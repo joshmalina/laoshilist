@@ -28,6 +28,18 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
+      .when('/jobs', {
+        templateUrl: 'views/jobs.html',
+        controller: 'JobsCtrl'
+      })
+      .when('/jobEdit', {
+        templateUrl: 'views/jobedit.html',
+        controller: 'JobeditCtrl'
+      })
+      .when('/users', {
+        templateUrl: 'views/users.html',
+        controller: 'UsersCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

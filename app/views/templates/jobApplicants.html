@@ -1,0 +1,12 @@
+<!-- APPLICANTS --> 
+<table class="table" ng-if="job.applicants">
+	<thead>
+		<tr><th class="admin-list-start">Applicants</th></tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="app in job.applicants">
+			<td ng-bind="app.id"></td>
+			<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
+		</tr>
+	</tbody>
+</table>	

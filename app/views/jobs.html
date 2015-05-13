@@ -1,121 +1,39 @@
 <div class="page-header">
-	<h1>Jobs<h1>
-	</div>
+	<h1>Jobs<button class="btn btn-primary pull-right" ng-click="addJob()">New</button>
+</h1>
+</div>
 
-	<!-- filters -->
-	<div id = "filter-bar">
-		<form class="form-inline">	
-			<div class="form-group">
-				<input type="text" class="form-control" ng-model="filterText" placeholder="Search">
-			</div>
-			Sort by:
-			<button type="button" class="btn btn-default btn">
-				Date
-			</button>
-			<button type="button" class="btn btn-default btn">
-				Age Group
-			</button>
-			<button type="button" class="btn btn-default btn">
-				Subject
-			</button>
-			<button type="button" class="btn btn-default btn">
-				Location
-			</button>
-			<button type="button" class="btn btn-default btn">
-				Status
-			</button>
-			<button type="button" class="btn btn-default btn">
-				Reset
-			</button>
-		<!--select ng-model="job.status" ng-options="s for s in jobStatuses">
-			<option value="">Show all</option>
-		</select-->	
+<!-- filters -->
+<div id = "filter-bar">
+	<form class="form-inline">	
+		<div class="form-group">
+			<input type="text" class="form-control" ng-model="filterText.$" placeholder="Search">
+		</div>			
+		<select ng-model="filterText.age" ng-options="s for s in ages" class="reign-in form-control">
+			<option value="">Age</option>
+		</select>				
+		<select ng-model="filterText.subjects" ng-options="s for s in subjects" class="form-control reign-in">
+			<option value="">Subject</option>
+		</select>
+		<select ng-model="filterText.city" ng-options="c for c in cities" class="reign-in form-control">
+			<option value="">City</option>
+		</select>
+		<select ng-model="filterText.status" class="form-control" ng-options="s for s in jobStatuses">
+			<option value="">Status</option>
+		</select>
+		<button type="button" class="btn btn-default btn">
+			Newest
+		</button>
+		<button type="button" class="btn btn-default btn">
+			X
+		</button>		
 	</form>
 </div>
 
-<div class = "panel panel-default job-panel" ng-repeat="job in jobs">
-	<div class = "panel-heading">
-		<input type="text" class="form-control" ng-model="job.title" ng-change="jobs.$save(job)">
-		<span class="city">{{job.city | json}}</span>
-		<span class="dateModified">{{job.dateModified}}</span>
-	</div>
-	<div class = "panel-body">
-		<textarea ng-model="job.longDesc" class="form-control" ng-change="jobs.$save(job)"></textarea>		
-	</div>
-	<ul class="list-group">
-		<li class="list-group-item subjects-list-item" ng-if="job.subjects">
-			<span class="select-dropdown"><label>Subjects:</label>{{job.subjects | json }}</span>
-			<select ng-model="job.subjects" ng-options="s for s in subjects" class="form-control reign-in" readonly>
-				<option value="">Choose one or more subjects</option>
-			</select>
-		</li>			
-		<!-- restrict showing if empty and not an admin -->
-		<li class="list-group-item" ng-if="job.pay">
-			<label>Pay:</label>
-			<input type="text" ng-model="job.pay" ng-change="jobs.$save(job)">
-		</li>
-		<li class="list-group-item" ng-if="job.locationDesc">
-			<label>Location:</label>
-			<input type="text" ng-model="job.locationDesc">
-		</li>
-		<li class="list-group-item" ng-if="job.schedule">
-			<label>Schedule:</label>
-			<input type="text" ng-model="job.schedule">
-		</li>
-		<li class="list-group-item subjects-list-item" ng-if="job.age">
-			<label>Student Age:</label>{{job.age | json}}
-			<select ng-model="job.age" ng-options="s for s in ages track by s" class="reign-in form-control">
-				<option value="">Choose an age group</option>
-			</select>
-		</li>
-		<li class="list-group-item" ng-if="job.numStudents">
-			<label>Number of students:</label>
-			<input type="text" ng-model="job.numStudents" ng-change="jobs.$save(job)">
-		</li>
+<div class = "panel panel-default job-panel" ng-repeat="(key, job) in jobs | filter:filterText">
+	<ll-public-job job="job"></ll-public-job>
+	<ll-job-applicants job="job"></ll-job-applicants>
+	<ll-private-job job="job" key="key"></ll-private-job>
+</div>
 
-	</ul>
-	<!-- ul ng-if="admin in user.roles"> -->
-
-	<!-- APPLICANTS --> 
-	<ul class="list-group" ng-if="job.applicants">
-		<li class="list-group-item admin-list-start">Applicants</li>
-		<li class="list-group-item" ng-repeat="app in job.applicants">{{ app | json}}</li>
-	</ul>
-
-	<!-- ADMIN DETAILS --> 
-	<ul class="list-group">
-		<li class="list-group-item admin-list-start">Admin Details</li>
-		<li class="list-group-item subject-list-item" ng-if="job.fee">
-			<span class="select-dropdown"><label>Fee:</label></span>
-			<input type="text" ng-model="job.fee" class="form-control" ng-change="jobs.$save(job)">
-		</li>
-		<li class="list-group-item" ng-if="job.contact">
-			<!-- drop down of contacts to feed into function -->
-			<!-- would also be nice if contact itself was editable -->
-			fun({{job.contact}) { returns contact info }
-		</li>
-		<li class="list-group-item">
-			<select ng-model="job.status" class="form-control" ng-options="s for s in jobStatuses">
-				<option value="">Status</option>
-			</select>	
-		</li>
-		<li class="list-group-item">
-			<input type="text" ng-model="job.comment" class="form-control" ng-change="jobs.$save(job)">
-		</li>
-	</ul>
-
-
-	<div class = "panel-footer">
-		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-primary">Apply</button>
-			<ul>
-				
-				<li>
-					<input type="text" placeholder="comment"></li>
-				</li>
-			</ul>			
-			<button type="button" class="btn btn-danger" ng-click="removeJob(job)">Delete Permanently</button>
-		</div>
-	</div>	
-</div>	
 

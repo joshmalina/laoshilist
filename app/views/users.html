@@ -1,1 +1,25 @@
-<p>This is the users view.</p>
+
+<div class="container" ng-repeat="user in users">
+	
+	<!-- teacher specific --> 
+	<img src="/uploads/avatars/{{user.img}}" alt="img"/>
+
+	<!-- all users -->
+	<div>{{user.fullName}}</div>
+	<div>{{user.contact | json }}</div>
+	<div>{{user.dateJoined | date:'MM/dd/yy'}}</div>
+	<div>{{user.lastLogin | date:'MM/dd/yy' }}</div>
+
+	<!-- teacher specific -->
+	<!-- should all be editable -->
+	<div>{{user.country}}</div>
+	<div>{{user.education | json }}</div>
+	<div><a href="{{user.linkedIn}}">LinkedIn</a></div>
+
+	<!-- all users -->
+	<div><ll-lessons id="{{user.id}}"/></div>
+	<div>{{user.bank | json}}</div>
+	<div>{{user.schedule | json}}</div>
+</div>
+
+{{sth}}

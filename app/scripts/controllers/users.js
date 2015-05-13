@@ -12,6 +12,8 @@
 
   	// create a service to generate unique userIDs
 
+  	$scope.sth = 'd';
+
   	var users =	 {
   		bill1092:  	{
   			roles: {
@@ -38,9 +40,20 @@
   			img: null,
   			vid: null,
   			voice: null,
+  			country: null,
+  			ethnicity: null,
   			city: {
   				beijing: true
   			},
+  			education: [{
+				uni: 'umontana',
+				degree: 'BA',
+				major: 'agriculture'
+  			}, {
+  				uni: 'ulondon',
+  				degree: 'MA',
+  				major: 'farmEcon'
+  			}],
   			bank: {
   				bankName: null,
   				nameOnAcct: null,
@@ -48,10 +61,13 @@
   				branch: null
   			},
   			linkenin: null,
+  			// toggling this field should turn / on emails, contact to this person
   			active: true
   		},
 	  		sally3235: {} 
   	};
+
+  	$scope.users = users;
 
 	  	var lessons = [
 	  		{

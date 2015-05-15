@@ -7,9 +7,22 @@
  * # llJob
  */
 angular.module('laoshiListApp')
-  .directive('llJob', function (jobStatus, subjects, cities, ages) {
+  .directive('llJob', function (jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
   	
   	function link (scope, element, attrs) {
+
+  		// get our job object from firebase
+  		var ref = new Firebase('https://' + firebasePath + '.firebaseio.com/jobs/' + scope.job.$id);
+
+  		// make available to scope
+  		scope.job_ = $firebaseObject(ref);
+
+    	scope.save = function() {
+    		scope.job_.dateModified = Firebase.ServerValue.TIMESTAMP;
+    		scope.job_.$save().catch(function(error) {
+    			console.log("Couldn't update", error);
+    		});
+    	}
 
   		// make services available to view
   		scope.subjects = subjects;

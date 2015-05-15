@@ -30,7 +30,7 @@
 	</form>
 </div>
 
-<i ng-repeat="(key, job) in jobs">
+<i ng-repeat="(key, job) in jobs | filter: filterText">
 	<!-- ng-show = "job.status == 'needTeacher' && admin" -->
 	<ll-job job="job" key="key"></ll-job>
 </i>

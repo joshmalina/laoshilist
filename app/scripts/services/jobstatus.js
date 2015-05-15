@@ -16,5 +16,6 @@ angular.module('laoshiListApp')
   	'waitPayment',
   	'closedPaid',
   	'closedUnpaid',
-  	'onHold'
+  	'onHold',
+  	'dead'
 ]);

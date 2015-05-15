@@ -11,9 +11,7 @@
  .controller('UsersCtrl', function ($scope) {
 
   	// create a service to generate unique userIDs
-
-  	$scope.sth = 'd';
-
+    
   	var users =	 {
   		bill1092:  	{
   			roles: {

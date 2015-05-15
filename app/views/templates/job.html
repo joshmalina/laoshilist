@@ -1,0 +1,138 @@
+<!-- this template contains an entire job -->
+<!-- it will have public fields and private fields, including a list of applicants -->
+
+<div class = "panel panel-default job-panel">
+
+	<!-- Public template of job details; fields should only be editable for admins -->
+	<div class="public-job-details">
+		<!-- title -->
+		<div class = "panel-heading">
+			<input type="text" class="form-control" ng-model="job.title" ng-change="$parent.jobs.$save(job)">		
+		</div>
+
+		<!-- description -->
+		<div class = "panel-body">
+			<textarea ng-model="job.longDesc" class="form-control" ng-change="jobs.$save(job)"></textarea>
+
+			<!-- toggle to see more job details -->
+			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>		
+		</div>
+
+
+			<ul class="list-group" collapse="isCollapsed">
+
+				<!-- map -->
+
+				<!-- subjects -->
+				<li class="list-group-item subjects-list-item">
+					<span class="select-dropdown"><label>Subjects:</label>{{job.subjects | json }}</span>
+					<select ng-model="job.subjects" ng-options="s for s in subjects" class="form-control reign-in">
+						<option value="">Choose one or more subjects</option>
+					</select>
+				</li>
+
+				<!-- pay -->
+				<li class="list-group-item">
+					<label>Pay:</label>
+					<input type="text" ng-model="job.pay" ng-change="jobs.$save(job)">
+				</li>
+
+				<!-- location -->
+				<li class="list-group-item">
+					<label>Location:</label>
+					<input type="text" ng-model="job.locationDesc" class="form-control">
+				</li>
+
+				<!-- schedule -->
+				<li class="list-group-item">
+					<label>Schedule:</label>
+					<input type="text" ng-model="job.schedule" class="form-control">
+				</li>
+
+				<!-- ages -->
+				<li class="list-group-item subjects-list-item">
+					<span class="select-dropdown"><label>Student Age:</label>{{job.age}}</span>
+					<select ng-model="job.age" ng-options="s for s in ages track by s" class="reign-in form-control">
+						<option value="">Choose an age group</option>
+					</select>
+				</li>
+
+				<!-- number of students -->
+				<li class="list-group-item">
+					<label>Number of students:</label>
+					<input type="text" ng-model="job.numStudents" ng-change="jobs.$save(job)">
+				</li>
+
+				<!-- city -->
+				<li class="list-group-item subjects-list-item">
+					<span class="select-dropdown"><label>City:</label>{{job.city}}</span>
+					<select ng-model="job.city" ng-options="c for c in cities track by c" class="reign-in form-control">
+						<option value="">Choose a city</option>
+					</select>
+				</li>
+
+
+			</ul>
+
+	</div>
+	<!-- end PUBLIC -->
+
+	<!-- begin PRIVATE -->
+	<div class="private-job-details" collapse="isCollapsed">
+
+		<!-- begin APPLICANTS -->
+		<!-- APPLICANTS --> 
+		<table class="table job-applicants" ng-if="job.applicants">
+			<thead>
+				<tr><th class="admin-list-start">Applicants</th></tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="app in job.applicants">
+					<td ng-bind="app.id"></td>
+					<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
+				</tr>
+			</tbody>
+		</table>	
+		<!-- end APPLICANTS -->
+
+		<!-- ADMIN DETAILS --> 
+		<ul class="list-group admin-details">
+			<li class="list-group-item admin-list-start">Admin Details</li>
+			<li class="list-group-item subject-list-item">
+				<span class="select-dropdown"><label>Fee:</label></span>
+				<input type="text" ng-model="job.fee" class="form-control" ng-change="jobs.$save(job)">
+			</li>
+			<li class="list-group-item">
+				<!-- drop down of contacts to feed into function -->
+				<!-- would also be nice if contact itself was editable -->
+				fun({{job.contact}) { returns contact info }
+			</li>
+			<li class="list-group-item subjects-list-item">
+				<span class="select-dropdown"><label>Status:</label>{{job.status}}</span>
+				<select ng-model="job.status" class="reign-in form-control" ng-options="s for s in jobStatuses track by s">
+					<option value="">Status</option>
+				</select>	
+			</li>
+			<li class="list-group-item">
+				<label>Note:</label>
+				<input type="text" ng-model="jbs[key].comment" class="form-control" ng-change="save(key)">
+			</li>
+		</ul>
+		
+	</div>
+	<!-- end PRIVATE -->
+
+	<!-- FOOTER contains public / private fields -->
+	<div class = "panel-footer">
+		<div class="btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-primary">Apply</button>			
+			<button type="button" class="btn btn-danger" ng-click="$parent.jobs.$remove(key)">Delete Permanently</button>
+		</div>
+		<span class="dateModified pull-right">
+			Updated on {{job.dateModified | date:'MM/dd/yy'}}
+		</span>
+	</div>	
+	<!-- end FOOTER -->
+	
+</div>
+

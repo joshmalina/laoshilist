@@ -14,29 +14,19 @@ angular.module('laoshiListApp')
   	var jobs = $firebaseArray(ref);
   	$scope.jobs = jobs;
 
-  	$scope.isCollapsed = true;
-
-  	$scope.coll = function() {
-  		$scope.isCollapsed = !$scope.isCollapsed;
-  	};
-
-  	$scope.subjects = subjects;
-  	$scope.jobStatuses = jobStatus;
-  	$scope.ages = ages;
-  	$scope.cities = cities;
-
   	$scope.addJob = function() {
-  		jobs.$add();
+  		jobs.$add(
+        {
+          status:'needDetail', 
+          dateModified: Firebase.ServerValue.TIMESTAMP
+        });
   	};
 
-  	$scope.removeJob = function(job) {
-  		console.log('dd');
-  		jobs.$remove(job.$id).then(function(ref) {
-  			console.log('this job: ');
-  			console.log(ref);
-  			console.log(' was removed');
-  		});
-  	};
+    $scope.update = function() {
+        console.log("update");
+    };
+
+  	
 
   	// filters
   	// $scope.filterText = '';

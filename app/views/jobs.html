@@ -30,10 +30,8 @@
 	</form>
 </div>
 
-<div class = "panel panel-default job-panel" ng-repeat="(key, job) in jobs | filter:filterText">
-	<ll-public-job job="job"></ll-public-job>
-	<ll-job-applicants job="job"></ll-job-applicants>
-	<ll-private-job job="job" key="key"></ll-private-job>
-</div>
-
+<i ng-repeat="(key, job) in jobs">
+	<!-- ng-show = "job.status == 'needTeacher' && admin" -->
+	<ll-job job="job" key="key"></ll-job>
+</i>
 

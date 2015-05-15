@@ -9,28 +9,32 @@
 		<div class="form-group">
 			<input type="text" class="form-control" ng-model="filterText.$" placeholder="Search">
 		</div>			
-		<select ng-model="filterText.age" ng-options="s for s in ages" class="reign-in form-control">
-			<option value="">Age</option>
+		<select ng-model="filterText.age" class="reign-in form-control">
+			<option value>Age</option>
+			<option ng-repeat="age in ages">{{age}}</option>
 		</select>				
-		<select ng-model="filterText.subjects" ng-options="s for s in subjects" class="form-control reign-in">
+		<select ng-model="filterText.subjects" class="form-control reign-in">
 			<option value="">Subject</option>
+			<option ng-repeat="subject in subjects">{{ subject | capitalizeFirst }}</option>
 		</select>
-		<select ng-model="filterText.city" ng-options="c for c in cities" class="reign-in form-control">
+		<select ng-model="filterText.city" class="reign-in form-control">
 			<option value="">City</option>
+			<option ng-repeat="city in cities">{{city | capitalizeFirst }}</option>
 		</select>
-		<select ng-model="filterText.status" class="form-control" ng-options="s for s in jobStatuses">
+		<select ng-model="filterText.status" class="form-control">
 			<option value="">Status</option>
+			<option ng-repeat="status in statuses">{{status}}</option>
 		</select>
-		<button type="button" class="btn btn-default btn">
-			Newest
+		<button type="button" class="btn btn-default btn" ng-click="toggleGroupBy()">
+			{{orderedBy}}
 		</button>
-		<button type="button" class="btn btn-default btn">
+		<button type="button" class="btn btn-default btn" ng-click="clearFilter()">
 			X
 		</button>		
 	</form>
 </div>
 
-<i ng-repeat="(key, job) in jobs | filter: filterText">
+<i ng-repeat="(key, job) in jobs | orderBy: groupBy | filter: filterText">
 	<!-- ng-show = "job.status == 'needTeacher' && admin" -->
 	<ll-job job="job" key="key"></ll-job>
 </i>

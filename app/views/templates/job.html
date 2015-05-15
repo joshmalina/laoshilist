@@ -26,7 +26,7 @@
 				<!-- subjects -->
 				<li class="list-group-item subjects-list-item">
 					<span class="select-dropdown"><label>Subjects:</label>{{job_.subjects | json }}</span>
-					<select ng-model="job_.subjects" ng-change="save()" ng-options="s for s in subjects" class="form-control reign-in">
+					<select ng-model="job_.subjects" ng-change="save()" ng-options="s as (s | capitalizeFirst) for s in subjects" class="form-control reign-in">
 						<option value="">Choose one or more subjects</option>
 					</select>
 				</li>
@@ -66,7 +66,7 @@
 				<!-- city -->
 				<li class="list-group-item subjects-list-item">
 					<span class="select-dropdown"><label>City:</label>{{job_.city}}</span>
-					<select ng-model="job_.city" ng-change="save()" ng-options="c for c in cities track by c" class="reign-in form-control">
+					<select ng-model="job_.city" ng-change="save()" ng-options="c as (c | capitalizeFirst) for c in cities track by c" class="reign-in form-control">
 						<option value="">Choose a city</option>
 					</select>
 				</li>

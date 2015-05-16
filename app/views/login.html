@@ -1,0 +1,13 @@
+<h1>Login<br><small>All fields are required</small></h1>
+
+<form novalidate ng-submit="login()">
+	<div class="form-group">
+		<label>Email</label>
+		<input ng-model="usr.email" type="email" class="form-control">
+	</div>
+	<div class="form-group">
+		<label>Password</label>
+		<input ng-model="usr.password" type="password" class="form-control">
+	</div>
+	<button type="submit" class="btn btn-default">Login</button>
+</form>

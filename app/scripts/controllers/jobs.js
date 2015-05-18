@@ -35,7 +35,7 @@ angular.module('laoshiListApp')
     }
 
     // get all jobs, pass to view
-  	var ref = new Firebase(firebaseArray + '/jobs');
+  	var ref = new Firebase(firebasePath + '/jobs');
   	$scope.jobs = $firebaseArray(ref);
 
     // add new job, set default status

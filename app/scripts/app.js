@@ -49,7 +49,7 @@ angular
         templateUrl: 'views/register.html',
         controller: 'RegisterCtrl'
       })
-      .when('/profile', {
+      .when('/profile/:username', {
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
       })

@@ -32,7 +32,8 @@
  					email: $scope.usr.email,
  					uid: userData.uid,
  					first_name: $scope.usr.firstName,
- 					last_name: $scope.usr.lastName					
+ 					last_name: $scope.usr.lastName,
+ 					date_joined: Firebase.ServerValue.TIMESTAMP				
  				}, function(error) {
  					if(error) {
  						console.log(error);

@@ -109,7 +109,8 @@ body {
   }
 }
 
-/* jobs page */
+/* BEGIN JOBS PAGE */
+
 #filter-bar {
   padding-bottom: 20px;
 }
@@ -167,4 +168,14 @@ body {
   width: inherit;
 }
 
+/* END JOBS PAGE */
+
+/* BEGIN REGISTER PAGE */
+
+.ll-forms input.ng-invalid.ng-touched {
+  border: 1px solid darkred;
+  
+}
+
+/* END REGISTER PAGE */
 

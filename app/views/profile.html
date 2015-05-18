@@ -1,0 +1,61 @@
+<div class="page-header">
+	<h1>User Profile</h1>
+</h1>
+</div>
+
+<div class = "container profile">
+	<div class = "profile-top-box">
+		<!-- at large res, float; at small res put on top -->
+		<div class = "profile-avatar"></div>
+		<div class = "profile-top-info">
+			<div class = "profile-name"></div>
+			<div class = "profile-top-fields">
+				<ul>
+					<li class="profile-location"></li>
+					<li class="profile-country-of-origin"></li>
+					<li class="profile-last-login"></li>
+					<li class="profile-ethnicity"></li>
+				</ul>
+			</div>
+		</div>
+		<!-- either subjects learned (student) / subjects taught (teacher) -->
+		<div class = "profile-subjects"></div>
+		<div class = "mid-level-info">
+			<ul>
+				<!-- either english or chinese depending on user type -->
+				<li class="profile-language-ability"></li>
+				<!-- either teacher preference or students age -->
+				<li class = "profile-student-age"></li>
+			</ul>
+		</div>
+		<div class = "edu-info">
+			<ul ng-repeat="edu in education">
+				<li>{{edu.uni}}</li>
+				<li>{{edu.degree}}</li>
+				<li>{{edu.major}}</li>
+			</ul>
+		</div>
+	</div>
+	<div class = "private-info">
+		<div class = "associated-with"></div>
+		<div class = "contact-info">
+			<ul>
+				<li>{{wechat}}</li>
+				<li>{{phone}}</li>
+				<li>{{email}}</li>
+			</ul>
+		</div>
+		<div class = "applied-for"></div>
+		<div class = "owes-owed"></div>
+		<div class = "total-in-total-out"></div>
+		<div class = "bank-info">
+			<ul ng-repeat="bank in banks">
+				<li>{{bank.bankName}}</li>
+				<li>{{bank.nameOnAcct}}</li>
+				<li>{{bank.num}}</li>
+				<li>{{bank.branch}}</li>
+			</ul>
+		</div>
+	</div>
+	<button>deactivate</button>
+</div>

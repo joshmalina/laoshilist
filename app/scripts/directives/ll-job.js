@@ -12,7 +12,7 @@ angular.module('laoshiListApp')
   	function link (scope, element, attrs) {
 
   		// get our job object from firebase
-  		var ref = new Firebase('https://' + firebasePath + '.firebaseio.com/jobs/' + scope.job.$id);
+      var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
 
   		// make available to scope
   		scope.job_ = $firebaseObject(ref);
@@ -20,9 +20,9 @@ angular.module('laoshiListApp')
     	scope.save = function() {
     		scope.job_.dateModified = Firebase.ServerValue.TIMESTAMP;
     		scope.job_.$save().catch(function(error) {
-    			console.log("Couldn't update", error);
+    			console.log('Couldn\'t update', error);
     		});
-    	}
+    	};
 
   		// make services available to view
   		scope.subjects = subjects;
@@ -36,7 +36,7 @@ angular.module('laoshiListApp')
   		scope.coll = function () {
   			scope.isCollapsed = !scope.isCollapsed;
   			scope.readMore = scope.isCollapsed ? 'Read more' : 'Read less';
-  		}
+  		};
 
   		// remove a job
 

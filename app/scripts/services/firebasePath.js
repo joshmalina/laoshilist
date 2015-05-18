@@ -8,4 +8,4 @@
  * Constant in the laoshiListApp.
  */
 angular.module('laoshiListApp')
-  .constant('firebasePath', 'popping-torch-9518');
+	.constant('firebasePath', 'https://popping-torch-9518.firebaseio.com');

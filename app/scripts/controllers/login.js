@@ -9,7 +9,7 @@
  */
  angular.module('laoshiListApp')
  .controller('LoginCtrl', function ($scope, firebasePath) {
- 	var ref = new Firebase("https://" + firebasePath + ".firebaseio.com");
+ 	var ref = new Firebase(firebasePath);
 
  	$scope.login = function() {
  		ref.authWithPassword({

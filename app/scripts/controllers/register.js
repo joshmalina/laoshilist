@@ -8,22 +8,43 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('RegisterCtrl', function ($scope, firebasePath) {
+ .controller('RegisterCtrl', function ($scope, firebasePath, username) {
 
- 	var ref = new Firebase("https://" + firebasePath + ".firebaseio.com");
+ 	var ref = new Firebase(firebasePath);
 
  	$scope.register = function() {
+
+ 		if(!$scope.registerForm.$valid) {
+ 			return;
+ 		}
+
+ 		// register user with firebase auth
  		ref.createUser({
  			email: $scope.usr.email,
  			password: $scope.usr.password
- 		}, function (e, userData) {
- 			if (e) {
- 				console.log("error:", e);
+ 		}, function (error, userData) {
+ 			if (error) {
+ 				console.log('error:', error);
  			} else {
- 				console.log("created: ", userData);
+ 				// create a new user in the DB, indexed by a new username
+ 				var newUserRef = ref.child("users").child(username.new($scope.usr.firstName));
+ 				newUserRef.set({
+ 					email: $scope.usr.email,
+ 					uid: userData.uid,
+ 					first_name: $scope.usr.firstName,
+ 					last_name: $scope.usr.lastName					
+ 				}, function(error) {
+ 					if(error) {
+ 						console.log(error);
+ 					} else {
+ 						console.log("saved");
+ 					}
+ 				});
+
  			}
- 		});
- 	}	
 
 
- });
+ 		});	
+
+	}
+});

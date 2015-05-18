@@ -1,26 +1,82 @@
+<style>
+	.profile-avatar img {
+		padding: 0;
+		padding-bottom: 0px;
+		border-radius: 4px;
+		width:100%;
+	}
+	.profile-boxes {
+		border-radius: 4px;
+		border: 1px solid #ddd;
+		margin-bottom:5px;	
+		padding: 8px;	
+	}
+	.profile-avatar {
+	}
+	.profile-container {
+		width: auto;
+		background-color: #fff;
+	}
+	.profile-top-fields {
+	  border-radius: 2px;
+	  width: 100%;
+	  text-align: center;
+	  margin-bottom: 10px;
+	}
+	.profile-top-fields ul {
+		padding:0;
+	}
+	.profile-top-fields li {
+		list-style: none;
+		margin-bottom: 10px;
+		padding:10px;  
+		width:100%;
+		background: #f5f5f5;
+	}
+	.profile-top-fields .fields-value {
+		font-weight:bold;
+	}
+	.profile-head-text {
+	  font-family: Helvetica,Arial,Verdana,sans-serif;
+	  color: #444;
+	  font-weight: 700;
+	  font-size: 1.5em;
+	  line-height: 2em;
+	}
+</style>
+
 <div class="page-header">
 	<h1>User Profile</h1></h1>
 </div>
 
-{{user}}
-
-<div class = "container profile">
+<div class = "profile-container clearfix">
 	<div class = "profile-top-box">
 		<!-- at large res, float; at small res put on top -->
-		<div class = "profile-avatar"></div>
-		<div class = "profile-top-info">
-			<div class = "profile-name"></div>
+		<div class = "profile-avatar profile-boxes col-lg-5 col-md-5 col-sm-5 col-xs-12">
+			<img src="/images/blank_teacher.png"/>
+		</div>
+		<div class = "profile-top-info profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
+			<div class = "profile-head-text">{{user.first_name}} {{user.last_name}}</div>
 			<div class = "profile-top-fields">
 				<ul>
-					<li class="profile-location"></li>
-					<li class="profile-country-of-origin"></li>
-					<li class="profile-last-login"></li>
-					<li class="profile-ethnicity"></li>
+					<li class="profile-location">
+						<span class="fields-name">
+							{{ 'Location' | uppercase}}
+						</span><br/>
+						<span class="fields-value">
+							{{ 'Dongzhimen' | uppercase}}
+						</span>
+					</li>
+					<li class="profile-country-of-origin">USA</li>
+					<li class="profile-last-login">Wednesday</li>
+					<li class="profile-ethnicity">White</li>
 				</ul>
 			</div>
 		</div>
 		<!-- either subjects learned (student) / subjects taught (teacher) -->
-		<div class = "profile-subjects"></div>
+		<div class = "profile-subjects profile-boxes">
+			<div class="profile-head-text">Subjects</div>
+		</div>
 		<div class = "mid-level-info">
 			<ul>
 				<!-- either english or chinese depending on user type -->

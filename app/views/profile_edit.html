@@ -46,14 +46,14 @@
 			</div>
 		</tab>
 
+		{{cats}}
 		<tab heading="Work/Study">
 			<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
-			{{user_subjects}}
 			<select class="form-control" multiple ng-model="user_subjects" ng-change="save_subjects(user_subjects)">
 				<option ng-repeat="s in subjects">{{s}}</option>
 			</select>
 			<label>Preferred student age / studen't age<br/><small>Ctrl + click to select more than one </small></label>	
-			<select class="form-control" multiple>
+			<select class="form-control" multiple ng-model="user_ages">
 				<option ng-repeat="a in ages">{{a}}</option>
 			</select>
 		</tab>

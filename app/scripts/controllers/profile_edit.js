@@ -48,31 +48,47 @@
 		});
 	};
 
-	$scope.user_subjects = [];
-	// reformating the firebase data into an array of keys
-	// for exposure to view
-	$scope.user.$loaded().then(function() {
-		var subs = [];
-		for(var k in $scope.user.subjects) {
-			subs.push(k);
-		}
-		$scope.user_subjects = subs;
-	});
+	/*
+	 * this function takes firebase data, aka an object with a bunch
+	 * of meaningful keys, like {chinese: true, english: true}, and
+	 * a bunch of non-sense values, as in 'true', 'true', etc...
+	 *
+	 * it returns nothing, but it's side effect is to set the value
+	 * of a scope-bound array -- would be nice if it did
+	 */
+	var fbObj_to_array = function(start_object, scope_array) {			
+		// iterate through object
+		for(var k in start_object) {
+			// build array
+			scope_array.push(k);
+		};
+	};
 
-
-	// changing the array back into an object
-	// for compatability with firebase object
-	$scope.save_subjects = function(a) {
-		console.log(a);
-	 	var nref = new Firebase (firebasePath + '/users/' + $routeParams['username'] + '/subjects');
-		var ob = $firebaseObject(nref);
+	// would be great if this returned something, for the sake of unit testing
+	var save_array_to_fb_object = function(model, refChild) {
 		var o = {};
-		var l = a.length;
+		var l = model.length;
 		for (var i = 0; i < l; i++) {
-			o[a[i]] = true;
+			o[model[i]] = true;
 		}
-		nref.set(o);
+		ref.child(refChild).set(o);
+	};
+
+
+
+	$scope.user.$loaded().then(function() {
+		fbObj_to_array($scope.user.subjects, $scope.user_subjects=[]);
+	});	
+
+	// should be a way to define this function partially
+	$scope.save_subjects = function(model) {
+		save_array_to_fb_object(model, 'subjects');
 	}
+
+
+
+
+	
 
 
 

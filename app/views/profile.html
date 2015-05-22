@@ -89,7 +89,7 @@
 							{{ 'country' | uppercase }}
 						</span><br />
 						<span class="fields-value">
-							{{ user.nationality | uppercase }}
+							{{ user.country | uppercase }}
 						</span>
 					</li>
 					<li class="profile-last-login">
@@ -126,7 +126,7 @@
 			<img src="images/glyphicons-153-check.png" alt="" />Subjects
 		</div>
 		<span ng-repeat="(key,val) in user.subjects">
-			{{key | capitalizeFirst }}{{$last ? '' : ', '}}
+			{{key | uppercase }}{{$last ? '' : ', '}}
 		</span>
 	</div>
 

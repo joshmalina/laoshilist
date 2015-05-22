@@ -53,6 +53,10 @@ angular
         templateUrl: 'views/profile.html',
         controller: 'ProfileCtrl'
       })
+      .when('/profile_edit/:username', {
+        templateUrl: 'views/profile_edit.html',
+        controller: 'ProfileEditCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

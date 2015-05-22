@@ -14,6 +14,11 @@ angular.module('laoshiListApp')
 
   	$scope.user = $firebaseObject(ref);
 
+  	$scope.go_to_edit = function() {
+  		$location.path('/profile_edit/' + $routeParams['username']);
+  	};
+
+
 
   	// need to do some checking to make sure we got a user, else redirect
 

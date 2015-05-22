@@ -89,7 +89,9 @@
     when: 3234234234,
     debit: false,
     amount: 102.4,
-    party: 'userID' || 'string'
+    party: 'userID' || 'string',
+    comment: 'string',
+    date_of_payment: 'timestamp'
   }
   ];
 

@@ -47,7 +47,35 @@
 			}
 		});
 	};
-	
+
+	$scope.user_subjects = [];
+	// reformating the firebase data into an array of keys
+	// for exposure to view
+	$scope.user.$loaded().then(function() {
+		var subs = [];
+		for(var k in $scope.user.subjects) {
+			subs.push(k);
+		}
+		$scope.user_subjects = subs;
+	});
+
+
+	// changing the array back into an object
+	// for compatability with firebase object
+	$scope.save_subjects = function(a) {
+		console.log(a);
+	 	var nref = new Firebase (firebasePath + '/users/' + $routeParams['username'] + '/subjects');
+		var ob = $firebaseObject(nref);
+		var o = {};
+		var l = a.length;
+		for (var i = 0; i < l; i++) {
+			o[a[i]] = true;
+		}
+		nref.set(o);
+	}
+
+
+
 
 
 });

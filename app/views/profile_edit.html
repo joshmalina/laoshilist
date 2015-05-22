@@ -11,6 +11,7 @@
 
 <div class = "edit-profile-container">
 	<tabset vertical="false" type="pills" class="edit-profile-menu">
+
 		<tab heading="Basic">
 			<div class = "form-group">
 				<label>Photo</label><br>
@@ -44,10 +45,12 @@
 				</select>
 			</div>
 		</tab>
+
 		<tab heading="Work/Study">
 			<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
-			<select class="form-control" multiple>
-				<option ng-repeat="s in subjects">{{s | capitalizeFirst }}</option>
+			{{user_subjects}}
+			<select class="form-control" multiple ng-model="user_subjects" ng-change="save_subjects(user_subjects)">
+				<option ng-repeat="s in subjects">{{s}}</option>
 			</select>
 			<label>Preferred student age / studen't age<br/><small>Ctrl + click to select more than one </small></label>	
 			<select class="form-control" multiple>

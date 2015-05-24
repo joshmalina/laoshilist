@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', function ($scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors) {
+ .controller('ProfileEditCtrl', function ($scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter) {
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams['username']);
  	$scope.user = $firebaseObject(ref);
@@ -83,6 +83,9 @@
 	$scope.user.$loaded().then(function() {
 		fbObj_to_array($scope.user.subjects, $scope.user_subjects=[]);
 		fbObj_to_array($scope.user.ages, $scope.user_ages=[]);
+		var date = new Date($scope.user.birthday);
+		$scope.user_birthday = $filter('date')(date, 'yyyy-MM-dd');
+
 	});	
 
 	// should be a way to define this function partially
@@ -93,6 +96,16 @@
 	$scope.save_ages = function(model) {
 		save_array_to_fb_object(model, 'ages');
 	}
+
+	$scope.save_date = function(date) {
+		var tms = Date.parse(date);
+		ref.child('birthday').set(tms);
+	}
+
+
+
+
+
 
 
 

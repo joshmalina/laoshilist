@@ -2,8 +2,12 @@
 	.profile-avatar img {
 		padding: 0;
 		padding-bottom: 0px;
-		border-radius: 4px;
-		width:100%;
+		border-radius: 4px;		
+		max-width: 300px;
+		max-height:300px;
+	}
+	.profile_avatar {
+		background-color:#2bbbd8;
 	}
 	.profile-head-text .label {
 		margin-left:-100px;
@@ -38,11 +42,7 @@
 		padding:10px;  
 		width:100%;
 		background: #f5f5f5;
-	}
-	.profile-avatar img {
-		max-height: 1350px;
-
-	}
+	}	
 	.ll-glyph {
 		max-width:22px;
 	}
@@ -70,7 +70,7 @@
 	<div class = "profile-top-box">
 		<!-- at large res, float; at small res put on top -->
 		<div class = "profile-avatar profile-boxes col-lg-5 col-md-5 col-sm-5 col-xs-12">
-			<img src="{{user.avatar.data}}"/>
+			<img src="{{user.avatar.data}}" class="avatar-img"/>
 		</div>
 		<div class = "profile-top-info profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
 			<div class = "profile-head-text">{{user.first_name}}</div>

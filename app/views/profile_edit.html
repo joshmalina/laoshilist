@@ -2,6 +2,10 @@
 	.tab-content .active {
 		margin-top:20px;
 	}
+	.avatar-img {
+		max-width: 200px;
+		max-height:200px;
+	}
 </style>
 
 
@@ -15,7 +19,7 @@
 		<tab heading="Basic">
 			<div class = "form-group">
 				<label>Photo</label><br>
-				<img fb-src fp-src="{{user.avatar.data}}"/>
+				<img src="{{user.avatar.data}}" class="avatar-img"/>
 				<form ng-submit="upload_image(image)">
 					<div class="fb-error" ng-show="error">{{error}}</div>
 					<div class="fb-inputs" ng-hide="image.isUploading">
@@ -27,6 +31,10 @@
 					</div>
 					<div class="" ng-show="status">{{status}}</div>
 				</form>
+			</div>
+			<div class = "form-group">
+				<label>First Name *</label><br>
+				<span>{{user.first_name}}</span>
 			</div>
 			<div class = "form-group">
 				<label>Last Name</label>
@@ -41,22 +49,45 @@
 			<div class = "form-group">
 				<label>Ethnicity</label>
 				<select class="form-control" ng-model="user.ethnicity" ng-change="user.$save()">
+					<option value=""></option>
 					<option ng-repeat="r in races">{{r | capitalizeFirst }}</option>
 				</select>
 			</div>
+			<div class = "form-group">
+				<label>Birthday</label>
+				<div>
+					<datepicker ng-model="user.birthday" class="well" ng-change="save_date(user.birthday)"></datepicker>
+				</div>
+			</div>
+			<small>*Cannot be changed</small>
+
 		</tab>
 
 		<tab heading="Work/Study">
-			<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
-			<select class="form-control" multiple ng-model="user_subjects" ng-change="save_subjects(user_subjects)">
-				<option ng-repeat="s in subjects">{{s}}</option>
-			</select>
-			<label>Preferred student age / studen't age<br/><small>Ctrl + click to select more than one </small></label>	
-			<select class="form-control" multiple ng-model="user_ages" ng-change="save_ages(user_ages)">
-				<option ng-repeat="a in ages">{{a}}</option>
-			</select>
+			<div class="form-group">
+				<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
+				<select class="form-control" multiple ng-model="user_subjects" ng-change="save_subjects(user_subjects)">
+					<option ng-repeat="s in subjects">{{s}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Preferred student age / studen't age<br/><small>Ctrl + click to select more than one </small></label>	
+				<select class="form-control" multiple ng-model="user_ages" ng-change="save_ages(user_ages)">
+					<option ng-repeat="a in ages">{{a}}</option>
+				</select>
+			</div>
+			<div class="form-group">
+				<label>Chinese / English language level</label>
+				<select class="form-control" ng-model="user.language_ability" ng-change="user.$save()">
+					<option value=""></option>
+					<option ng-repeat="l in language_level" value="l.value">{{l.desc}}</option>
+				</select>
+			</div>		
 		</tab>
 		<tab heading="Location">
+			<div class = "form-group">
+				<label>City</label>
+			</div>
 			<div class = "form-group">
 				<label>Specific Location</label>
 				<input type="text" class="form-control" ng-model="user.location" ng-change="user.$save()" placeholder="Dongzhimen"/>
@@ -99,7 +130,16 @@
 			</div>			
 		</tab>
 
-		<tab heading="Payment">			
+		<tab heading="Payment">
+			<div class="form-group">
+				<label>Zhifubao 支付宝</label>
+				<input type="text" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>WeChat Payment ID</label>
+				<input type="text" class="form-control">
+			</div>		
+			<label>add a bank</label>	
 		</tab>
 	</tabset>	
 </div>

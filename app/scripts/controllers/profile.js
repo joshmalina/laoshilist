@@ -18,6 +18,9 @@ angular.module('laoshiListApp')
   		$location.path('/profile_edit/' + $routeParams['username']);
   	};
 
+  	 	$scope.firebaseUrl = ref+ '/avatar';
+
+
 
 
   	// need to do some checking to make sure we got a user, else redirect

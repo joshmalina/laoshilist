@@ -24,7 +24,6 @@ angular.module('laoshiListApp')
 				if (!image) {
 					$log.log('It appears the image ' + attrs.fpSrc + ' does not exist.');
 				}else{
-					$log.log(attrs.fpSrc);
 					elem.attr('src', image.data);
 				}
 			});

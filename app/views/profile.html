@@ -116,6 +116,16 @@
 							{{ user.ethnicity | uppercase }}
 						</span>
 					</li>
+					<li class="profile-age">
+						<span class="fields-name">
+							{{ 'student age / preference (YRS)' | uppercase}}
+						</span><br />
+						<span class="fields-value">
+							<span ng-repeat="(key, _) in user.ages">
+								{{ key | uppercase }}{{$last ? '' : ', '}}
+							</span>
+						</span>
+					</li>
 				</ul>
 			</div>
 		</div>		
@@ -125,7 +135,7 @@
 		<div class="profile-head-text">
 			<img src="images/glyphicons-153-check.png" alt="" />Subjects
 		</div>
-		<span ng-repeat="(key,val) in user.subjects">
+		<span ng-repeat="(key,_) in user.subjects">
 			{{key | uppercase }}{{$last ? '' : ', '}}
 		</span>
 	</div>
@@ -154,12 +164,10 @@
 			</li>
 	</div>
 
-	<div class = "mid-level-info">
+	<div class = "mid-level-info">		
 		<ul>
 			<!-- either english or chinese depending on user type -->
-			<li class="profile-language-ability"></li>
-			<!-- either teacher preference or students age -->
-			<li class = "profile-student-age"></li>
+			<li class="profile-language-ability"></li>			
 		</ul>
 	</div>
 

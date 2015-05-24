@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', function ($scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities) {
+ .controller('ProfileEditCtrl', function ($scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges) {
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams['username']);
  	$scope.user = $firebaseObject(ref);
@@ -16,6 +16,8 @@
  	$scope.ages = ages;
  	$scope.countries = countries;
  	$scope.races = ethnicities;	
+ 	$scope.degrees = degrees;
+ 	$scope.colleges = colleges;
 
  	$scope.go_to_profile = function() {
  		$location.path('/profile/' + $routeParams['username']);
@@ -47,6 +49,9 @@
  			}
  		});
  	};
+
+ 	// for img shower
+ 	$scope.firebaseUrl = ref+ '/avatar';
 
 	/*
 	 * this function takes firebase data, aka an object with a bunch

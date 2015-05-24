@@ -17,13 +17,14 @@ angular.module('laoshiListApp')
 	return {
 		link: function (scope, elem, attrs) {
 			var safename = attrs.fpSrc.replace(/\.|\#|\$|\[|\]|-|\//g, "");
-			var dataRef = new Firebase( [scope.firebaseUrl, 'images', safename].join('/') );
+			var dataRef = new Firebase( scope.firebaseUrl );
 			elem.attr('alt', attrs.fpSrc);
 			dataRef.once('value', function (snapshot) {
 				var image = snapshot.val();
 				if (!image) {
 					$log.log('It appears the image ' + attrs.fpSrc + ' does not exist.');
 				}else{
+					$log.log(attrs.fpSrc);
 					elem.attr('src', image.data);
 				}
 			});

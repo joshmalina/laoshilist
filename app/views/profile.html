@@ -76,6 +76,14 @@
 			<div class = "profile-head-text">{{user.first_name}}</div>
 			<div class = "profile-top-fields">
 				<ul>
+					<li class="profile-city">
+						<span class="fields-name">
+							{{ 'city' | uppercase}}
+						</span><br/>
+						<span class="fields-value">
+							{{ cities[user.city].en + ' - ' + cities[user.city].zh | uppercase }}
+						</span>
+					</li>
 					<li class="profile-location">
 						<span class="fields-name">
 							{{ 'Location' | uppercase}}

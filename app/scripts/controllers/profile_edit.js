@@ -8,10 +8,11 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', ['$firebaseArray', '$scope', '$log', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'subjects', 'countries', 'ages', 'ethnicities', 'degrees', 'colleges', 'majors', '$filter', 'languageLevel', 'cities', function ($firebaseArray, $scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter, languageLevel, cities) {
+ .controller('ProfileEditCtrl', ['fbMethods', 'roles', '$firebaseArray', '$scope', '$log', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'subjects', 'countries', 'ages', 'ethnicities', 'degrees', 'colleges', 'majors', '$filter', 'languageLevel', 'cities', function (fbMethods, roles, $firebaseArray, $scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter, languageLevel, cities) {
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
- 	$scope.user = $firebaseObject(ref);
+		
+ 	$scope.user = $firebaseObject(ref)
  	$scope.subjects = subjects;
  	$scope.ages = ages;
  	$scope.countries = countries;
@@ -21,18 +22,23 @@
  	$scope.majors = majors;
  	$scope.languageLevel = languageLevel;
  	$scope.cities = cities;
+ 	$scope.roles = roles;
 
  	$scope.goToProfile = function() {
  		$location.path('/profile/' + $routeParams.username);
  	};
 
  	$scope.contacts = $firebaseArray(ref.child('contact'));
+ 	var bankRef = new Firebase (firebasePath + '/users/' + $routeParams.username + '/payment/banks');
+ 	$scope.banks = $firebaseArray(bankRef);
 
- 	$scope.addContact = function() {
- 		$scope.contacts.$add({
- 			foo: 'bar'
- 		});
- 	};
+	$scope.addContact = function() {
+		fbMethods.addEmpty($scope.contacts);
+	};
+
+ 	$scope.addBank = function() {
+ 		fbMethods.addEmpty($scope.banks);
+	};
 
  	$scope.uploadImage = function (image) {
  		if (!image.valid) {
@@ -97,6 +103,7 @@
 		fbObjToArray($scope.user.ages, $scope.userAges=[]);
 		var date = new Date($scope.user.birthday);
 		$scope.userBirthday = $filter('date')(date, 'yyyy-MM-dd');
+		fbObjToArray($scope.user.roles, $scope.userRoles=[]);
 	});	
 
 	// should be a way to define this function partially
@@ -107,6 +114,10 @@
 	$scope.saveAges = function(model) {
 		saveArrayToFbObject(model, 'ages');
 	};
+
+	$scope.saveRoles = function(model) {
+		saveArrayToFbObject(model, 'roles');
+	}
 
 	$scope.saveDate = function(date) {
 		var tms = Date.parse(date);

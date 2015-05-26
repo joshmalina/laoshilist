@@ -34,14 +34,20 @@
 				</form>
 			</div>
 			<div class = "form-group">
+				<label>Roles</label><br/>
+				<select ng-model="userRoles" class="form-control" multiple ng-change="saveRoles(userRoles)">
+					<option ng-repeat="r in roles">{{r}}</options>
+				</select>
+			</div>
+			<div class = "form-group firstName">
 				<label>First Name</label><br>
 				<input type="text" class="form-control" ng-model="user.firstName" ng-change="user.$save()">
 			</div>
-			<div class = "form-group">
+			<div class = "form-group lastName">
 				<label>Last Name</label> <span class="label label-default">Private</span>
 				<input type="text" class="form-control" ng-model="user.lastName" ng-change="user.$save()">
 			</div>
-			<div class = "form-group">
+			<div class = "form-group chineseName">
 				<label>Chinese Name</label>
 				<input type="text" class="form-control" ng-model="user.chineseName" ng-change="user.$save()">
 			</div>
@@ -64,7 +70,6 @@
 					<datepicker ng-model="user.birthday" class="well" ng-change="saveDate(user.birthday)"></datepicker>
 				</div>
 			</div>
-			<small>*Cannot be changed</small>
 		</tab>
 
 		<tab heading="Work/Study">
@@ -128,14 +133,15 @@
 
 		<tab heading="Payment">
 			<div class="form-group">
-				<label>Zhifubao 支付宝</label>
-				<input type="text" class="form-control">
+				<label>Alipay ID</label>
+				<input type="text" class="form-control" ng-model="user.payment.alipay" ng-change="user.$save()">
 			</div>
 			<div class="form-group">
 				<label>WeChat Payment ID</label>
-				<input type="text" class="form-control">
-			</div>		
-			<label>add a bank</label>	
+				<input type="text" class="form-control" ng-model="user.payment.weChatPay" ng-change="user.$save()">
+			</div>	
+			<bank-info ng-repeat="bank in banks" user="{{user.$id}}" ident="{{bank.$id}}" ></bank-info>	
+			<button class="btn btn-default pull-right" ng-click="addBank()">+ Bank</button>
 		</tab>
 	</tabset>	
 </div>

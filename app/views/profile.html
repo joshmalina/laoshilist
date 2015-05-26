@@ -160,8 +160,8 @@
 			<span class="label label-default pull-right">Private</span>
 			Contact
 		</div>
-		<ul class="">
-			<li ng-repeat="(name, value) in user.contact">
+		<ul ng-repeat="contact in user.contact">
+			<li ng-repeat="(name, value) in contact">
 				<span class="fields-name">{{name | uppercase }}</span><br/>
 				<span class="fields-value">{{value}}</span>
 			</li>

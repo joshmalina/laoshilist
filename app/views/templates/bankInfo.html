@@ -1,0 +1,23 @@
+<div class = "bankInfo well">
+	<form no-validate>
+		<div class="btn-group pull-right">
+			<button class="btn btn-danger btn-xs pull-right" ng-click="bank.$remove()">X</button>	
+		</div>	
+		<div class = "form-group">
+			<label>Name of Bank</label>
+			<input type = "text" class = "form-control" ng-model="bank.nameOfBank" ng-change="bank.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Name on Account</label>
+			<input type = "tel" class = "form-control" ng-model="bank.nameOnAcct" ng-change="bank.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Account Number</label>
+			<input type = "text" class= "form-control" ng-model="bank.acctNum" ng-change="bank.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Branch Name</label>
+			<input type = "email" class="form-control" ng-model="bank.branchName" ng-change="bank.$save()">
+		</div>					
+	</form>
+</div>

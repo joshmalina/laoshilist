@@ -7,9 +7,9 @@
  * # llJob
  */
 angular.module('laoshiListApp')
-  .directive('llJob', function (jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+  .directive('llJob', ['jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
   	
-  	function link (scope, element, attrs) {
+  	function link (scope) {
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
@@ -52,4 +52,4 @@ angular.module('laoshiListApp')
       },
       link: link  
     };
-  });
+  }]);

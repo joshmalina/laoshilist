@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobsCtrl', function ($scope, $firebaseArray, firebasePath, jobStatus, subjects, ages, cities) {
+  .controller('JobsCtrl', ['$scope', '$firebaseArray', 'firebasePath', 'jobStatus', 'subjects', 'ages', 'cities', function ($scope, $firebaseArray, firebasePath, jobStatus, subjects, ages, cities) {
 
     // pass services to filter
     $scope.statuses = jobStatus;
@@ -25,14 +25,14 @@ angular.module('laoshiListApp')
     $scope.groupBy = '-dateModified';
     $scope.orderedBy = 'Newest';
     $scope.toggleGroupBy = function() {
-      if($scope.groupBy == '-dateModified') {
+      if($scope.groupBy === '-dateModified') {
         $scope.groupBy = 'dateModified';
         $scope.orderedBy = 'Oldest';
       } else {
         $scope.groupBy = '-dateModified';
         $scope.orderedBy = 'Newest';
       }
-    }
+    };
 
     // get all jobs, pass to view
   	var ref = new Firebase(firebasePath + '/jobs');
@@ -46,4 +46,4 @@ angular.module('laoshiListApp')
       });
   	};
 
-  });
+  }]);

@@ -8,9 +8,9 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', function ($scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter, languageLevel, cities) {
+ .controller('ProfileEditCtrl', ['$firebaseArray', '$scope', '$log', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'subjects', 'countries', 'ages', 'ethnicities', 'degrees', 'colleges', 'majors', '$filter', 'languageLevel', 'cities', function ($firebaseArray, $scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter, languageLevel, cities) {
 
- 	var ref = new Firebase (firebasePath + '/users/' + $routeParams['username']);
+ 	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
  	$scope.user = $firebaseObject(ref);
  	$scope.subjects = subjects;
  	$scope.ages = ages;
@@ -19,21 +19,25 @@
  	$scope.degrees = degrees;
  	$scope.colleges = colleges;
  	$scope.majors = majors;
- 	$scope.language_level = languageLevel;
+ 	$scope.languageLevel = languageLevel;
  	$scope.cities = cities;
 
- 	$scope.go_to_profile = function() {
- 		$location.path('/profile/' + $routeParams['username']);
- 	}
+ 	$scope.goToProfile = function() {
+ 		$location.path('/profile/' + $routeParams.username);
+ 	};
 
- 	
+ 	$scope.contacts = $firebaseArray(ref.child('contact'));
 
- 	$scope.city_save = function(city_index) {
- 		ref.child('city').set(city_index);
- 	}
+ 	$scope.addContact = function() {
+ 		$scope.contacts.$add({
+ 			foo: 'bar'
+ 		});
+ 	};
 
- 	$scope.upload_image = function (image) {
- 		if (!image.valid) return;
+ 	$scope.uploadImage = function (image) {
+ 		if (!image.valid) {
+ 			return;
+ 		}
 
  		image.isUploading = true;
  		var imageUpload = {
@@ -70,16 +74,16 @@
 	 * it returns nothing, but it's side effect is to set the value
 	 * of a scope-bound array -- would be nice if it did
 	 */
-	 var fbObj_to_array = function(start_object, scope_array) {			
+	 var fbObjToArray = function(startObject, scopeArray) {			
 		// iterate through object
-		for(var k in start_object) {
+		for(var k in startObject) {
 			// build array
-			scope_array.push(k);
-		};
+			scopeArray.push(k);
+		}
 	};
 
 	// would be great if this returned something, for the sake of unit testing
-	var save_array_to_fb_object = function(model, refChild) {
+	var saveArrayToFbObject = function(model, refChild) {
 		var o = {};
 		var l = model.length;
 		for (var i = 0; i < l; i++) {
@@ -89,34 +93,33 @@
 	};
 
 	$scope.user.$loaded().then(function() {
-		fbObj_to_array($scope.user.subjects, $scope.user_subjects=[]);
-		fbObj_to_array($scope.user.ages, $scope.user_ages=[]);
+		fbObjToArray($scope.user.subjects, $scope.userSubjects=[]);
+		fbObjToArray($scope.user.ages, $scope.userAges=[]);
 		var date = new Date($scope.user.birthday);
-		$scope.user_birthday = $filter('date')(date, 'yyyy-MM-dd');
-
+		$scope.userBirthday = $filter('date')(date, 'yyyy-MM-dd');
 	});	
 
 	// should be a way to define this function partially
-	$scope.save_subjects = function(model) {
-		save_array_to_fb_object(model, 'subjects');
-	}
+	$scope.saveSubjects = function(model) {
+		saveArrayToFbObject(model, 'subjects');
+	};
 
-	$scope.save_ages = function(model) {
-		save_array_to_fb_object(model, 'ages');
-	}
+	$scope.saveAges = function(model) {
+		saveArrayToFbObject(model, 'ages');
+	};
 
-	$scope.save_date = function(date) {
+	$scope.saveDate = function(date) {
 		var tms = Date.parse(date);
 		ref.child('birthday').set(tms);
-	}
+	};
 
+	$scope.mapOptions = {
+      enableMapClick: false,
+      // ui map config
+      // 是否使用缓存来缓存此map dom，而不是每次链接跳转来都重新创建
+      uiMapCache: true
+    };
 
-
-
-
-
-
-
-});
+}]);
 
 

@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('LoginCtrl', function ($scope, firebasePath) {
+ .controller('LoginCtrl', ['$scope', 'firebasePath', function ($scope, firebasePath) {
  	var ref = new Firebase(firebasePath);
 
  	$scope.login = function() {
@@ -17,11 +17,11 @@
  			password : $scope.usr.password
  		}, function(error, authData) {
  			if (error) {
- 				console.log("Login Failed!", error);
+ 				console.log('Login Failed!', error);
  			} else {
- 				console.log("Authenticated successfully with payload:", authData);
+ 				console.log('Authenticated successfully with payload:', authData);
  			}
  		});
- 	}
+ 	};
 
- });
+ }]);

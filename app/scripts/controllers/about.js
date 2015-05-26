@@ -8,6 +8,6 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('AboutCtrl', function ($scope) {
+  .controller('AboutCtrl', function () {
     
   });

@@ -9,6 +9,7 @@
  */
 angular.module('laoshiListApp')
   .constant('jobStatus', [
+    'dealPending',
   	'needDetail',
   	'needTeacher',
   	'haveTeacher',

@@ -9,7 +9,7 @@
 angular.module('laoshiListApp')
   .directive('fbImageUpload', [function() {
 	return {
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 			// Modified from https://developer.mozilla.org/en-US/docs/Web/API/FileReader
 			var fileReader = new FileReader();
 			var fileFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;

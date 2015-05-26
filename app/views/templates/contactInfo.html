@@ -1,0 +1,30 @@
+<style>
+</style>
+
+<div class = "contactInfo well">
+	<form no-validate>
+		<div class="btn-group pull-right">
+			<button class="btn btn-danger btn-xs pull-right" ng-click="contact.$remove()">X</button>	
+		</div>	
+		<div class = "form-group">
+			<label>Name</label>
+			<input type = "text" class = "form-control" ng-model="contact.name" ng-change="contact.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Phone</label>
+			<input type = "tel" class = "form-control" ng-model="contact.phone" ng-change="contact.$save()">
+		</div>
+		<div class = "form-group">
+			<label>WeChat</label>
+			<input type = "text" class= "form-control" ng-model="contact.wechat" ng-change="contact.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Email</label>
+			<input type = "email" class="form-control" ng-model="contact.email" ng-change="contact.$save()">
+		</div>
+		<div class = "form-group">
+			<label>Address</label>
+			<textarea class="form-control" ng-model="contact.address" ng-change="contact.$save()"></textarea>
+		</div>					
+	</form>
+</div>

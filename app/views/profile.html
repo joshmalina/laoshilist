@@ -62,7 +62,7 @@
 </style>
 
 <div class="page-header">
-	<h1>User Profile<button class="btn btn-primary pull-right" ng-click="go_to_edit()">Edit</button>
+	<h1>{{user.firstName}} {{user.lastName}} {{user.chineseName}}<button class="btn btn-primary pull-right" ng-click="goToEdit()">Edit</button>
 	</h1>
 </div>
 
@@ -73,7 +73,6 @@
 			<img src="{{user.avatar.data}}" class="avatar-img"/>
 		</div>
 		<div class = "profile-top-info profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
-			<div class = "profile-head-text">{{user.first_name}}</div>
 			<div class = "profile-top-fields">
 				<ul>
 					<li class="profile-city">
@@ -81,7 +80,7 @@
 							{{ 'city' | uppercase}}
 						</span><br/>
 						<span class="fields-value">
-							{{ cities[user.city].en + ' - ' + cities[user.city].zh | uppercase }}
+							{{ cities[user.city].en | uppercase }}
 						</span>
 					</li>
 					<li class="profile-location">
@@ -94,13 +93,13 @@
 					</li>
 					<li class="profile-country-of-origin">
 						<span class="fields-name">
-							{{ 'country' | uppercase }}
+							{{ 'country of citizenship' | uppercase }}
 						</span><br />
 						<span class="fields-value">
-							{{ user.country | uppercase }}
+							{{ countries[user.country] | uppercase }}
 						</span>
 					</li>
-					<li class="profile-last-login">
+					<li class="profile-last-login" ng-if="user.lastLogin">
 						<span class="fields-name">
 							{{ 'last login' | uppercase }}
 						</span><br />
@@ -108,12 +107,20 @@
 							{{ user.last_login | date:'MM/dd/yy' }}
 						</span>
 					</li>
-					<li class="profile-date-joined">
+					<li class="profile-date-joined" ng-if="user.date_joined">
 						<span class="fields-name">
 							{{ 'date joined' | uppercase }}
 						</span><br />
 						<span class="fields-value">
 							{{ user.date_joined | date:'MM/dd/yy' }}
+						</span>
+					</li>
+					<li class ="profile-date-joined">
+						<span class="fields-name">
+							{{ 'date added' | uppercase }}
+						</span><br />
+						<span class="fields-value">
+							{{ user.dateAdded | date:'MM/dd/yy' }}
 						</span>
 					</li>
 					<li class="profile-ethnicity">
@@ -126,7 +133,7 @@
 					</li>
 					<li class="profile-age">
 						<span class="fields-name">
-							{{ 'student age / preference (YRS)' | uppercase}}
+							{{ 'student age' | uppercase}}
 						</span><br />
 						<span class="fields-value">
 							<span ng-repeat="(key, _) in user.ages">

@@ -8,7 +8,7 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('username', function (firebasePath) {
+ .factory('username', ['firebasePath', function (firebasePath) {
 
     // takes a string (i.e. user's first name), assuming it's already been validated 
     // attach a random string to the end
@@ -61,4 +61,4 @@
         return checkAndFinalizeUserName(name);
       }
     };
-  });
+  }]);

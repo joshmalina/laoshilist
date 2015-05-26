@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('MainCtrl', function ($scope, $firebaseArray) {
+ .controller('MainCtrl', function () {
  
  	
  });

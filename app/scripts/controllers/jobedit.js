@@ -8,6 +8,6 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobeditCtrl', function ($scope, subjects) {
+  .controller('JobeditCtrl', ['$scope', 'subjects', function ($scope, subjects) {
     $scope.subjects = subjects;
-  });
+  }]);

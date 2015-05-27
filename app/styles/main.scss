@@ -109,66 +109,9 @@ body {
   }
 }
 
-/* BEGIN JOBS PAGE */
-
 #filter-bar {
   padding-bottom: 20px;
 }
-
-.job-panel input {
-  border:none;
-  background: none;
-  padding: 0;
-}
-
-.job-panel .panel-heading {
-  display:flex;
-  background: #6cd0e4;
-}
-
-.job-panel .panel-heading input {
-  font-size: large;
-}
-
-.job-panel textarea {
-  border:none;
-  padding:0;
-}
-
-.job-panel .dateModified {
-  margin-top:auto;
-  margin-bottom:auto;
-  font-style: italic;
-}
-
-.job-panel .panel-heading input {
-  font-weight:bold;
-}
-
-.job-panel .admin-list-start {
-  text-align: center;
-  font-weight: bold;
-}
-
-.job-panel .subjects-list-item {
-  display: flex;
-}
-
-.job-panel .list-group-item label {
-  padding-right: 5px;
-}
-
-.job-panel .select-dropdown {
-  width: 100%;
-  margin-top:auto;
-  margin-bottom:auto;
-}
-
-.job-panel .reign-in {
-  width: inherit;
-}
-
-/* END JOBS PAGE */
 
 /* BEGIN REGISTER PAGE */
 

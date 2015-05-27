@@ -1,3 +1,118 @@
+<style>
+	/* BEGIN JOBS PAGE */
+
+#filter-bar {
+  padding-bottom: 20px;
+  border-bottom: 1px solid lightgray;
+}
+
+.job-panel input {
+  border:none;
+  background: none;
+  padding: 0;
+  font-style: normal;
+}
+
+.job-panel .panel-heading {
+  display:flex;
+  padding:0;
+  margin-bottom:0;
+}
+
+.job-panel .panel-heading input {
+  font-size: x-large;
+  font-weight: 400;
+  color: #0065C4;
+}
+
+.job-panel textarea {
+  border:none;
+  padding:0;
+}
+
+.job-panel .dateModified {
+  margin-top:auto;
+  margin-bottom:auto;
+  font-style: italic;
+}
+
+.job-panel span, .job-panel div {
+	font-style: normal;
+}
+
+.job-panel {
+	border: none;
+	border-bottom: 1px solid lightgray;
+}
+
+.job-panel .admin-list-start {
+  text-align: center;
+  font-weight: bold;
+}
+
+.job-panel .subjects-list-item {
+  display: flex;
+}
+
+.job-panel .list-group-item label {
+  padding-right: 5px;
+}
+
+.job-panel .select-dropdown {
+  width: 100%;
+  margin-top:auto;
+  margin-bottom:auto;
+}
+
+.job-panel .reign-in {
+  width: inherit;
+}
+
+.job-panel .panel-footer {
+	background: none;
+	border-top:none;
+	padding-left:0;
+}
+
+.client-name {
+	font-weight: bold;
+	float:left;
+	padding-right: 5px;
+}
+
+.panel-heading-subtitle { 
+	font-size: large;
+}
+
+.panel-body {
+	padding-left:0;
+	padding-bottom:0;
+}
+
+.short-location {
+	color: gray;
+}
+
+.footer-buttons button:first-of-type {
+	padding-left: 0;
+}
+
+.list-group li:first-of-type {
+	border-bottom:none;
+}
+
+.job-panel .dateModified {
+	color:lightgray;
+	font-style:normal;
+}
+
+.job-panel textarea {
+	width:100% !important;
+}
+
+/* END JOBS PAGE */
+</style>
+
 <!-- this template contains an entire job -->
 <!-- it will have public fields and private fields, including a list of applicants -->
 
@@ -6,136 +121,146 @@
 	<!-- Public template of job details; fields should only be editable for admins -->
 	<div class="public-job-details">
 		<!-- title -->
-		<div class = "panel-heading">
-			<input type="text" class="form-control" ng-model="job_.title" ng-change="save()">		
+		<h3 class = "panel-heading">
+			<input type="text" class="form-control" ng-model="job_.title" ng-change="save()">
+		</h3>
+		<div class = "panel-heading-subtitle">
+			<span class = "client-name">Alice</span>
+			<span> - </span>
+			<span class = "short-location">Dongzhimen, Beijing</span>
 		</div>
 
 		<!-- description -->
 		<div class = "panel-body">
 			<textarea ng-model="job_.longDesc" class="form-control" ng-change="save()"></textarea>
-
-			<!-- toggle to see more job details -->
-			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>		
 		</div>
 
+			<form class = "edit-panel form-inline" collapse="isCollapsed">
+				
+				<ul class="list-group">
+					<li class="list-group-item subjects-list-item">
+						<span class="select-dropdown">
+							<label>Subjects:</label>
+							<span ng-repeat="(key,_) in job_.subjects">
+								{{key }}{{$last ? '' : ', '}}
+							</span>
+						</span>
+						<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="s for s in subjects" class="form-control reign-in">
+							<option value=""></option>
+						</select>
+					</li>
+					<!-- schedule -->
+					<li class="list-group-item">
+						<label>Schedule:</label><br>
+						<textarea ng-model="job_.schedule" class="form-control"></textarea>
+					</li>
+				</ul>
 
-			<ul class="list-group" collapse="isCollapsed">
+				<ul class="list-group">
+					<li class="list-group-item">
+						<span class="select-dropdown"><label>Fee:</label></span>
+						<input type="text" ng-model="job_.fee" class="form-control" ng-change="save()">
+					</li>
+					<li class = "teacherPay list-group-item">
+						<label>Teacher Pay:</label>
+						<input type="text" ng-model="job_.teacherPay" class="form-control" ng-change="save()">
+					</li>
+				</ul>
 
-				<!-- map -->
+				<ul class = "list-group">
 
-				<!-- subjects -->
-				<li class="list-group-item subjects-list-item">
-					<span class="select-dropdown"><label>Subjects:</label>
-					<span ng-repeat="(key,_) in job_.subjects">
-						{{key }}{{$last ? '' : ', '}}
-					</span></span>
-					<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="s for s in subjects" class="form-control reign-in">
-						<option value=""></option>
+					<!-- city -->
+					<li class="list-group-item subjects-list-item">
+						<span class="select-dropdown"><label>City:</label>{{job_.city}}</span>
+						<select ng-model="job_.city" ng-change="save()" ng-options="c as (c) for c in cities track by c" class="reign-in form-control">
+							<option value="">Choose a city</option>
+						</select>
+					</li>
+					<!-- location -->
+					<li class="list-group-item">
+						<label>Location:</label>
+						<input type="text" ng-model="job_.locationDesc" class="form-control" ng-change="save()">
+					</li>
+				</ul>
+
+				<ul class = "list-group">					
+
+					<!-- ages -->
+					<li class="list-group-item subjects-list-item">
+						<span class="select-dropdown"><label>Student Age:</label>{{job_.age}}</span>
+						<select ng-model="job_.age" ng-change="save()" ng-options="s for s in ages track by s" class="reign-in form-control">
+							<option value="">Choose an age group</option>
+						</select>
+					</li>
+
+					<!-- number of students -->
+					<li class="list-group-item">
+						<label>Number of students:</label>
+						<input type="text" ng-model="job_.numStudents" ng-change="save()">
+					</li>
+
+					
+				</ul>
+
+			
+			<!-- end PUBLIC -->
+
+			<!-- begin PRIVATE -->
+			<div class="private-job-details" collapse="isCollapsed">
+
+				<!-- begin APPLICANTS -->
+				<!-- APPLICANTS --> 
+			<!-- <table class="table job-applicants">
+				<thead>
+					<tr><th class="admin-list-start">Applicants</th></tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="app in job_.applicants">
+						<td ng-bind="app.id"></td>
+						<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
+					</tr>
+				</tbody>
+			</table>	 -->
+			<!-- end APPLICANTS -->
+
+			<!-- ADMIN DETAILS --> 
+			<ul class="list-group admin-details">
+				<!-- <li class="list-group-item admin-list-start">Admin Details</li> -->
+				
+				<li class="list-group-item">
+					<!-- maybe typeahead at some points -->
+					<label>Client</label>
+					<select ng-model="chosenClient">
+						<option value=""></option>					
 					</select>
 				</li>
-
-				<!-- pay -->
-				<li class="list-group-item">
-					<label>Pay:</label>
-					<input type="text" ng-model="job_.pay" ng-change="save()">
-				</li>
-
-				<!-- location -->
-				<li class="list-group-item">
-					<label>Location:</label>
-					<input type="text" ng-model="job_.locationDesc" class="form-control" ng-change="save()">
-				</li>
-
-				<!-- schedule -->
-				<li class="list-group-item">
-					<label>Schedule:</label>
-					<textarea ng-model="job_.schedule" class="form-control"></textarea>
-				</li>
-
-				<!-- ages -->
 				<li class="list-group-item subjects-list-item">
-					<span class="select-dropdown"><label>Student Age:</label>{{job_.age}}</span>
-					<select ng-model="job_.age" ng-change="save()" ng-options="s for s in ages track by s" class="reign-in form-control">
-						<option value="">Choose an age group</option>
-					</select>
+					<span class="select-dropdown"><label>Status:</label>{{job_.status}}</span>
+					<select ng-model="job_.status" class="reign-in form-control" ng-change="save()" ng-options="s for s in jobStatuses track by s">
+						<option value="">Status</option>
+					</select>	
 				</li>
-
-				<!-- number of students -->
 				<li class="list-group-item">
-					<label>Number of students:</label>
-					<input type="text" ng-model="job_.numStudents" ng-change="save()">
+					<label>Note:</label>
+					<input type="text" ng-model="job_.comment" class="form-control" ng-change="save()">
 				</li>
-
-				<!-- city -->
-				<li class="list-group-item subjects-list-item">
-					<span class="select-dropdown"><label>City:</label>{{job_.city}}</span>
-					<select ng-model="job_.city" ng-change="save()" ng-options="c as (c) for c in cities track by c" class="reign-in form-control">
-						<option value="">Choose a city</option>
-					</select>
-				</li>
-
-
 			</ul>
-
-	</div>
-	<!-- end PUBLIC -->
-
-	<!-- begin PRIVATE -->
-	<div class="private-job-details" collapse="isCollapsed">
-
-		<!-- begin APPLICANTS -->
-		<!-- APPLICANTS --> 
-		<!-- <table class="table job-applicants">
-			<thead>
-				<tr><th class="admin-list-start">Applicants</th></tr>
-			</thead>
-			<tbody>
-				<tr ng-repeat="app in job_.applicants">
-					<td ng-bind="app.id"></td>
-					<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
-				</tr>
-			</tbody>
-		</table>	 -->
-		<!-- end APPLICANTS -->
-
-		<!-- ADMIN DETAILS --> 
-		<ul class="list-group admin-details">
-			<!-- <li class="list-group-item admin-list-start">Admin Details</li> -->
-			<li class="list-group-item subject-list-item">
-				<span class="select-dropdown"><label>Fee:</label></span>
-				<input type="text" ng-model="job_.fee" class="form-control" ng-change="save()">
-			</li>
-			<li class="list-group-item">
-				<!-- maybe typeahead at some points -->
-				<label>Client</label>
-				<select ng-model="chosenClient">
-					<option value=""></option>					
-				</select>
-			</li>
-			<li class="list-group-item subjects-list-item">
-				<span class="select-dropdown"><label>Status:</label>{{job_.status}}</span>
-				<select ng-model="job_.status" class="reign-in form-control" ng-change="save()" ng-options="s for s in jobStatuses track by s">
-					<option value="">Status</option>
-				</select>	
-			</li>
-			<li class="list-group-item">
-				<label>Note:</label>
-				<input type="text" ng-model="job_.comment" class="form-control" ng-change="save()">
-			</li>
-		</ul>
-		
-	</div>
+			
+		</div>
+		</form>
 	<!-- end PRIVATE -->
 
 	<!-- FOOTER contains public / private fields -->
 	<div class = "panel-footer">
-		<div class="btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-primary">Apply</button>			
-			<button type="button" class="btn btn-danger" ng-click="job_.$remove()">Delete Permanently</button>
-		</div>
+		<div class="footer-buttons btn-group" role="group" aria-label="...">
+			<button type="button" class="btn btn-link">Apply</button>			
+			<!-- toggle to see more job details -->
+			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>	
+			<button type="button" class="btn btn-link" ng-click="job_.$remove()">Delete</button>
+		</div>		
 		<span class="dateModified pull-right">
-			Updated on {{job_.dateModified | date:'MM/dd/yy hh:mm'}}
-		</span>
+			Updated {{job_.dateModified | date:'MM/dd'}}
+		</span>		
 	</div>	
 	<!-- end FOOTER -->
 	

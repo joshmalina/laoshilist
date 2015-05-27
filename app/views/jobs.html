@@ -1,41 +1,90 @@
-<div class="page-header">
+<div class="page-header col-lg-12 col-sm-12">
 	<h1>Jobs<button class="btn btn-primary pull-right" ng-click="addJob()">New</button>
 </h1>
 </div>
 
+<style>
+	.filterBar {
+		height:100%;
+		
+	}
+	.filterContent {
+		background:whitesmoke;
+		margin:0;
+		padding:10px;
+	}
+	body, html {
+		height:100%;
+	}
+	.jobPageWrapper {
+		height:100%;
+	}
+
+</style>
 <!-- filters -->
-<div id = "filter-bar">
-	<form class="form-inline">	
-		<div class="form-group">
-			<input type="text" class="form-control" ng-model="filterText.$" placeholder="Search">
-		</div>			
-		<select ng-model="filterText.age" class="reign-in form-control" multiple>
-			<option value>Age</option>
-			<option ng-repeat="age in ages">{{age}}</option>
-		</select>				
-		<select ng-model="filterText.subjects" class="form-control reign-in">
-			<option value="">Subject</option>
-			<option ng-repeat="subject in subjects">{{ subject | capitalizeFirst }}</option>
-		</select>
-		<select ng-model="filterText.city" class="reign-in form-control">
-			<option value="">City</option>
-			<option ng-repeat="city in cities">{{ city.en }}</option>
-		</select>
-		<select ng-model="filterText.status" class="form-control" multiple>
-			<option value="">Status</option>
-			<option ng-repeat="status in statuses">{{status}}</option>
-		</select>
-		<button type="button" class="btn btn-default btn" ng-click="toggleGroupBy()">
-			{{orderedBy}}
-		</button>
-		<button type="button" class="btn btn-default btn" ng-click="clearFilter()">
-			X
-		</button>		
-	</form>
+<div class ="jobPageWrapper row">
+	<div class = "filterBar col-lg-3">
+	<div class = "filterContent">
+			<div class="form-group">
+				<label>Search</label>
+				<input type="text" class="form-control" ng-model="filterText.$" placeholder="Search">
+			</div>
+			<div class = "form-group">
+				<label>Ages</label>	
+				<select ng-model="filterText.age" class="reign-in form-control" multiple>
+					<option value=""></option>
+					<option ng-repeat="age in ages">{{age}}</option>
+				</select>	
+			</div>	
+			<div class = "form-group">
+				<label>Subjects</label>
+				<select ng-model="filterText.subjects" class="form-control reign-in" multiple>
+					<option value=""></option>
+					<option ng-repeat="subject in subjects">{{ subject | capitalizeFirst }}</option>
+				</select>
+			</div>			
+			<div class = "form-group">
+				<label>Cities</label>
+				<select ng-model="filterText.city" class="reign-in form-control" multiple>
+					<option value=""></option>
+				<option ng-repeat="city in cities">{{ city.en }}</option>
+			</select>
+			</div>
+			
+			<div class = "form-group">
+				<label>Status</label>
+				<select ng-model="filterText.status" class="form-control" multiple>
+					<option value=""></option>
+					<option ng-repeat="status in statuses">{{status}}</option>
+				</select>
+			</div>
+
+			<div class ="form-group">
+				<label>Sort by</label><br>
+				<button type="button" class="btn btn-default btn" ng-click="toggleGroupBy()">
+					{{orderedBy}}
+				</button>
+			</div>
+
+			<div class = "text-center">				
+				<button type="button" class="btn btn-link" ng-click="clearFilter()">
+					Clear All
+				</button>
+			</div>
+				
+		</div>	
+	</div>
+
+	<div class = "job-results col-lg-9">
+		<div class = "resultsNum">Showing {{jobs.length}} results</div>
+		<div class="" ng-repeat="(key, job) in jobs | orderBy: groupBy | filter: filterText">
+
+		<!-- ng-show = "job.status == 'needTeacher' && admin" -->
+			<ll-job job="job" key="key"></ll-job>
+		</div>
+	</div>
+
 </div>
 
-<i ng-repeat="(key, job) in jobs | orderBy: groupBy | filter: filterText">
-	<!-- ng-show = "job.status == 'needTeacher' && admin" -->
-	<ll-job job="job" key="key"></ll-job>
-</i>
+
 

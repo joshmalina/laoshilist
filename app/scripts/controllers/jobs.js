@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobsCtrl', ['$scope', '$firebaseArray', 'firebasePath', 'jobStatus', 'subjects', 'ages', 'cities', function ($scope, $firebaseArray, firebasePath, jobStatus, subjects, ages, cities) {
+  .controller('JobsCtrl', ['fbMethods', '$scope', '$firebaseArray', 'firebasePath', 'jobStatus', 'subjects', 'ages', 'cities', function (fbMethods, $scope, $firebaseArray, firebasePath, jobStatus, subjects, ages, cities) {
 
     // pass services to filter
     $scope.statuses = jobStatus;
@@ -21,7 +21,7 @@ angular.module('laoshiListApp')
       $scope.filterText = {};
     };
 
-    // toggle view jobs by newewst / oldest
+    // toggle view jobs by newest / oldest
     $scope.groupBy = '-dateModified';
     $scope.orderedBy = 'Newest';
     $scope.toggleGroupBy = function() {
@@ -42,7 +42,7 @@ angular.module('laoshiListApp')
   	$scope.addJob = function() {
   		$scope.jobs.$add({
           status:'needDetail', 
-          dateModified: Firebase.ServerValue.TIMESTAMP
+          dateModified: fbMethods.getTime()
       });
   	};
 

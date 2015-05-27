@@ -1,24 +1,23 @@
 <div class="page-header">
 	<h1>Users<button class="btn btn-primary pull-right" ng-click="addUser()">New</button></h1>
 </div>
-	
 	<table class="table">
 		<thead>
 			<tr>
-				<th>username</th>
-				<th>email</th>
 				<th>name</th>
+				<th>email</th>
+				<th>phone</th>
 				<th>roles</th>
-				<th>date joined</th>
+				<th>date added</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="(name, user) in users | filter: filterText" ng-click="viewProfile(user.$id)">
-				<td>{{user.$id}}</td>
-				<th>{{user.email}}</th>
-				<td>{{user.first_name}}</td>
-				<td></td>
-				<td>{{user.date_joined | date:'MM/dd/yy'}}</td>
+				<td>{{user.firstName}}</td>
+				<td>{{user.email}}</td>
+				<td>{{user.phone}}</td>
+				<td>{{user.roles | json}}</td>
+				<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
 			</tr>
 		</tbody>
 	</table>

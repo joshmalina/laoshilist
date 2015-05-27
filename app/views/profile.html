@@ -159,13 +159,8 @@
 		<div class="profile-head-text">
 			<span class="label label-default pull-right">Private</span>
 			Contact
-		</div>
-		<ul ng-repeat="contact in user.contact">
-			<li ng-repeat="(name, value) in contact">
-				<span class="fields-name">{{name | uppercase }}</span><br/>
-				<span class="fields-value">{{value}}</span>
-			</li>
-		</ul>
+		</div>		
+		<profile-box label="contact" obj="user.contact"></profile-box>
 	</div>
 
 	<div class = "profile-docs profile-boxes profile-top-fields">
@@ -195,19 +190,28 @@
 	</div>
 
 	<div class = "private-info">
-		<div class = "associated-with"></div>
-		
+		<div class = "associated-with"></div>		
 		<div class = "applied-for"></div>
 		<div class = "owes-owed"></div>
 		<div class = "total-in-total-out"></div>
-		<div class = "bank-info">
-			<ul ng-repeat="bank in banks">
-				<li>{{bank.bankName}}</li>
-				<li>{{bank.nameOnAcct}}</li>
-				<li>{{bank.num}}</li>
-				<li>{{bank.branch}}</li>
-			</ul>
+		<div class = "profile-contact profile-boxes profile-top-fields">
+		<div class="profile-head-text">
+			<span class="label label-default pull-right">Private</span>
+			Payment
 		</div>
+		<ul>
+			<li>
+				<span class="fields-name">Alipay</span><br/>
+				<span class="fields-value">{{user.payment.alipay}}</span>
+			</li>
+			<li>
+				<span class="fields-name">WeChat Pay</span><br/>
+				<span class="fields-value">{{user.payment.weChatPay}}</span>
+			</li>
+		</ul>
+		<label>Banks</label>		
+		<profile-box label="bank" obj="user.payment.banks"></profile-box>		
+	</div>
 	</div>
 	<button>deactivate</button>
 </div>

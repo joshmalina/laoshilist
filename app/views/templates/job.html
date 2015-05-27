@@ -25,9 +25,12 @@
 
 				<!-- subjects -->
 				<li class="list-group-item subjects-list-item">
-					<span class="select-dropdown"><label>Subjects:</label>{{job_.subjects | json }}</span>
-					<select ng-model="job_.subjects" ng-change="save()" ng-options="s as (s) for s in subjects" class="form-control reign-in">
-						<option value="">Choose one or more subjects</option>
+					<span class="select-dropdown"><label>Subjects:</label>
+					<span ng-repeat="(key,_) in job_.subjects">
+						{{key }}{{$last ? '' : ', '}}
+					</span></span>
+					<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="s for s in subjects" class="form-control reign-in">
+						<option value=""></option>
 					</select>
 				</li>
 
@@ -46,7 +49,7 @@
 				<!-- schedule -->
 				<li class="list-group-item">
 					<label>Schedule:</label>
-					<input type="text" ng-model="job_.schedule" class="form-control">
+					<textarea ng-model="job_.schedule" class="form-control"></textarea>
 				</li>
 
 				<!-- ages -->
@@ -82,7 +85,7 @@
 
 		<!-- begin APPLICANTS -->
 		<!-- APPLICANTS --> 
-		<table class="table job-applicants">
+		<!-- <table class="table job-applicants">
 			<thead>
 				<tr><th class="admin-list-start">Applicants</th></tr>
 			</thead>
@@ -92,20 +95,22 @@
 					<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
 				</tr>
 			</tbody>
-		</table>	
+		</table>	 -->
 		<!-- end APPLICANTS -->
 
 		<!-- ADMIN DETAILS --> 
 		<ul class="list-group admin-details">
-			<li class="list-group-item admin-list-start">Admin Details</li>
+			<!-- <li class="list-group-item admin-list-start">Admin Details</li> -->
 			<li class="list-group-item subject-list-item">
 				<span class="select-dropdown"><label>Fee:</label></span>
 				<input type="text" ng-model="job_.fee" class="form-control" ng-change="save()">
 			</li>
 			<li class="list-group-item">
-				<!-- drop down of contacts to feed into function -->
-				<!-- would also be nice if contact itself was editable -->
-				fun({{job.contact}) { returns contact info }
+				<!-- maybe typeahead at some points -->
+				<label>Client</label>
+				<select ng-model="chosenClient">
+					<option value=""></option>					
+				</select>
 			</li>
 			<li class="list-group-item subjects-list-item">
 				<span class="select-dropdown"><label>Status:</label>{{job_.status}}</span>
@@ -129,7 +134,7 @@
 			<button type="button" class="btn btn-danger" ng-click="job_.$remove()">Delete Permanently</button>
 		</div>
 		<span class="dateModified pull-right">
-			Updated on {{job_.dateModified | date:'MM/dd/yy'}}
+			Updated on {{job_.dateModified | date:'MM/dd/yy hh:mm'}}
 		</span>
 	</div>	
 	<!-- end FOOTER -->

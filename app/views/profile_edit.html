@@ -72,7 +72,7 @@
 			</div>
 		</tab>
 
-		<tab heading="Work/Study">
+		<tab heading="Study">
 			<div class="form-group">
 				<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
 				<select class="form-control" multiple ng-model="userSubjects" ng-change="saveSubjects(userSubjects)">
@@ -87,11 +87,23 @@
 			</div>
 			<div class="form-group">
 				<label>Chinese / English language level</label>
-				<select class="form-control" ng-model="user.language_level" ng-change="user.$save()">
+				<select class="form-control" ng-model="user.languageLevel" ng-change="user.$save()">
 					<option value=""></option>
 					<option ng-repeat="l in languageLevel" value="{{$index}}">{{l.shortDesc}}</option>
 				</select>
 			</div>		
+		</tab>
+
+		<tab headiing="Jobs">
+			<table class="table">
+				<thead>
+					<td>id</td>
+					<td>date</td>
+					<td>shortDesc</td>
+					<td>status</td>
+				</thead>
+				<tbody></tbody>
+			</table>
 		</tab>
 
 		<tab heading="Location">

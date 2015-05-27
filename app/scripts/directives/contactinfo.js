@@ -15,7 +15,6 @@ angular.module('laoshiListApp')
   		
   	}
 
-
     return {
       templateUrl: 'views/templates/contactInfo.html',
       restrict: 'E',

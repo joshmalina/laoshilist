@@ -6,10 +6,10 @@
  * @description
  * # llJob
  */
-angular.module('laoshiListApp')
-  .directive('llJob', ['jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
-  	
-  	function link (scope) {
+ angular.module('laoshiListApp')
+ .directive('llJob', ['fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+
+   function link (scope) {
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
@@ -17,12 +17,21 @@ angular.module('laoshiListApp')
   		// make available to scope
   		scope.job_ = $firebaseObject(ref);
 
-    	scope.save = function() {
-    		scope.job_.dateModified = Firebase.ServerValue.TIMESTAMP;
-    		scope.job_.$save().catch(function(error) {
-    			console.log('Couldn\'t update', error);
-    		});
-    	};
+      // generic save function, also updates datemodified value
+      scope.save = function() {
+        scope.job_.dateModified = fbMethods.getTime();
+        scope.job_.$save().catch(function(error) {
+         console.log('Couldn\'t update', error);
+       });
+      };
+
+      scope.saveSubjects = function(model) {
+        // update time
+        ref.child('dateModified').set(fbMethods.getTime());
+        ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));        
+      };
+
+
 
   		// make services available to view
   		scope.subjects = subjects;

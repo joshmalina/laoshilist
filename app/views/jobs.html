@@ -13,7 +13,7 @@
 			<option value>Age</option>
 			<option ng-repeat="age in ages">{{age}}</option>
 		</select>				
-		<select ng-model="filterText.subjects" class="form-control reign-in" multiple>
+		<select ng-model="filterText.subjects" class="form-control reign-in">
 			<option value="">Subject</option>
 			<option ng-repeat="subject in subjects">{{ subject | capitalizeFirst }}</option>
 		</select>

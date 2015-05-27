@@ -12,7 +12,7 @@
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
 		
- 	$scope.user = $firebaseObject(ref)
+ 	$scope.user = $firebaseObject(ref);
  	$scope.subjects = subjects;
  	$scope.ages = ages;
  	$scope.countries = countries;
@@ -72,52 +72,27 @@
  	// for img shower
  	$scope.firebaseUrl = ref+ '/avatar';
 
-	/*
-	 * this function takes firebase data, aka an object with a bunch
-	 * of meaningful keys, like {chinese: true, english: true}, and
-	 * a bunch of non-sense values, as in 'true', 'true', etc...
-	 *
-	 * it returns nothing, but it's side effect is to set the value
-	 * of a scope-bound array -- would be nice if it did
-	 */
-	 var fbObjToArray = function(startObject, scopeArray) {			
-		// iterate through object
-		for(var k in startObject) {
-			// build array
-			scopeArray.push(k);
-		}
-	};
-
-	// would be great if this returned something, for the sake of unit testing
-	var saveArrayToFbObject = function(model, refChild) {
-		var o = {};
-		var l = model.length;
-		for (var i = 0; i < l; i++) {
-			o[model[i]] = true;
-		}
-		ref.child(refChild).set(o);
-	};
-
 	$scope.user.$loaded().then(function() {
-		fbObjToArray($scope.user.subjects, $scope.userSubjects=[]);
-		fbObjToArray($scope.user.ages, $scope.userAges=[]);
+
+		fbMethods.fbObjToArray($scope.user.subjects, $scope.userSubjects=[]);
+		fbMethods.fbObjToArray($scope.user.ages, $scope.userAges=[]);
+		fbMethods.fbObjToArray($scope.user.roles, $scope.userRoles=[]);
+
 		var date = new Date($scope.user.birthday);
 		$scope.userBirthday = $filter('date')(date, 'yyyy-MM-dd');
-		fbObjToArray($scope.user.roles, $scope.userRoles=[]);
 	});	
 
-	// should be a way to define this function partially
 	$scope.saveSubjects = function(model) {
-		saveArrayToFbObject(model, 'subjects');
+		fbMethods.saveArrayToFbObject(model, ref.child('subjects'));
 	};
 
 	$scope.saveAges = function(model) {
-		saveArrayToFbObject(model, 'ages');
+		fbMethods.saveArrayToFbObject(model, ref.child('ages'));
 	};
 
 	$scope.saveRoles = function(model) {
-		saveArrayToFbObject(model, 'roles');
-	}
+		fbMethods.saveArrayToFbObject(model, ref.child('roles'));
+	};
 
 	$scope.saveDate = function(date) {
 		var tms = Date.parse(date);

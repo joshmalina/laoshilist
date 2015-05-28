@@ -76,8 +76,8 @@
 	</div>
 
 	<div class = "job-results col-lg-9">
-		<div class = "resultsNum">Showing {{jobs.length}} results</div>
-		<div class="" ng-repeat="(key, job) in jobs | orderBy: groupBy | filter: filterText">
+		<div class = "resultsNum">Showing {{filteredJobs.length}} results</div>
+		<div class="" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | filter: filterText))">
 
 		<!-- ng-show = "job.status == 'needTeacher' && admin" -->
 			<ll-job job="job" key="key"></ll-job>

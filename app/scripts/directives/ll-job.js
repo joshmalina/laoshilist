@@ -7,7 +7,7 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+ .directive('llJob', ['user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
 
    function link (scope) {
 
@@ -17,8 +17,34 @@
   		// make available to scope
   		scope.job_ = $firebaseObject(ref);
 
+      // get all users
+      var usersRef = new Firebase (firebasePath + '/users');
+      scope.users = $firebaseArray(usersRef);
+
+      scope.updateClient = function() {
+        scope.client = new user(scope.job_.clientID).getInfo();         
+      };
+
+      scope.job_.$loaded().then(function() {
+        scope.updateClient();
+      });
+
+
+      // clientRef.on('value', function(snapshot) {
+      //    scope.client = snapshot.val();
+      //    console.log(snapshot.val());
+      //  });
+
+
+      // should have a library function that handles
+      // userIDS or usernames for nav
+      scope.visitClient = function(clientID) {
+        $location.path('/profile/' + clientID);
+      }
+
       // generic save function, also updates datemodified value
       scope.save = function() {
+        console.log("yeoo");
         scope.job_.dateModified = fbMethods.getTime();
         scope.job_.$save().catch(function(error) {
          console.log('Couldn\'t update', error);

@@ -21,7 +21,7 @@
   display:flex;
   padding:0;
   margin-bottom:0;
-  font-size: x-large;
+  font-size: large;
   font-weight: 400;
   color: #0065C4;
 }
@@ -82,7 +82,6 @@
 }
 
 .panel-heading-subtitle { 
-	font-size: large;
 }
 
 .panel-body {
@@ -126,7 +125,7 @@
 			<a>{{job_.title}}</a>
 		</h3>
 		<div class = "panel-heading-subtitle">
-			<span class = "client-name">Alice</span>
+			<span class = "client-name">{{client.firstName}}</span>
 			<span> - </span>
 			<span class = "subtitle-location">			
 				<span class = "short-location">{{job_.shortLocation}}<i>, </i></span>				
@@ -190,7 +189,7 @@
 					<!-- city -->
 					<li class="list-group-item subjects-list-item">
 						<span class="select-dropdown"><label>City:</label>{{job_.city.en }}</span>
-						<select ng-model="job_.city" ng-change="save()" ng-options="c as c.en for c in cities track by c" class="reign-in form-control">
+						<select ng-model="job_.city" ng-change="save()" ng-options="c for c in cities track by $index" class="reign-in form-control">
 							<option value="">Choose a city</option>
 						</select>
 					</li>
@@ -249,12 +248,14 @@
 			<ul class="list-group admin-details">
 				<!-- <li class="list-group-item admin-list-start">Admin Details</li> -->
 				
-				<li class="list-group-item">
+				<li class="list-group-item subjects-list-item">
 					<!-- maybe typeahead at some points -->
-					<label>Client</label>
-					<select ng-model="chosenClient">
-						<option value=""></option>					
-					</select>
+					<span class="select-dropdown"><label>Client:</label>
+						<button class="btn btn-link" ng-click="visitClient(job_.clientID)">View Profile</button>{{client}}
+					</span>
+					<select ng-model="job_.clientID" ng-change="save(); updateClient()" ng-options="u.$id as u.firstName for u in users" class="form-control reign-in">
+						<option value=""></option>							
+					</select>					
 				</li>
 				<li class="list-group-item subjects-list-item">
 					<span class="select-dropdown"><label>Status:</label>{{job_.status}}</span>

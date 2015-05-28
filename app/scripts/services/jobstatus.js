@@ -9,14 +9,13 @@
  */
 angular.module('laoshiListApp')
   .constant('jobStatus', [
-    'dealPending',
-  	'needDetail',
-  	'needTeacher',
-  	'haveTeacher',
-  	'meetScheduled',
-  	'waitPayment',
-  	'closedPaid',
-  	'closedUnpaid',
-  	'onHold',
-  	'dead'
+    'Deal Pending',
+  	'Needs Details',
+  	'Pending Teacher',
+  	'Have Teacher',
+  	'Meeting Scheduled',
+  	'Pending Payment',
+  	'Closed - Paid',
+  	'Closed - Unpaid',
+  	'On Hold'
 ]);

@@ -18,9 +18,9 @@
   'ngTouch',
   'firebase',
   'ui.bootstrap',
-  'ui.map'
+  'monospaced.elastic'
   ])
- .config(function ($routeProvider, uiMapLoadParamsProvider) {
+ .config(function ($routeProvider) {
   $routeProvider
   .when('/', {
     templateUrl: 'views/main.html',
@@ -60,11 +60,7 @@
   })
   .otherwise({
     redirectTo: '/'
-  });
-  uiMapLoadParamsProvider.setParams({
-    v: '2.0',
-    ak:'xxxx'
-  });
+  });  
 });
 
 

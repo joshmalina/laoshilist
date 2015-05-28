@@ -99,12 +99,7 @@
 		ref.child('birthday').set(tms);
 	};
 
-	$scope.mapOptions = {
-      enableMapClick: false,
-      // ui map config
-      // 是否使用缓存来缓存此map dom，而不是每次链接跳转来都重新创建
-      uiMapCache: true
-    };
+	
 
 }]);
 

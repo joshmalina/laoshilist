@@ -17,6 +17,11 @@
   font-style: normal;
 }
 
+.job-status-label {
+	color:red;
+	border: .5px solid red;
+}
+
 .job-panel .panel-heading {
   display:flex;
   padding:0;
@@ -110,6 +115,18 @@
 	width:100% !important;
 }
 
+.job-panel .newNote {
+	display:flex;
+}
+
+.job-panel .newNote textarea {
+	border: 1px solid #ccc;
+}
+
+.job-panel .newNote btn {
+	margin-left:5px;
+}
+
 /* END JOBS PAGE */
 </style>
 
@@ -128,8 +145,8 @@
 			<span class = "client-name">{{client.firstName}}</span>
 			<span> - </span>
 			<span class = "subtitle-location">			
-				<span class = "short-location">{{job_.shortLocation}}<i>, </i></span>				
-				<span class = "subtitle-city">{{job_.city.en}}</span>
+				<span class = "short-location" ng-if="job_.shortLocation">{{job_.shortLocation}}<i>, </i></span>				
+				<span class = "subtitle-city">{{cities[job_.city].en}}</span>
 			</span>
 		</div>
 
@@ -150,7 +167,7 @@
 					</li>
 					<li class = "list-group-item">
 						<label>Description</label>
-						<textarea ng-model="job_.longDesc" class="form-control" ng-change="save()"></textarea>
+						<textarea ng-model="job_.longDesc" msd-elastic="\n" class="form-control" ng-change="save()"></textarea>
 					</li>
 				</ul>
 				
@@ -163,13 +180,13 @@
 							</span>
 						</span>
 						<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="s for s in subjects" class="form-control reign-in">
-							<option value=""></option>
+							<option value="">-- choose --</option>
 						</select>
 					</li>
 					<!-- schedule -->
 					<li class="list-group-item">
 						<label>Schedule:</label><br>
-						<textarea ng-model="job_.schedule" class="form-control"></textarea>
+						<textarea msd-elastic ng-model="job_.schedule" class="form-control"></textarea>
 					</li>
 				</ul>
 
@@ -188,8 +205,8 @@
 
 					<!-- city -->
 					<li class="list-group-item subjects-list-item">
-						<span class="select-dropdown"><label>City:</label>{{job_.city.en }}</span>
-						<select ng-model="job_.city" ng-change="save()" ng-options="c for c in cities track by $index" class="reign-in form-control">
+						<span class="select-dropdown"><label>City:</label></span>
+						<select ng-model="job_.city" ng-change="save()" ng-options="k as c.en for (k,c) in cities" class="reign-in form-control">
 							<option value="">Choose a city</option>
 						</select>
 					</li>
@@ -251,21 +268,33 @@
 				<li class="list-group-item subjects-list-item">
 					<!-- maybe typeahead at some points -->
 					<span class="select-dropdown"><label>Client:</label>
-						<button class="btn btn-link" ng-click="visitClient(job_.clientID)">View Profile</button>{{client}}
+						<button class="btn btn-link" ng-click="visitClient(job_.clientID)">Visit {{client.firstName}}</button>
 					</span>
 					<select ng-model="job_.clientID" ng-change="save(); updateClient()" ng-options="u.$id as u.firstName for u in users" class="form-control reign-in">
 						<option value=""></option>							
 					</select>					
 				</li>
 				<li class="list-group-item subjects-list-item">
-					<span class="select-dropdown"><label>Status:</label>{{job_.status}}</span>
-					<select ng-model="job_.status" class="reign-in form-control" ng-change="save()" ng-options="s for s in jobStatuses track by s">
-						<option value="">Status</option>
+					<span class="select-dropdown"><label>Status:</label></span>
+					<select ng-model="job_.status" class="reign-in form-control" ng-change="save()" ng-options="k as s for (k,s) in jobStatuses">
+						<option value="">-- choose --</option>
 					</select>	
 				</li>
 				<li class="list-group-item">
-					<label>Note:</label>
-					<input type="text" ng-model="job_.comment" class="form-control" ng-change="save()">
+						<div>
+							<label>Notes:</label>
+							<div class="newNote">
+								<textarea class="textarea form-control msd-elastic newNote" ng-model="newNote"></textarea>
+								<button class="btn btn-danger" ng-click="pushNote(newNote)">+</button>
+							</div>
+						</div>
+					<table class="table">
+						<tr ng-repeat="note in job_.notes | orderBy: '-note.date'">
+							<td>{{note.notevalue}}</td>
+							<td>{{note.userid}}</td>
+							<td>{{note.date | date:'MM/dd'}}</td>
+						</tr>
+					</table>
 				</li>
 			</ul>
 			
@@ -280,6 +309,7 @@
 			<!-- toggle to see more job details -->
 			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>	
 			<button type="button" class="btn btn-link" ng-click="job_.$remove()">Delete</button>
+			<button type="button" class="job-status-label btn btn-link" disabled>{{ jobStatuses[job_.status]}}</button>
 		</div>		
 		<span class="dateModified pull-right">
 			Updated {{job_.dateModified | date:'MM/dd'}}

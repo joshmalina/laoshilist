@@ -21,30 +21,35 @@
       var usersRef = new Firebase (firebasePath + '/users');
       scope.users = $firebaseArray(usersRef);
 
+      var client = null;
+
       scope.updateClient = function() {
-        scope.client = new user(scope.job_.clientID).getInfo();         
+        client = new user(scope.job_.clientID);
+        client.getInfo();
+        scope.client = client; 
       };
 
       scope.job_.$loaded().then(function() {
         scope.updateClient();
+        scope.visitClient = function() {
+          client.visit();
+        }
+
       });
 
+      var notes = $firebaseArray(ref.child('notes'));
 
-      // clientRef.on('value', function(snapshot) {
-      //    scope.client = snapshot.val();
-      //    console.log(snapshot.val());
-      //  });
-
-
-      // should have a library function that handles
-      // userIDS or usernames for nav
-      scope.visitClient = function(clientID) {
-        $location.path('/profile/' + clientID);
-      }
+      scope.pushNote = function(newNote) {
+        notes.$add({
+          notevalue: newNote,
+          userid: 'josh',
+          date: fbMethods.getTime()
+        })
+        scope.newNote = null;
+      };
 
       // generic save function, also updates datemodified value
       scope.save = function() {
-        console.log("yeoo");
         scope.job_.dateModified = fbMethods.getTime();
         scope.job_.$save().catch(function(error) {
          console.log('Couldn\'t update', error);

@@ -11,7 +11,7 @@ angular.module('laoshiListApp')
   .constant('jobStatus', [
     'Deal Pending',
   	'Needs Details',
-  	'Pending Teacher',
+  	'Needs Teacher',
   	'Have Teacher',
   	'Meeting Scheduled',
   	'Pending Payment',

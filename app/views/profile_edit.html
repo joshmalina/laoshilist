@@ -91,6 +91,10 @@
 					<option value=""></option>
 					<option ng-repeat="l in languageLevel" value="{{$index}}">{{l.shortDesc}}</option>
 				</select>
+			</div>
+			<div class = "form-group">
+				<label>CV</label>
+				<input type="text" class="form-control" ng-model="user.cv" ng-change="user.$save()">
 			</div>		
 		</tab>
 

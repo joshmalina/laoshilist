@@ -71,7 +71,7 @@
 }
 
 .job-panel .reign-in {
-  width: inherit;
+  width:100%;
 }
 
 .job-panel .panel-footer {
@@ -175,11 +175,11 @@
 					<li class="list-group-item subjects-list-item">
 						<span class="select-dropdown">
 							<label>Subjects:</label>
-							<span ng-repeat="(key,_) in job_.subjects">
-								{{key }}{{$last ? '' : ', '}}
+							<span ng-repeat="(key,_) in job_.subjects track by key">
+								{{subjects[key]}}{{$last ? '' : ', '}}
 							</span>
 						</span>
-						<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="s for s in subjects" class="form-control reign-in">
+						<select multiple ng-model="jobSubjects" ng-change="saveSubjects(jobSubjects)" ng-options="key as subject for (key, subject) in subjects" class="form-control reign-in">
 							<option value="">-- choose --</option>
 						</select>
 					</li>
@@ -225,8 +225,8 @@
 
 					<!-- ages -->
 					<li class="list-group-item subjects-list-item">
-						<span class="select-dropdown"><label>Student Age:</label>{{job_.age}}</span>
-						<select ng-model="job_.age" ng-change="save()" ng-options="s for s in ages track by s" class="reign-in form-control">
+						<span class="select-dropdown"><label>Student Age:</label></span>
+						<select ng-model="job_.age" ng-change="save()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
 							<option value="">Choose an age group</option>
 						</select>
 					</li>
@@ -289,7 +289,7 @@
 							</div>
 						</div>
 					<table class="table">
-						<tr ng-repeat="note in job_.notes | orderBy: '-note.date'">
+						<tr ng-repeat="note in job_.notes | orderBy: '-date'">
 							<td>{{note.notevalue}}</td>
 							<td>{{note.userid}}</td>
 							<td>{{note.date | date:'MM/dd'}}</td>

@@ -91,7 +91,6 @@
       },
       getTime: function() {
         return getTime();
-
       },
       takeArrayReturnFbObject: function(model) {
         return takeArrayReturnFbObject(model);

@@ -19,6 +19,11 @@ angular.module('laoshiListApp')
     // clear all filters
     $scope.clearFilter = function() {
       $scope.filterText = {};
+      $scope.filterSearch = null;
+    };
+
+    $scope.clear = function() {
+      $scope.filterText.city = null;
     };
 
 

@@ -9,6 +9,10 @@
 		display:inline-flex;
 		min-width: 190px;
 	}
+	.clearFilter {
+		font-size:x-small;
+		display:none;
+	}
 	.filterContent {
 		background:whitesmoke;
 		margin:0;
@@ -44,35 +48,28 @@
 	<div class = "filterBar col-lg-3 col-xl-3">
 	<div class = "filterContent">
 			<div class="form-group">
-				<label>Search</label>
-				<input type="text" class="form-control" ng-model="filterText.$" placeholder="Search">
+				<label>Search</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterSearch)">clear</button>
+				<input type="text" class="form-control" ng-model="filterSearch" placeholder="Search">
 			</div>
 			<div class = "form-group filter-age">
-				<label>Ages</label>	
+				<label>Ages</label><button class = "clearFilter btn-link btn btn-xs pull-right">clear</button>
 				<select ng-model="filterText.age" class="reign-in form-control" multiple>
-					<option value="">-- choose ages --</option>
 					<option ng-repeat="age in ages">{{age}}</option>
 				</select>	
 			</div>	
 			<div class = "form-group filter-subjects">
-				<label>Subjects</label>
-				<select ng-model="filterText.subjects" class="form-control reign-in" multiple>
-					<option value="">-- choose subjects --</option>
-					<option ng-repeat="subject in subjects">{{ subject | capitalizeFirst }}</option>
+				<label>Subjects</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterText.subjects = undefined">clear</button>
+				<select ng-model="filterText.subjects" class="form-control reign-in" multiple ng-options="key as subject for (key, subject) in subjects">	
 				</select>
 			</div>			
 			<div class = "form-group filter-cities">
-				<label>Cities</label>
+				<label>Cities</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear()">clear</button>
 				<select ng-model="filterText.city" class="reign-in form-control" multiple ng-options="key as city.en for (key, city) in cities">
-					<option value="">-- choose cities --</option>
-				<!-- <option ng-repeat="city for (key, city) in cities">{{ city.en }}</option> -->
 				</select>
 			</div>			
 			<div class = "form-group filter-status">
-				<label>Status</label>
-				<select ng-model="filterText.status" class="form-control" multiple>
-					<option value="">-- choose status --</option>
-					<option ng-repeat="status in statuses">{{status}}</option>
+				<label>Status</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterText.status)">clear</button>
+				<select ng-model="filterText.status" class="form-control" multiple ng-options="key as status for (key, status) in statuses">
 				</select>
 			</div>
 			<div class ="form-group">
@@ -82,7 +79,7 @@
 				</button>
 			</div>
 			<div class = "text-center">				
-				<button type="button" class="btn btn-link" ng-click="clearFilter()">
+				<button type="button" class="btn btn-link" ng-click="filterText = undefined">
 					Clear All
 				</button>
 			</div>				
@@ -91,7 +88,7 @@
 
 	<div class = "job-results col-lg-9 col-xl-9">
 		<div class = "resultsNum">Showing {{filteredJobs.length}} results</div>
-		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText))">
+		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch ))">
 			<ll-job job="job" key="key"></ll-job>
 		</div>
 	</div>

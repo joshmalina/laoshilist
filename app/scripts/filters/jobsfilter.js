@@ -16,15 +16,19 @@
 
  		var keys = Object.keys(criteria);
 
- 		console.log(criteria);
+ 		//console.log(criteria);
 
     	// key should be common to filter object and to jobs object
     	function match(job, key) {
 
-    		// need to discriminate between objects and non-objects
+    		if (typeof job[key] === 'object')  {
+				var valKeys = Object.keys(job[key]);
+				var anyLength = valKeys.filter(function(val) {
+					return criteria[key].indexOf(val) != -1;					
+				});
 
-    		if (typeof job[key] === 'object') {
-				// iterate through object keys, looking for a match
+				return anyLength.length > 0;
+
     		} else {
 
     			if (criteria[key].indexOf(job[key]) != -1) {
@@ -32,7 +36,8 @@
     			}
     		}
 
-    		return false;    
+    		return false;
+
 
     	}
 

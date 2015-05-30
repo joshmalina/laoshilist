@@ -7,6 +7,7 @@
 	.filterBar {
 		height:100%;	
 		display:inline-flex;
+		min-width: 190px;
 	}
 	.filterContent {
 		background:whitesmoke;
@@ -62,9 +63,9 @@
 			</div>			
 			<div class = "form-group filter-cities">
 				<label>Cities</label>
-				<select ng-model="filterText.city" class="reign-in form-control" multiple>
+				<select ng-model="filterText.city" class="reign-in form-control" multiple ng-options="key as city.en for (key, city) in cities">
 					<option value="">-- choose cities --</option>
-				<option ng-repeat="city in cities">{{ city.en }}</option>
+				<!-- <option ng-repeat="city for (key, city) in cities">{{ city.en }}</option> -->
 				</select>
 			</div>			
 			<div class = "form-group filter-status">
@@ -90,7 +91,7 @@
 
 	<div class = "job-results col-lg-9 col-xl-9">
 		<div class = "resultsNum">Showing {{filteredJobs.length}} results</div>
-		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | filter: filterText))">
+		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText))">
 			<ll-job job="job" key="key"></ll-job>
 		</div>
 	</div>

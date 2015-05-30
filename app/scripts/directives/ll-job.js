@@ -72,10 +72,10 @@
 
   		// config collapsable -- might refactor into a service
   		scope.isCollapsed = true;
-  		scope.readMore = 'Edit';
+  		scope.readMore = 'Expand';
   		scope.coll = function () {
   			scope.isCollapsed = !scope.isCollapsed;
-  			scope.readMore = scope.isCollapsed ? 'Edit' : 'Done Editing';
+  			scope.readMore = scope.isCollapsed ? 'Expand' : 'Collapse';
   		};
 
   		// remove a job

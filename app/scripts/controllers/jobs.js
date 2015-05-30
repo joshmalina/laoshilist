@@ -21,6 +21,11 @@ angular.module('laoshiListApp')
       $scope.filterText = {};
     };
 
+
+    // $scope.filterText = {
+    //   age: ['24+', '9-13']
+    // };
+
     // toggle view jobs by newest / oldest
     $scope.groupBy = '-dateModified';
     $scope.orderedBy = 'Newest';

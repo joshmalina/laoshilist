@@ -25,9 +25,7 @@
     });
   };
 
-  $scope.remove = function() {
-    console.log(1)
-  };
+ 
 
 
 	// var users =	 {

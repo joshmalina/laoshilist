@@ -122,6 +122,10 @@
       }]
     }
   })
+  .when('/jobview', {
+    templateUrl: 'views/jobview.html',
+    controller: 'JobviewCtrl'
+  })
   .otherwise({
     redirectTo: '/'
   });  

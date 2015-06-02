@@ -3,70 +3,59 @@
 		padding: 0;
 		padding-bottom: 0px;
 		border-radius: 4px;		
-		max-width: 300px;
-		max-height:300px;
+		max-width: 330px;
+		max-height:330px;
+		margin-left:auto;
+		margin-right:auto;
 	}
 	.profile_avatar {
 		background-color:#2bbbd8;
-	}
-	.profile-head-text .label {
-		margin-left:-100px;
-	}
-	.profile-boxes {
-		border-radius: 4px;
-		border: 1px solid #ddd;
-		margin-bottom:5px;	
-		padding: 8px;
-		display: inline-block;
-		width: 100%;
 		text-align:center;
+		margin-right:5px;
+	}
+	.fields-name {
+		color:grey;
 	}
 	.profile-head-text img {
 		padding-right: 5px;
+	}	
+
+	.styled li {
+		list-style: none;
 	}
-	.profile-container {
-		width: auto;
-		background-color: #fff;
+
+	.profile-head-text {
+		font-family: Helvetica,Arial,Verdana,sans-serif;
+		color: #444;
+		font-weight: 700;
+		font-size: 1.5em;
+		line-height: 2em;
 	}
-	.profile-top-fields {
-	  border-radius: 2px;
-	  width: 100%;
-	  margin-bottom: 10px;
-	}
-	.profile-top-fields ul {
+	ul {
+		margin-bottom: 0;
 		padding:0;
 	}
-	.profile-top-fields li {
-		list-style: none;
-		margin-bottom: 10px;
-		padding:10px;  
-		width:100%;
-		background: #f5f5f5;
-	}	
-	.ll-glyph {
-		max-width:22px;
-	}
-	.profile-boxes li {
-		list-style: none;
-	}
-	.profile-top-fields .fields-value {
-		font-weight:bold;
-	}
-	.profile-head-text {
-	  font-family: Helvetica,Arial,Verdana,sans-serif;
-	  color: #444;
-	  font-weight: 700;
-	  font-size: 1.5em;
-	  line-height: 2em;
-	}
 	.styled {
-		padding:15px;
-		font-size: 1.5em;
-		color:white;
-		background:darkgrey !important;
-		border:1px solid white;
+		padding:8px;
+		font-size: 1em;
+		color:black;
+		border-radius:5px;
+		border:1px solid #ddd;
+		background-color: white;
+		margin:2px;
+		text-align: center;
 	}
-	
+	.profile-container {
+		padding:10px;
+	}
+	.center {
+		margin:0 auto;
+		float:none;
+	}
+	body {
+		background:pearlwhite;
+	}
+
 	
 </style>
 
@@ -75,172 +64,49 @@
 	</h1>
 </div>
 
-<div class = "profile-container clearfix">
-	<div class = "profile-top-box">
+<div class = "clearfix profile-container container col-lg-12">
+	<div class = "col-lg-offset-0 col-xs-offset-2 col-sm-offset-1">
 		<!-- at large res, float; at small res put on top -->
-		<div class = "profile-avatar profile-boxes col-lg-5 col-md-5 col-sm-5 col-xs-12" ng-if="user.avatar.data">
-			<img src="{{user.avatar.data}}" class="avatar-img"/>
-		</div>
-		<div class = "profile-top-info styled profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
-			<div class = "profile-top-fields">
-				<div class = "styled col-xs-12 " ng-if="user.roles">
-					<explode wrap="roles" array="user.roles"></explode>
-				</div>
-				<div class = "cityIcon col-lg-6 styled col-xs-12 " ng-if="user.city">
-					{{ cities[user.city].zh }}
-				</div>
-				<div class = "locationStyled styled col-xs-12 " ng-if="user.location">
-					{{ '@ ' + user.location }}
-				</div>
-				<div class = "nationality styled col-xs-12 " ng-if="user.country">
-					{{ countries[user.country] + ' 人' }}
-				</div>
-				<div class = "lastSeen styled col-xs-12 " ng-if="user.lastLogin">
-					last seen {{ user.last_login | date:'MM/dd/yy' }}
-				</div>
-				<div class = "ethnicity styled col-xs-12 " ng-if="user.ethnicity">
-					{{ '看起来 ' + ethnicities[user.ethnicity] }}
-				</div>
-				<div class = "styled col-xs-12 " ng-if="user.ages">
-					<explode array="user.ages"></explode> 岁
-				</div>
-				<!--ul>					
-					<li class="profile-city">
-						<span class="fields-name">
-							{{ 'city' | uppercase}}
-						</span><br/>
-						<span class="fields-value">
-							{{  cities[user.city].en | uppercase }}
-						</span>
-					</li>
-					<li class="profile-location">
-						<span class="fields-name">
-							{{ 'Location' | uppercase}}
-						</span><br/>
-						<span class="fields-value">
-							{{ user.location | uppercase}}
-						</span>
-					</li>
-					<li class="profile-country-of-origin">
-						<span class="fields-name">
-							{{ 'country of citizenship' | uppercase }}
-						</span><br />
-						<span class="fields-value">
-							{{ countries[user.country] | uppercase }}
-						</span>
-					</li>
-					<li class="profile-last-login" ng-if="user.lastLogin">
-						<span class="fields-name">
-							{{ 'last login' | uppercase }}
-						</span><br />
-						<span class="fields-value">
-							{{ user.last_login | date:'MM/dd/yy' }}
-						</span>
-					</li>
-					<li class="profile-date-joined" ng-if="user.date_joined">
-						<span class="fields-name">
-							{{ 'date joined' | uppercase }}
-						</span><br />
-						<span class="fields-value">
-							{{ user.date_joined | date:'MM/dd/yy' }}
-						</span>
-					</li>
-					<li class ="profile-date-joined">
-						<span class="fields-name">
-							{{ 'date added' | uppercase }}
-						</span><br />
-						<span class="fields-value">
-							{{ user.dateAdded | date:'MM/dd/yy' }}
-						</span>
-					</li>
-					<li class="profile-ethnicity">
-						<span class="fields-name">
-							{{ 'ethnicity' | uppercase }}
-						</span><br />
-						<span class="fields-value">
-							{{ ethnicities[user.ethnicity] | uppercase }}
-						</span>
-					</li>
-					<li class="profile-age">
-						<span class="fields-name">
-							{{ 'student age' | uppercase}}
-						</span><br />
-						<span class="fields-value">
-							<span ng-repeat="(key, _) in user.ages">
-								{{ key | uppercase }}{{$last ? '' : ', '}}
-							</span>
-						</span>
-					</li>
-				</ul-->
-			</div>
+		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar.data">
+			<img src="{{user.avatar.data}}" class="avatar-img"/>			
 		</div>		
-	</div>
-	<!-- either subjects learned (student) / subjects taught (teacher) -->
-	<div class = "profile-subjects profile-boxes styled" ng-if="user.subjects">
-		<!-- <div class="profile-head-text">
-			<img src="images/glyphicons-153-check.png" alt="" />Subjects
-		</div>	 -->	学习
-		<explode wrap="subjects" array="user.subjects"></explode>
-	</div>
-
-	<div class = "profile-contact profile-boxes profile-top-fields">
-		<div class="profile-head-text">
-			<span class="label label-default pull-right">Private</span>
-			Contact
+		<div class = "styled col-lg-6 col-sm-7 col-xs-9 col-lg-7" ng-if="user.roles">
+			<span class = "fields-name">Is a</span> <explode wrap="roles" array="user.roles"></explode>
+		</div>
+		<div class = "col-lg-7 col-sm-7 styled col-xs-9" ng-if="user.city">
+			<span class = "fields-name">Lives in </span>{{ cities[user.city].zh }}
+		</div>
+		<div class = "locationStyled col-sm-7 styled col-xs-9 col-lg-7 " ng-if="user.location">
+			<span class = "fields-name">Lives at </span>{{ user.location }}
+		</div>
+		<div class = "nationality col-sm-7 styled col-xs-9 col-lg-7 " ng-if="user.country">
+			<span class = "fields-name">From </span>{{ countries[user.country] }}
+		</div>
+		<div class = "lastSeen styled col-sm-7 col-xs-9 col-lg-7" ng-if="user.lastLogin">
+			<span class = "fields-name">Seen on </span> {{ user.last_login | date:'MM/dd/yy' }}
+		</div>
+		<div class = "since styled col-xs-9 col-sm-7 col-lg-7" ng-if="user.dateAdded">
+			<span class = "fields-name">Joined </span>{{ user.dateAdded | date:'MM/dd/yy' }}
+		</div>
+		<div class = "ethnicity styled col-xs-9 col-sm-7 col-lg-7" ng-if="user.ethnicity">
+			<span class = "fields-name">Ethnically </span>
+			{{ ethnicities[user.ethnicity] }}
+		</div>
+		<div class = "styled col-xs-9 col-lg-7 col-sm-7" ng-if="user.ages">
+			<span class = "fields-name">Lived </span><explode array="user.ages"></explode> <span class = "fields-name"> years</span>
 		</div>		
-		<profile-box label="contact" obj="user.contact"></profile-box>
-	</div>
-
-	<div class = "profile-docs profile-boxes profile-top-fields" ng-if="user.cv">
-		<div class="profile-head-text">
-			<span class="label label-default pull-right">Private</span>
-			Documents
+		<div class =  "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7" ng-if="user.subjects">
+			<span class = "fields-name">Studies </span>
+			<explode wrap="subjects" array="user.subjects"></explode>
 		</div>
-			<li>
-				<span class="fields-name">CV</span><br/>
-				<span class="fields-value"><a target="_blank" href="{{user.cv}}">View</a></span>
-			</li>
-	</div>
-
-	<div class = "mid-level-info">		
-		<ul>
-			<!-- either english or chinese depending on user type -->
-			<li class="profile-language-ability"></li>			
-		</ul>
-	</div>
-
-	<div class = "edu-info">
-		<ul ng-repeat="edu in education">
-			<li>{{edu.uni}}</li>
-			<li>{{edu.degree}}</li>
-			<li>{{edu.major}}</li>
-		</ul>
-	</div>
-
-	<div class = "private-info">
-		<div class = "associated-with"></div>		
-		<div class = "applied-for"></div>
-		<div class = "owes-owed"></div>
-		<div class = "total-in-total-out"></div>
-		<div class = "profile-contact profile-boxes profile-top-fields">
-	</div>
-	<div class = "payment" ng-if="user.payment">
-		<div class="profile-head-text">
-			Payment
+		<div class = "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7">			
+			<profile-box label="contact" obj="user.contact"></profile-box>
 		</div>
-		<ul>
-			<li>
-				<span class="fields-name">Alipay</span><br/>
-				<span class="fields-value">{{user.payment.alipay}}</span>
-			</li>
-			<li>
-				<span class="fields-name">WeChat Pay</span><br/>
-				<span class="fields-value">{{user.payment.weChatPay}}</span>
-			</li>
-		</ul>
-		<label>Banks</label>		
-		<profile-box label="bank" obj="user.payment.banks"></profile-box>		
+		<div class = "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7" ng-if="user.cv">
+			<span class="fields-name">CV</span>
+			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Open</a></span>
+		</div>
 	</div>
-	</div>
-	<button class="btn btn-large">Deactivate</button>
+	<!-- to add: jobs associated with, jobs applied for, payables, bank info, education potentially -->	
+	
 </div>

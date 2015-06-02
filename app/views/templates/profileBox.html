@@ -1,6 +1,6 @@
 <ul ng-repeat="label in obj">
-	<li ng-repeat="(name, value) in label">
-		<span class="fields-name">{{ name | capitalizeFirst }}</span><br/>
+	<li ng-repeat="(name, value) in label" ng-if="value != ''">
+		<span class="fields-name">{{ name | capitalizeFirst }}</span> 
 		<span class="fields-value">{{value}}</span>
 	</li>
 </ul>

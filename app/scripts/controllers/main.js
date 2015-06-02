@@ -9,6 +9,5 @@
  */
  angular.module('laoshiListApp')
  .controller('MainCtrl', function () {
- 
  	
  });

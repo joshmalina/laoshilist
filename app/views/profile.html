@@ -59,6 +59,14 @@
 	  font-size: 1.5em;
 	  line-height: 2em;
 	}
+	.styled {
+		padding:15px;
+		font-size: 1.5em;
+		color:white;
+		background:darkgrey !important;
+		border:1px solid white;
+	}
+	
 	
 </style>
 
@@ -70,18 +78,39 @@
 <div class = "profile-container clearfix">
 	<div class = "profile-top-box">
 		<!-- at large res, float; at small res put on top -->
-		<div class = "profile-avatar profile-boxes col-lg-5 col-md-5 col-sm-5 col-xs-12">
+		<div class = "profile-avatar profile-boxes col-lg-5 col-md-5 col-sm-5 col-xs-12" ng-if="user.avatar.data">
 			<img src="{{user.avatar.data}}" class="avatar-img"/>
 		</div>
-		<div class = "profile-top-info profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
+		<div class = "profile-top-info styled profile-boxes col-lg-7 col-md-7 col-sm-7 col-xs-12">
 			<div class = "profile-top-fields">
-				<ul>
+				<div class = "styled col-xs-12 " ng-if="user.roles">
+					<explode wrap="roles" array="user.roles"></explode>
+				</div>
+				<div class = "cityIcon col-lg-6 styled col-xs-12 " ng-if="user.city">
+					{{ cities[user.city].zh }}
+				</div>
+				<div class = "locationStyled styled col-xs-12 " ng-if="user.location">
+					{{ '@ ' + user.location }}
+				</div>
+				<div class = "nationality styled col-xs-12 " ng-if="user.country">
+					{{ countries[user.country] + ' 人' }}
+				</div>
+				<div class = "lastSeen styled col-xs-12 " ng-if="user.lastLogin">
+					last seen {{ user.last_login | date:'MM/dd/yy' }}
+				</div>
+				<div class = "ethnicity styled col-xs-12 " ng-if="user.ethnicity">
+					{{ '看起来 ' + ethnicities[user.ethnicity] }}
+				</div>
+				<div class = "styled col-xs-12 " ng-if="user.ages">
+					<explode array="user.ages"></explode> 岁
+				</div>
+				<!--ul>					
 					<li class="profile-city">
 						<span class="fields-name">
 							{{ 'city' | uppercase}}
 						</span><br/>
 						<span class="fields-value">
-							{{ cities[user.city].en | uppercase }}
+							{{  cities[user.city].en | uppercase }}
 						</span>
 					</li>
 					<li class="profile-location">
@@ -142,18 +171,16 @@
 							</span>
 						</span>
 					</li>
-				</ul>
+				</ul-->
 			</div>
 		</div>		
 	</div>
 	<!-- either subjects learned (student) / subjects taught (teacher) -->
-	<div class = "profile-subjects profile-boxes">
-		<div class="profile-head-text">
+	<div class = "profile-subjects profile-boxes styled" ng-if="user.subjects">
+		<!-- <div class="profile-head-text">
 			<img src="images/glyphicons-153-check.png" alt="" />Subjects
-		</div>
-		<span ng-repeat="(key,_) in user.subjects">
-			{{key | uppercase }}{{$last ? '' : ', '}}
-		</span>
+		</div>	 -->	学习
+		<explode wrap="subjects" array="user.subjects"></explode>
 	</div>
 
 	<div class = "profile-contact profile-boxes profile-top-fields">
@@ -164,7 +191,7 @@
 		<profile-box label="contact" obj="user.contact"></profile-box>
 	</div>
 
-	<div class = "profile-docs profile-boxes profile-top-fields">
+	<div class = "profile-docs profile-boxes profile-top-fields" ng-if="user.cv">
 		<div class="profile-head-text">
 			<span class="label label-default pull-right">Private</span>
 			Documents
@@ -196,8 +223,9 @@
 		<div class = "owes-owed"></div>
 		<div class = "total-in-total-out"></div>
 		<div class = "profile-contact profile-boxes profile-top-fields">
+	</div>
+	<div class = "payment" ng-if="user.payment">
 		<div class="profile-head-text">
-			<span class="label label-default pull-right">Private</span>
 			Payment
 		</div>
 		<ul>
@@ -214,5 +242,5 @@
 		<profile-box label="bank" obj="user.payment.banks"></profile-box>		
 	</div>
 	</div>
-	<button>deactivate</button>
+	<button class="btn btn-large">Deactivate</button>
 </div>

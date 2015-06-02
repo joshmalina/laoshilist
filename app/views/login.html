@@ -1,6 +1,22 @@
-<h1>Login<br><small>All fields are required</small></h1>
+<style>
+	.ll-center {
+		float:none;
+		margin-left:auto;
+		margin-right:auto;
+	}
+	.ll-forms {
+		padding-bottom:10px;
+	}
+</style>
 
-<form novalidate ng-submit="login()">
+{{someInfo}}
+
+<form novalidate class="ll-center ll-forms col-lg-5 col-md-5" ng-submit="login()">
+	<div class = "page-header">
+		<h1>Login</h1>
+		<small>All fields required</small>
+	</div>
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="alerts.splice($index, 1);">{{alert.msg}}</alert>
 	<div class="form-group">
 		<label>Email</label>
 		<input ng-model="usr.email" type="email" class="form-control">

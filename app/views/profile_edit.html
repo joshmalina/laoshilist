@@ -35,8 +35,7 @@
 			</div>
 			<div class = "form-group">
 				<label>Roles</label><br/>
-				<select ng-model="userRoles" class="form-control" multiple ng-change="saveRoles(userRoles)">
-					<option ng-repeat="r in roles">{{r}}</options>
+				<select ng-model="userRoles" class="form-control" multiple ng-change="saveRoles(userRoles)" ng-options="key as role for (key, role) in roles">
 				</select>
 			</div>
 			<div class = "form-group firstName">
@@ -75,14 +74,12 @@
 		<tab heading="Study">
 			<div class="form-group">
 				<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
-				<select class="form-control" multiple ng-model="userSubjects" ng-change="saveSubjects(userSubjects)">
-					<option ng-repeat="s in subjects">{{s}}</option>
+				<select class="form-control" multiple ng-model="userSubjects" ng-change="saveSubjects(userSubjects)" ng-options="key as subject for (key, subject) in subjects">
 				</select>
 			</div>
 			<div class="form-group">
 				<label>Preferred student age / studen't age<br/><small>Ctrl + click to select more than one </small></label>	
-				<select class="form-control" multiple ng-model="userAges" ng-change="saveAges(userAges)">
-					<option ng-repeat="a in ages">{{a}}</option>
+				<select class="form-control" multiple ng-model="userAges" ng-change="saveAges(userAges)" ng-options="key as age for (key, age) in ages">
 				</select>
 			</div>
 			<div class="form-group">

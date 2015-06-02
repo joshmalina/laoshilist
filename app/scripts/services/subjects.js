@@ -24,5 +24,5 @@
  	'Chemistry', 
  	'Chinese', 
  	'College Preparation', 
- 	'Computer Science', 'Economics', 'English', 'French', 'Geometry', 'German', 'GMAT', 'GRE', 'Hebrew', 'High School Math', 'History', 'IELTS', 'ISEE', 'Italian', 'Japanese', 'Korean', 'LSAT', 'Middle School Math', 'Other', 'Performing Arts', 'Philosophy', 'Physical education', 'Physics', 'Portugese', 'Psychology', 'SAT', 'SAT II', 'Spanish', 'Spoken English', 'SSAT', 'Statistics', 'TOEFL', 'Trigonometry', 'Writing']	
+ 	'Computer Science', 'Economics', 'English', 'Reading Comprehension', 'French', 'Geometry', 'German', 'GMAT', 'GRE', 'Hebrew', 'High School Math', 'History', 'IELTS', 'ISEE', 'Italian', 'Japanese', 'Korean', 'LSAT', 'Middle School Math', 'Other', 'Performing Arts', 'Philosophy', 'Physical education', 'Physics', 'Portugese', 'Psychology', 'SAT', 'SAT II', 'Spanish', 'Spoken English', 'SSAT', 'Statistics', 'TOEFL', 'Trigonometry', 'Writing']	
  	);	

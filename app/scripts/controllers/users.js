@@ -8,11 +8,12 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('UsersCtrl', ['$scope', 'firebasePath', '$firebaseArray', '$location', function ($scope, firebasePath, $firebaseArray, $location) {
+ .controller('UsersCtrl', ['roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function (roles, $scope, firebasePath, $firebaseArray, $location) {
 
   var ref = new Firebase (firebasePath + '/users');
   var users = $firebaseArray(ref);
   $scope.users = users;
+  $scope.roles = roles;
 
   $scope.viewProfile = function(userID) {
     $location.path('/profile/' + userID);
@@ -20,8 +21,12 @@
 
   $scope.addUser = function() {
     $scope.users.$add({      
-      dateAdded: Firebase.ServerValue.TIMESTAMP 
+      dateAdded: Firebase.ServerValue.TIMESTAMP
     });
+  };
+
+  $scope.remove = function() {
+    console.log(1)
   };
 
 

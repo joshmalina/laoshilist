@@ -7,9 +7,12 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+ .directive('llJob', ['Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
 
    function link (scope) {
+
+
+      var authObj = Auth.$getAuth();
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
@@ -42,7 +45,7 @@
       scope.pushNote = function(newNote) {
         notes.$add({
           notevalue: newNote,
-          userid: 'josh',
+          userid: authObj.password.email,
           date: fbMethods.getTime()
         })
         scope.newNote = null;

@@ -1,25 +1,50 @@
-<h1>Register<br><small>* Indicates required field</small></h1>
+<style>
+	.ll-center {
+		float:none;
+		margin-left:auto;
+		margin-right:auto;
+	}
+</style>
 
-<form name="registerForm" id="registerForm" class="ll-forms" novalidate ng-submit="register()">
+
+<form name="registerForm" id="registerForm" class="ll-forms ll-center col-sm-5 col-lg-5 col-md-5" novalidate ng-submit="register()">
+	<div class = "page-header">
+	<h1>Register</h1><small>All fields required</small></div>
+
+	<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+
 	<div class="form-group">
-		<label>First Name *</label>
-		<input ng-model="usr.firstName" type="text" class="form-control" autofocus minlength="3" maxlength="15" required ng-pattern="/^[a-zA-Z]*$/">
+		<label for="firstName">First Name</label>
+		<input ng-model="usr.firstName" id="firstName" type="text" class="form-control" autofocus minlength="3" maxlength="15" required ng-pattern="/^[a-zA-Z]*$/"><small class="help-text">3 - 15 characters, only A-Z, a-z.</small>
 	</div>
-	<div class="form-group">
-		<label>Last Name</label>
-		<input ng-model="usr.lastName" type="text" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Email *</label>
+	<!--div class="form-group col-lg-6 col-md-6">
+		<label for="lastName">Last Name</label>
+		<input ng-model="usr.lastName" id="lastName" type="text" class="form-control">
+	</div-->
+	<div class="form-group ">
+		<label>Email</label>
 		<input ng-model="usr.email" type="email" class="form-control" required ng-pattern="/^[a-z0-9!#$%&'*+/=?^_`{|}~.-]+@[a-z0-9-]+.[a-z0-9-]/">
 	</div>
-	<div class="form-group">
-		<label>Password *</label>
+	<div class="form-group" ng-hide="showpassword">
+		<label>Password</label>
 		<input ng-model="usr.password" type="password" class="form-control" required minlength="5">
 	</div>
-	<div class="form-group">
+	<div class="form-group" ng-show="showpassword">
+		<label>Password</label>
+		<input ng-model="usr.password" type="text" class="form-control" required minlength="5">
+	</div>	
+	<div class = "checkbox">
+		<label>
+		<input type="checkbox" ng-model="showpassword" ng-checked="false">Show Password
+		</label>
+	</div>
+	
+  
+	<!--div class="form-group col-lg-6 col-md-6">
 		<label>Confirm Password *</label>
 		<input ng-model="usr.confPassword" type="password" class="form-control" required ng-pattern="{{usr.password}}">
+	</div-->
+	<div class = "form-group ">
+		<button type="submit" class="btn btn-default" ng-disabled="registerForm.$invalid">Register</button>
 	</div>
-	<button type="submit" class="btn btn-default" ng-disabled="registerForm.$invalid">Register</button>
 </form>

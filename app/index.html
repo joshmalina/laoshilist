@@ -21,7 +21,7 @@
 
     <!-- Add your site or application content here -->
     <div class="header">
-      <div class="navbar navbar-default" role="navigation">
+      <div class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
         <div class="container">
           <div class="navbar-header">
 
@@ -41,10 +41,11 @@
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/jobs">Jobs</a></li>
-              <li><a ng-href="#/users">Users</a></li>
-              <li><a ng-href="#/login">Login</a></li>
-              <li><a ng-href="#/register">Register</a></li>
+              <li ng-if="authUser" ng-cloak><a ng-href="#/jobs">Jobs</a></li>
+              <li ng-if="authUser" ng-cloak><a ng-href="#/users">Users</a></li>
+              <li ng-if="!authUser" ng-cloak><a ng-href="#/login">Login</a></li>
+              <!--li ng-if="!authUser" ng-cloak><a ng-href="#/register">Register</a></li-->
+              <li ng-if="authUser" ng-cloak><a ng-click="auth.$unauth()">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -132,6 +133,9 @@
         <script src="scripts/directives/profilebox.js"></script>
         <script src="scripts/services/user.js"></script>
         <script src="scripts/filters/jobsfilter.js"></script>
+        <script src="scripts/directives/explode.js"></script>
+        <script src="scripts/services/auth.js"></script>
+        <script src="scripts/controllers/nav.js"></script>
         <!-- endbuild -->
 </body>
 </html>

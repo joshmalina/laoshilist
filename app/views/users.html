@@ -1,3 +1,10 @@
+<style>
+.users-table-body .firstName:hover{
+	background-color: whitesmoke;
+	cursor: pointer;
+}
+</style>
+
 <div class="page-header">
 	<h1>Users<button class="btn btn-primary pull-right" ng-click="addUser()">New</button></h1>
 </div>
@@ -5,21 +12,23 @@
 		<thead>
 			<tr>
 				<th>name</th>
-				<th>email</th>
-				<th>phone</th>
 				<th>roles</th>
 				<th>date added</th>
+				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="(name, user) in users | filter: filterText" ng-click="viewProfile(user.$id)">
-				<td>{{user.firstName}}</td>
-				<td>{{user.email}}</td>
-				<td>{{user.phone}}</td>
-				<td>{{user.roles | json}}</td>
+			<tr ng-repeat="(name, user) in users" class="users-table-body">
+				<td ng-click="viewProfile(user.$id)" class="firstName">{{user.firstName}}</td>
+				<td>
+					<explode wrap="roles" array="user.roles"></explode>
+					
+				</td>
 				<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
+				<td>
+					<button class="btn btn-danger btn-xs" ng-click="users.$remove(user)">X</button>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 
-	

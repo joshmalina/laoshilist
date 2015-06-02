@@ -8,4 +8,4 @@
  * Constant in the laoshiListApp.
  */
 angular.module('laoshiListApp')
-  .constant('ethnicities', ['white', 'black', 'asian', 'native american', 'hispanic', 'chinese', 'other']);
+  .constant('ethnicities', ['White', 'Black', 'Asian', 'Native American', 'Hispanic', 'Other']);

@@ -8,4 +8,4 @@
  * Constant in the laoshiListApp.
  */
 angular.module('laoshiListApp')
-  .constant('roles', ['teacher', 'client', 'admin']);
+  .constant('roles', ['Teacher', 'Client', 'Admin']);

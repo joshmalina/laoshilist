@@ -226,7 +226,7 @@
 					<!-- ages -->
 					<li class="list-group-item subjects-list-item">
 						<span class="select-dropdown"><label>Student Age:</label></span>
-						<select ng-model="job_.age" ng-change="save()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
+						<select multiple ng-model="job_.age" ng-change="save()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
 							<option value="">Choose an age group</option>
 						</select>
 					</li>

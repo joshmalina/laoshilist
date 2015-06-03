@@ -20,116 +20,112 @@
   'ui.bootstrap',
   'monospaced.elastic'
   ])
- .config(function ($routeProvider) {
+ .config(function ($routeProvider, $provide) {
   $routeProvider
-  .when('/', {
-    templateUrl: 'views/main.html',
-    controller: 'MainCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/about', {
-    templateUrl: 'views/about.html',
-    controller: 'AboutCtrl'
-  })
-  .when('/jobs', {
-    templateUrl: 'views/jobs.html',
-    controller: 'JobsCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/jobEdit', {
-    templateUrl: 'views/jobedit.html',
-    controller: 'JobeditCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/users', {
-    templateUrl: 'views/users.html',
-    controller: 'UsersCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/login', {
-    templateUrl: 'views/login.html',
-    controller: 'LoginCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$waitForAuth();
-      }]
-    }
-  })
-  .when('/register', {
-    templateUrl: 'views/register.html',
-    controller: 'RegisterCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/profile/:username', {
-    templateUrl: 'views/profile.html',
-    controller: 'ProfileCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/profile_edit/:username', {
-    templateUrl: 'views/profile_edit.html',
-    controller: 'ProfileEditCtrl',
-    resolve: {
-      // controller will not be loaded until $waitForAuth resolves
-      // Auth refers to our $firebaseAuth wrapper in the example above
-      "currentAuth": ["Auth", function(Auth) {
-        // $waitForAuth returns a promise so the resolve waits for it to complete
-        return Auth.$requireAuth();
-      }]
-    }
-  })
-  .when('/jobview', {
-    templateUrl: 'views/jobview.html',
-    controller: 'JobviewCtrl'
-  })
-  .otherwise({
-    redirectTo: '/'
-  });  
+    .when('/', {
+      templateUrl: 'views/main.html',
+      controller: 'MainCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/jobs', {
+      templateUrl: 'views/jobs.html',
+      controller: 'JobsCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/users', {
+      templateUrl: 'views/users.html',
+      controller: 'UsersCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/login', {
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$waitForAuth();
+        }]
+      }
+    })
+    .when('/register', {
+      templateUrl: 'views/register.html',
+      controller: 'RegisterCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/profile/:username', {
+      templateUrl: 'views/profile.html',
+      controller: 'ProfileCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/profile_edit/:username', {
+      templateUrl: 'views/profile_edit.html',
+      controller: 'ProfileEditCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
+    })
+    .when('/jobview/:jobid', {
+      templateUrl: 'views/jobview.html',
+      controller: 'JobviewCtrl'
+    })
+    .otherwise({
+      redirectTo: '/'
+    });
+  
+    // $provide.decorator('$FirebaseArray', function($delegate) {
+    //   var _super = $delegate.prototype.$add;
+    //   $delegate.prototype.$add = function(data) {
+    //     _super.call(this, $firebaseUtils.toJSON(data));
+    //   };
+    //   return $delegate; 
+    // });
+
+
 })
+
+
 
 .run(["$rootScope", "$location", function($rootScope, $location) {
   $rootScope.$on("$routeChangeError", function(event, next, previous, error) {

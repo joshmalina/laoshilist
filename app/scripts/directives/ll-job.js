@@ -11,36 +11,32 @@
 
    function link (scope) {
 
-
-      var authObj = Auth.$getAuth();
+    var authObj = Auth.$getAuth();
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
+      var usersRef = new Firebase(firebasePath + '/users');
 
   		// make available to scope
-  		scope.job_ = $firebaseObject(ref);
+  		scope.job_ = $firebaseObject(ref); 
 
-      // get all users
-      var usersRef = new Firebase (firebasePath + '/users');
-      scope.users = $firebaseArray(usersRef);
+      scope.teachers = [];
+      scope.clients = [];
 
-      var client = null;
-
-      scope.updateClient = function() {
-        client = new user(scope.job_.clientID);
-        client.getInfo();
-        scope.client = client; 
-      };
-
-      scope.job_.$loaded().then(function() {
-        scope.updateClient();
-        scope.visitClient = function() {
-          client.visit();
-        }
-
+      usersRef.on('value', function(querySnapshot) {
+        querySnapshot.forEach(function(userSnap) {
+          var user = userSnap.val();
+          // two seperate conditionals because at some point our students / teachers could overlap
+          if(user.roles[0]) {
+            scope.teachers.push({firstName: user.firstName, id: userSnap.key()});
+          }
+          if(user.roles[1]) {
+            scope.clients.push({firstName: user.firstName, id: userSnap.key()});
+          }
+        });
       });
 
-      var notes = $firebaseArray(ref.child('notes'));
+      scope.notes = $firebaseArray(ref.child('notes'));      
 
       scope.pushNote = function(newNote) {
         notes.$add({
@@ -60,9 +56,8 @@
       };
 
       scope.saveSubjects = function(model) {
-        // update time
-        ref.child('dateModified').set(fbMethods.getTime());
-        ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));        
+        ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));
+        ref.child('dateModified').set(fbMethods.getTime()); 
       };
 
 
@@ -73,15 +68,13 @@
   		scope.ages = ages;
   		scope.jobStatuses = jobStatus;
 
-  		// config collapsable -- might refactor into a service
+  		// config collapsable -- might refactor into a service - might turn into a modal or even a seperate page
   		scope.isCollapsed = true;
   		scope.readMore = 'Expand';
   		scope.coll = function () {
   			scope.isCollapsed = !scope.isCollapsed;
   			scope.readMore = scope.isCollapsed ? 'Expand' : 'Collapse';
   		};
-
-  		// remove a job
 
   	}
 

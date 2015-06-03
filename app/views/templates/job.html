@@ -140,7 +140,7 @@
 	<div class="public-job-details">
 		<!-- title -->
 		<h3 class = "panel-heading">
-			<a>{{job_.title}}</a>
+			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a>
 		</h3>
 		<div class = "panel-heading-subtitle">
 			<span class = "client-name">{{client.firstName}}</span>
@@ -269,9 +269,19 @@
 				<li class="list-group-item subjects-list-item">
 					<!-- maybe typeahead at some points -->
 					<span class="select-dropdown"><label>Client:</label>
-						<button class="btn btn-link" ng-click="visitClient(job_.clientID)">Visit {{client.firstName}}</button>
+						<a ng-if="job_.clientID" ng-href="/#/profile/{{job_.teacherID}}">View Profile</a>
 					</span>
-					<select ng-model="job_.clientID" ng-change="save(); updateClient()" ng-options="u.$id as u.firstName for u in users" class="form-control reign-in">
+					<select ng-model="job_.clientID" ng-change="save()" ng-options="c.id as c.firstName for c in clients" class="form-control reign-in">
+						<option value=""></option>							
+					</select>					
+				</li>
+				<!-- THE SAME THING BUT FOR THE SELECTED TEACHER; MAYBE REPRODUCE INTO A DIRECTIVE -->
+				<li class="list-group-item subjects-list-item">
+					<!-- maybe typeahead at some points -->
+					<span class="select-dropdown"><label>Teacher:</label>
+						<a ng-if="job_.teacherID" class="btn btn-link" ng-href="/#/profile/{{job_.teacherID}}">View Profile</a>
+					</span>
+					<select ng-model="job_.teacherID" ng-change="save()" ng-options="t.id as t.firstName for t in teachers" class="form-control reign-in">
 						<option value=""></option>							
 					</select>					
 				</li>
@@ -290,7 +300,7 @@
 							</div>
 						</div>
 					<table class="table">
-						<tr ng-repeat="note in job_.notes | orderBy: '-date'">
+						<tr ng-repeat="note in notes | orderBy:'-date'">
 							<td>{{note.notevalue}}</td>
 							<td>{{note.userid}}</td>
 							<td>{{note.date | date:'MM/dd'}}</td>
@@ -298,7 +308,6 @@
 					</table>
 				</li>
 			</ul>
-			
 		</div>
 		</form>
 	<!-- end PRIVATE -->

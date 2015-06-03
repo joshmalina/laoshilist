@@ -25,6 +25,24 @@
     });
   };
 
+  ref.on('value', function(snapshot) {
+      $scope.users_ = snapshot.val();    
+  }, function (errorObject) {
+    console.log('The read failed: ', errorObject);
+  });
+
+
+  ref.on('value', function(querySnapshot) {
+    var teachers = [];
+    querySnapshot.forEach(function(userSnap) {
+      var user = userSnap.val();
+      if(user.roles[0]) {
+          teachers.push({firstName: user.firstName, id: userSnap.key()});
+      }
+    });
+    console.log(teachers);
+  });
+
  
 
 

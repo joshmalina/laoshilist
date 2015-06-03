@@ -1,16 +1,108 @@
-<p>This is the jobView view.</p>
 <pre>{{job}}</pre>
 
-<div class = "left">
-	<div class = "about-job">
-		<div class = "job-title"></div>
-		<div class = "fast-facts"></div>
-		<div class = "description"></div>
-		<div class = "apply-button"></div>
+<style>
+	h1 { 
+		font-size: 2em;
+	}
+	h3 {
+		padding:0;
+		margin-top:0;
+	}
+	li {
+		list-style: none;
+	}
+	.description {
+		font-size: 1.25em;
+		font-weight: 450;
+	}
+	.fast-facts {
+		background: #eee;
+  		margin-bottom: 20px;
+  		padding: 20px 20px 10px 20px;	
+	}
+	.fast-facts table {
+		max-width: 100%;
+  		background-color: transparent;
+  		border-collapse: collapse;
+  		border-spacing: 0;
+	}
+	.fast-facts td {
+  		vertical-align: top;
+  		font-size:1.2em;
+  		padding-bottom: 16px;
+	}
+	.catValue {
+		font-weight: 400;
+  		
+	}
+	.catName {
+		padding-right: 20px;
+	}
+	.job_ {
+		padding-bottom: 14px;
+	}
+	.left {
+		padding-left: 0;
+	}
+</style>
+
+<div class="page-header">
+	<h1>{{job.title}}<button class="btn btn-primary pull-right" ng-href="#/#apply">Apply</button>
+	</h1>
+	<small>Last updated on {{job.dateModified | date:'MM/dd/yy'}}</small>
+</div>
+
+<div class = "left col-lg-8">
+	<div class = "about-job">	
+		<div class = "fast-facts">
+			<table>
+				<thead></thead>
+				<tbody>
+					<tr ng-if="job.city">
+						<td class="catName"><strong>City:</strong></td>
+						<td class="catValue">{{cities[job.city].en}}</td>
+					</tr>
+					<tr ng-if="job.shortLocation">
+						<td class = "catName"><strong>Area:</strong></td>
+						<td class="catValue">{{job.shortLocation}}</td>
+					</tr>
+					<tr ng-if="job.numStudents">
+						<td class="catName"><strong>Class Size:</strong></td>
+						<td class="catValue">{{job.numStudents}}</td>
+					</tr>
+					<tr ng-if="job.locationDesc">
+						<td class="catName"><strong>Location:</strong></td>
+						<td class="catValue">{{job.locationDesc}}</td>
+					</tr>
+					<tr ng-if="job.age">
+						<td class="catName"><strong>Age:</strong></td>
+						<td class="catValue"><explode wrap="ages" array="job.age"></explode></td>
+					</tr>
+					<tr ng-if="job.teacherPay">
+						<td class="catName"><strong>Pay:</strong></td>
+						<td class="catValue">{{job.teacherPay}}</td>
+					</tr>
+					<tr ng-if="job.subjects">
+						<td class="catName"><strong>Subject:</strong></td>
+						<td class="catValue"><explode wrap="subjects" array="job.subjects"></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>	
+		<div class = "description">
+			{{job.longDesc}}
+		</div>
 	</div>
 	<div class = "apply-job"></div>
 </div>
-<div class = "right">
-	<div class = "related-jobs"></div>
+<div class = "right col-lg-4">
+	<div class = "related-jobs">
+		<h3>Other Jobs</h3>
+		<div class = "job_" ng-repeat="job_ in jobs | limitTo:4">
+			<a>{{job_.title}}</a><br>
+			<small>{{cities[job_.city].en}},</small>
+			<small>{{job_.shortLocation}}</small>
+		</div>
+	</div>
 	<div class = "share-job"></div>
 </div>

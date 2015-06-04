@@ -109,7 +109,7 @@
 			<span class="fields-name">CV</span>
 			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Open</a></span>
 		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" nf-if="user.notes">
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.notes">
 			<span class="fields-name">Notes</span><br>
 			<notes notes=user.notes can-add="false"></notes>
 		</div>

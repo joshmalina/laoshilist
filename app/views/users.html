@@ -3,23 +3,32 @@
 	background-color: whitesmoke;
 	cursor: pointer;
 }
+.th-btn:hover {
+	text-decoration: underline;
+	cursor: pointer;
+}
 </style>
 
 
 <div class="page-header">
-	<h1>Users<button class="btn btn-primary pull-right" ng-click="addUser()">New</button></h1>
+	<h1 class="col-lg-8">Users</h1>
+	<div class = "form-group col-lg-3">
+		<input type="text" class="form-control" ng-model="filterText.$">
+	</div>
+	<button class="btn btn-primary pull-right" ng-click="addUser()">New</button></h1>
 </div>
+
 	<table class="table">
 		<thead>
 			<tr>
-				<th>name</th>
-				<th>roles</th>
-				<th>date added</th>
+				<th class="th-btn" ng-click="orderByFn('firstName')">Name</th>
+				<th class="th-btn" ng-click="orderByFn('roles')">Role</th>
+				<th class="th-btn" ng-click="orderByFn('dateAdded')">Date Added</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
-			<tr ng-repeat="(name, user) in users" class="users-table-body">
+			<tr ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText" class="users-table-body">
 				<td ng-click="viewProfile(user.$id)" class="firstName">{{user.firstName}}</td>
 				<td>
 					<explode wrap="roles" array="user.roles"></explode>
@@ -27,8 +36,11 @@
 				</td>
 				<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
 				<td>
-					<button class="btn btn-danger btn-xs" ng-click="users.$remove(user)">X</button>
+					<!--button class="btn btn-danger btn-xs" ng-click="users.$remove(user)">X</button-->
+					<button class="btn btn-danger btn-xs" ng-click="deleteConfirm(user)">X</button>
+					<ll-delete collection="users" item="user"></ll-delete>
 				</td>
+				<!--td><notes notes="user.notes" canAdd="false"></notes></td-->
 			</tr>
 		</tbody>
 	</table>

@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('UsersCtrl', ['roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function (roles, $scope, firebasePath, $firebaseArray, $location) {
+ .controller('UsersCtrl', ['$modal', 'roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function ($modal, roles, $scope, firebasePath, $firebaseArray, $location) {
 
   var ref = new Firebase (firebasePath + '/users');
   var users = $firebaseArray(ref);
@@ -17,6 +17,12 @@
 
   $scope.viewProfile = function(userID) {
     $location.path('/profile/' + userID);
+  };
+
+  $scope.orderBy = '';  
+
+  $scope.orderByFn = function(criterion) {
+    $scope.orderBy = $scope.orderBy === criterion ? '-' + criterion : criterion;
   };
 
   $scope.addUser = function() {
@@ -40,8 +46,32 @@
           teachers.push({firstName: user.firstName, id: userSnap.key()});
       }
     });
-    console.log(teachers);
   });
+
+  $scope.deleteConfirm = function(toDelete) {
+
+    console.log(toDelete);
+
+    var modalObj = {
+      templateUrl: 'views/templates/delete.html',
+      controller: 'DeleteCtrl',
+      size: 'sm',
+      resolve: {
+        toDelete: function() {
+          return toDelete;
+        },
+        collection: function() {
+          return $scope.users;
+        }
+      }
+    }
+
+    var modalInstance = $modal.open(modalObj);
+
+    modalInstance.result.then(function (deletedItem) {
+      console.log(deletedItem);
+    });
+  };
 
  
 

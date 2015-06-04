@@ -23,6 +23,22 @@
       scope.teachers = [];
       scope.clients = [];
 
+      var client = null;
+
+      scope.updateClient = function() {
+        client = new user(scope.job_.clientID);
+        client.getInfo();
+        scope.client = client; 
+      };
+
+      scope.job_.$loaded().then(function() {
+        scope.updateClient();
+        // scope.visitClient = function() {
+        //   client.visit();
+        // }
+
+      });
+
       usersRef.on('value', function(querySnapshot) {
         querySnapshot.forEach(function(userSnap) {
           var user = userSnap.val();
@@ -39,7 +55,7 @@
       scope.notes = $firebaseArray(ref.child('notes'));      
 
       scope.pushNote = function(newNote) {
-        notes.$add({
+        scope.notes.$add({
           notevalue: newNote,
           userid: authObj.password.email,
           date: fbMethods.getTime()

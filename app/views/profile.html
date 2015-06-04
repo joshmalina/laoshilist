@@ -65,46 +65,53 @@
 </div>
 
 <div class = "clearfix profile-container container col-lg-12">
-	<div class = "col-lg-offset-0 col-xs-offset-2 col-sm-offset-1">
+	<div class = "col-lg-offset-0 col-xs-offset-0 col-sm-offset-0">
 		<!-- at large res, float; at small res put on top -->
 		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar.data">
 			<img src="{{user.avatar.data}}" class="avatar-img"/>			
 		</div>		
-		<div class = "styled col-lg-6 col-sm-7 col-xs-9 col-lg-7" ng-if="user.roles">
+		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
 			<span class = "fields-name">Is a</span> <explode wrap="roles" array="user.roles"></explode>
 		</div>
-		<div class = "col-lg-7 col-sm-7 styled col-xs-9" ng-if="user.city">
+		<div class = "col-lg-7 col-sm-12 col-md-12 styled col-xs-12" ng-if="user.city">
 			<span class = "fields-name">Lives in </span>{{ cities[user.city].zh }}
 		</div>
-		<div class = "locationStyled col-sm-7 styled col-xs-9 col-lg-7 " ng-if="user.location">
+		<div class = "locationStyled col-sm-12 col-md-12 styled col-xs-12 col-lg-12" ng-if="user.location">
 			<span class = "fields-name">Lives at </span>{{ user.location }}
 		</div>
-		<div class = "nationality col-sm-7 styled col-xs-9 col-lg-7 " ng-if="user.country">
+		<div class = "nationality col-sm-12 col-md-12 styled col-xs-12 col-lg-12" ng-if="user.country">
 			<span class = "fields-name">From </span>{{ countries[user.country] }}
 		</div>
-		<div class = "lastSeen styled col-sm-7 col-xs-9 col-lg-7" ng-if="user.lastLogin">
+		<div class = "lastSeen styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.lastLogin">
 			<span class = "fields-name">Seen on </span> {{ user.last_login | date:'MM/dd/yy' }}
 		</div>
-		<div class = "since styled col-xs-9 col-sm-7 col-lg-7" ng-if="user.dateAdded">
+		<div class = "since styled col-xs-12 col-md-12 col-sm-12 col-lg-12" ng-if="user.dateAdded">
 			<span class = "fields-name">Joined </span>{{ user.dateAdded | date:'MM/dd/yy' }}
 		</div>
-		<div class = "ethnicity styled col-xs-9 col-sm-7 col-lg-7" ng-if="user.ethnicity">
+		<div class = "ethnicity styled col-xs-12 col-md-12 col-sm-12 col-lg-12" ng-if="user.ethnicity">
 			<span class = "fields-name">Ethnically </span>
 			{{ ethnicities[user.ethnicity] }}
 		</div>
-		<div class = "styled col-xs-9 col-lg-7 col-sm-7" ng-if="user.ages">
+		<div class = "styled col-xs-12 col-lg-12 col-sm-12 col-md-7" ng-if="user.ages">
 			<span class = "fields-name">Lived </span><explode array="user.ages"></explode> <span class = "fields-name"> years</span>
 		</div>		
-		<div class =  "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7" ng-if="user.subjects">
+		<div class =  "styled col-lg-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.subjects">
 			<span class = "fields-name">Studies </span>
 			<explode wrap="subjects" array="user.subjects"></explode>
 		</div>
-		<div class = "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7">			
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.contact">			
 			<profile-box label="contact" obj="user.contact"></profile-box>
 		</div>
-		<div class = "styled col-lg-5 col-xs-9 col-sm-7 col-lg-7" ng-if="user.cv">
+		<div class = "styled col-lg-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.schedule">
+			<span class = "fields-name">Available <br></span> {{user.schedule}}			
+		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
 			<span class="fields-name">CV</span>
 			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Open</a></span>
+		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" nf-if="user.notes">
+			<span class="fields-name">Notes</span><br>
+			<notes notes=user.notes can-add="false"></notes>
 		</div>
 	</div>
 	<!-- to add: jobs associated with, jobs applied for, payables, bank info, education potentially -->	

@@ -28,6 +28,8 @@
  		$location.path('/profile/' + $routeParams.username);
  	};
 
+ 	$scope.notes = $firebaseArray(ref.child('notes'));
+
  	$scope.contacts = $firebaseArray(ref.child('contact'));
  	var bankRef = new Firebase (firebasePath + '/users/' + $routeParams.username + '/payment/banks');
  	$scope.banks = $firebaseArray(bankRef);

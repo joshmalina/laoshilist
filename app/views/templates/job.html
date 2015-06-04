@@ -127,6 +127,16 @@
 	margin-left:5px;
 }
 
+.notesAboveFold {
+	background-color: whitesmoke;
+	font-size:small;
+	margin-top:10px;
+}
+
+.notesAboveFold td {
+	border:none !important;
+}
+
 /* END JOBS PAGE */
 </style>
 
@@ -154,7 +164,15 @@
 		<!-- description -->
 		<div class = "panel-body">
 			<span>{{job_.longDesc}}</span>
+			<table class="table notesAboveFold">
+			<tr ng-repeat="note in notes | orderBy:'-date'">
+				<td>{{note.notevalue}}</td>
+				<td>{{note.userid}}</td>
+				<td>{{note.date | date:'MM/dd'}}</td>
+			</tr>
+		</table>
 		</div>
+		
 
 			<form class = "edit-panel form-inline" collapse="isCollapsed">
 				<div class="text-center">
@@ -271,7 +289,7 @@
 					<span class="select-dropdown"><label>Client:</label>
 						<a ng-if="job_.clientID" ng-href="/#/profile/{{job_.teacherID}}">View Profile</a>
 					</span>
-					<select ng-model="job_.clientID" ng-change="save()" ng-options="c.id as c.firstName for c in clients" class="form-control reign-in">
+					<select ng-model="job_.clientID" ng-change="save(); updateClient()" ng-options="c.id as c.firstName for c in clients" class="form-control reign-in">
 						<option value=""></option>							
 					</select>					
 				</li>
@@ -315,7 +333,7 @@
 	<!-- FOOTER contains public / private fields -->
 	<div class = "panel-footer">
 		<div class="footer-buttons btn-group" role="group" aria-label="...">
-			<button type="button" class="btn btn-link">Apply</button>			
+			<!--button type="button" class="btn btn-link">Apply</button-->			
 			<!-- toggle to see more job details -->
 			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>	
 			<button type="button" class="btn btn-link" ng-click="job_.$remove()">Delete</button>

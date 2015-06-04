@@ -11,28 +11,14 @@
 
 
 <div class="page-header">
-	<h1>Edit Profile<button class="btn btn-primary pull-right" ng-click="goToProfile()">View Profile</button></h1>
+	<h1>{{user.firstName}} {{user.lastName}}<button class="btn btn-primary pull-right" ng-click="goToProfile()">View Profile</button></h1>
 </div>
 
 <div class = "edit-profile-container">
 	<tabset type="pills" class="edit-profile-menu">
 
 		<tab heading="Basic">
-			<div class = "form-group">
-				<label>Photo</label><br>
-				<img src="{{user.avatar.data}}" class="avatar-img"/>
-				<form ng-submit="uploadImage(image)">
-					<div class="fb-error" ng-show="error">{{error}}</div>
-					<div class="fb-inputs" ng-hide="image.isUploading">
-						<input class="fb-image-upload" fb-image-upload class="fb-input" type="file" name="image"/>
-						<input class="fb-submit" type="submit" value="Upload Image" ng-show="image.valid"/>
-					</div>
-					<div class="fb-uploading" ng-show="image.isUploading">
-						Uploading...
-					</div>
-					<div class="" ng-show="status">{{status}}</div>
-				</form>
-			</div>
+			
 			<div class = "form-group">
 				<label>Roles</label><br/>
 				<select ng-model="userRoles" class="form-control" multiple ng-change="saveRoles(userRoles)" ng-options="key as role for (key, role) in roles">
@@ -63,6 +49,26 @@
 					<option ng-repeat="r in races track by $index" value="{{$index}}">{{r | capitalizeFirst }}</option>
 				</select>
 			</div>
+			<label>Notes</label>
+			<notes notes="notes" can-add="true"></notes>			
+		</tab>
+
+		<tab heading="Personal">
+			<div class = "form-group">
+				<label>Photo</label><br>
+				<img src="{{user.avatar.data}}" class="avatar-img"/>
+				<form ng-submit="uploadImage(image)">
+					<div class="fb-error" ng-show="error">{{error}}</div>
+					<div class="fb-inputs" ng-hide="image.isUploading">
+						<input class="fb-image-upload" fb-image-upload class="fb-input" type="file" name="image"/>
+						<input class="fb-submit" type="submit" value="Upload Image" ng-show="image.valid"/>
+					</div>
+					<div class="fb-uploading" ng-show="image.isUploading">
+						Uploading...
+					</div>
+					<div class="" ng-show="status">{{status}}</div>
+				</form>
+			</div>
 			<div class = "form-group birthday">
 				<label>Birthday</label> <span class="label label-default">Private</span>
 				<div>
@@ -71,7 +77,7 @@
 			</div>
 		</tab>
 
-		<tab heading="Study">
+		<tab heading="Work / Study">
 			<div class="form-group">
 				<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
 				<select class="form-control" multiple ng-model="userSubjects" ng-change="saveSubjects(userSubjects)" ng-options="key as subject for (key, subject) in subjects">
@@ -82,8 +88,12 @@
 				<select class="form-control" multiple ng-model="userAges" ng-change="saveAges(userAges)" ng-options="key as age for (key, age) in ages">
 				</select>
 			</div>
+			<div class = "form-group">
+				<label>Schedule</label>
+				<textarea ng-model="user.schedule" class="form-control" ng-change="user.$save()"></textarea>
+			</div>
 			<div class="form-group">
-				<label>Chinese / English language level</label>
+				<label>Language level</label>
 				<select class="form-control" ng-model="user.languageLevel" ng-change="user.$save()">
 					<option value=""></option>
 					<option ng-repeat="l in languageLevel" value="{{$index}}">{{l.shortDesc}}</option>
@@ -93,19 +103,7 @@
 				<label>CV</label>
 				<input type="text" class="form-control" ng-model="user.cv" ng-change="user.$save()">
 			</div>		
-		</tab>
-
-		<tab headiing="Jobs">
-			<table class="table">
-				<thead>
-					<td>id</td>
-					<td>date</td>
-					<td>shortDesc</td>
-					<td>status</td>
-				</thead>
-				<tbody></tbody>
-			</table>
-		</tab>
+		</tab>		
 
 		<tab heading="Location">
 			<div class = "form-group">
@@ -115,9 +113,7 @@
 			<div class = "form-group">
 				<label>Specific Location</label>
 				<input type="text" class="form-control" ng-model="user.location" ng-change="user.$save()" placeholder="South of Dongzhimen"/>
-			</div>
-			<label>Map</label>
-			
+			</div>			
 		</tab>
 
 		<tab heading="Education">

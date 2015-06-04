@@ -1,0 +1,30 @@
+<style>
+	.newNote {
+		display:flex;
+	}
+	.notesAboveFold {
+		background-color: whitesmoke;
+		font-size:small;
+		margin-top:10px;
+	}
+
+	.notesAboveFold td {
+		border:none !important;
+	}
+</style>
+
+<div class="ll-notes">
+	<div ng-if="canAdd === true">
+		<div class="newNote">
+			<textarea class="textarea form-control msd-elastic newNote" ng-model="newNote"></textarea>
+			<button class="btn btn-danger" ng-click="pushNote(newNote)">+</button>
+		</div>
+	</div>
+	<table class="table notesAboveFold">
+		<tr ng-repeat="note in notes | orderBy:'-date'">
+			<td>{{note.value}}</td>
+			<td>{{note.user}}</td>
+			<td>{{note.date | date:'MM/dd'}}</td>
+		</tr>
+	</table>
+</div>

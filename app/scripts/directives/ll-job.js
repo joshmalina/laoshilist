@@ -25,18 +25,13 @@
 
       var client = null;
 
-      scope.updateClient = function() {
-        client = new user(scope.job_.clientID);
-        client.getInfo();
-        scope.client = client; 
+      scope.updateClient = function() {        
+        scope.client = new user(scope.job_.clientID);
+        //scope.client.assignJob(scope.job_.$id);
       };
 
       scope.job_.$loaded().then(function() {
         scope.updateClient();
-        // scope.visitClient = function() {
-        //   client.visit();
-        // }
-
       });
 
       usersRef.on('value', function(querySnapshot) {

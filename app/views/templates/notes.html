@@ -7,23 +7,29 @@
 		font-size:small;
 		margin-top:10px;
 	}
-
+	textarea {
+		height:36px;
+	}
 	.notesAboveFold td {
 		border:none !important;
+	}	
+	.showAdd:hover {
+		cursor: pointer;
 	}
 </style>
 
 <div class="ll-notes">
-	<div ng-if="canAdd === true">
+	<div ng-if="canAdd === true && showAdd">
 		<div class="newNote">
 			<textarea class="textarea form-control msd-elastic newNote" ng-model="newNote"></textarea>
-			<button class="btn btn-danger" ng-click="pushNote(newNote)">+</button>
+			<button class="btn btn-danger btn-xs" ng-click="pushNote(newNote); newNote = null"><span class="glyphicon glyphicon-plus"></span></button>
 		</div>
 	</div>
-	<table class="table notesAboveFold">
+	<a ng-show="canAdd === true" ng-click="showAdd = !showAdd" class="showAdd">Add Note</a>
+	<table class="table notesAboveFold">		
 		<tr ng-repeat="note in notes | orderBy:'-date'">
-			<td>{{note.value}}</td>
-			<td>{{note.user}}</td>
+			<td>{{note.value || note.notevalue }}</td>
+			<td>{{note.user || note.userid | limitTo: 4}}</td>
 			<td>{{note.date | date:'MM/dd'}}</td>
 		</tr>
 	</table>

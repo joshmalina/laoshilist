@@ -31,6 +31,8 @@
     });
   };
 
+  $scope.skinny = true;
+
   ref.on('value', function(snapshot) {
       $scope.users_ = snapshot.val();    
   }, function (errorObject) {
@@ -48,30 +50,31 @@
     });
   });
 
-  $scope.deleteConfirm = function(toDelete) {
+  // $scope.deleteConfirm = function(toDelete) {
 
-    console.log(toDelete);
+  //   console.log(toDelete);
 
-    var modalObj = {
-      templateUrl: 'views/templates/delete.html',
-      controller: 'DeleteCtrl',
-      size: 'sm',
-      resolve: {
-        toDelete: function() {
-          return toDelete;
-        },
-        collection: function() {
-          return $scope.users;
-        }
-      }
-    }
+  //   var modalObj = {
+  //     templateUrl: 'views/templates/delete.html',
+  //     controller: 'DeleteCtrl',
+  //     animation: false,
+  //     size: 'sm',
+  //     resolve: {
+  //       toDelete: function() {
+  //         return toDelete;
+  //       },
+  //       collection: function() {
+  //         return $scope.users;
+  //       }
+  //     }
+  //   }
 
-    var modalInstance = $modal.open(modalObj);
+  //   var modalInstance = $modal.open(modalObj);
 
-    modalInstance.result.then(function (deletedItem) {
-      console.log(deletedItem);
-    });
-  };
+  //   modalInstance.result.then(function (deletedItem) {
+  //     console.log(deletedItem);
+  //   });
+  // };
 
  
 

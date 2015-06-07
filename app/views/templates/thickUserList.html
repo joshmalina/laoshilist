@@ -1,0 +1,11 @@
+<div class="media" ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText">
+  <div class="media-left">
+    <a href="#">
+      <img class="media-object" src="images/blank_teacher.png" alt="...">
+    </a>
+  </div>
+  <div class="media-body">
+    <h4 class="media-heading">{{user.firstName}}</h4>
+	<notes notes="user.notes" canAdd="false"></notes>
+  </div>
+</div>

@@ -78,6 +78,11 @@
 		</tab>
 
 		<tab heading="Work / Study">
+			<div class="checkbox">
+				<label>
+					<input type="checkbox" ng-model="user.interviewed" ng-change="user.$save()"> Interviewed
+				</label>
+			</div>
 			<div class="form-group">
 				<label>Subjects you can teach / you want to study / you have studied<br/><small>Ctrl + click to select more than one </small></label>
 				<select class="form-control" multiple ng-model="userSubjects" ng-change="saveSubjects(userSubjects)" ng-options="key as subject for (key, subject) in subjects">

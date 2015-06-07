@@ -15,7 +15,7 @@ angular.module('laoshiListApp')
   	'Have Teacher',
   	'Meeting Scheduled',
   	'Pending Payment',
-  	'Closed - Paid',
-  	'Closed - Unpaid',
+  	'Paid',
+  	'Unpaid',
   	'On Hold'
 ]);

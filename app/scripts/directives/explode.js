@@ -17,6 +17,13 @@ angular.module('laoshiListApp')
   				return scope.wrap[key];
   			});
   		}	
+
+      if(scope.funcWrap) {
+        keys = keys.map(function(key) {
+          return scope.funcWrap(key);
+        });
+      }
+
   		scope.joined = keys.join(', ');
   	}
 
@@ -25,7 +32,8 @@ angular.module('laoshiListApp')
       restrict: 'E',
       scope: {
       	array: '=',
-      	wrap: '='
+      	wrap: '=',
+        funcWrap: '='
       },
       link: link
     };

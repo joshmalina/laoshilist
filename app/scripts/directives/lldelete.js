@@ -17,6 +17,7 @@ angular.module('laoshiListApp')
 		      templateUrl: 'views/templates/delete.html',
 		      controller: 'DeleteCtrl',
 		      size: 'sm',
+		      animation: false,
 		      resolve: {
 		        toDelete: function() {
 		          return scope.item;
@@ -37,7 +38,7 @@ angular.module('laoshiListApp')
   	}
 
   	return {
-  		template: '<button ng-click="deleteConfirm()">X</button>',
+  		template: '<button class="btn btn-link" ng-click="deleteConfirm()">Delete</button>',
   		restrict: 'E',
   		scope: {
   			collection: '=',

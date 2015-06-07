@@ -24,6 +24,8 @@
  			scope.newNote = null;
  		};
 
+ 		scope.showAdd = false;
+
  	}
 
  	return {

@@ -129,7 +129,7 @@
 
 .notesAboveFold {
 	background-color: whitesmoke;
-	font-size:small;
+	font-size:smaller;
 	margin-top:10px;
 }
 
@@ -164,13 +164,7 @@
 		<!-- description -->
 		<div class = "panel-body">
 			<span>{{job_.longDesc}}</span>
-			<table class="table notesAboveFold">
-			<tr ng-repeat="note in notes | orderBy:'-date'">
-				<td>{{note.notevalue}}</td>
-				<td>{{note.userid}}</td>
-				<td>{{note.date | date:'MM/dd'}}</td>
-			</tr>
-		</table>
+			<notes notes="notes" can-add="true"></notes>			
 		</div>
 		
 
@@ -308,23 +302,7 @@
 					<select ng-model="job_.status" class="reign-in form-control" ng-change="save()" ng-options="k as s for (k,s) in jobStatuses">
 						<option value="">-- choose --</option>
 					</select>	
-				</li>
-				<li class="list-group-item">
-						<div>
-							<label>Notes:</label>
-							<div class="newNote">
-								<textarea class="textarea form-control msd-elastic newNote" ng-model="newNote"></textarea>
-								<button class="btn btn-danger" ng-click="pushNote(newNote)">+</button>
-							</div>
-						</div>
-					<table class="table">
-						<tr ng-repeat="note in notes | orderBy:'-date'">
-							<td>{{note.notevalue}}</td>
-							<td>{{note.userid}}</td>
-							<td>{{note.date | date:'MM/dd'}}</td>
-						</tr>
-					</table>
-				</li>
+				</li>				
 			</ul>
 		</div>
 		</form>
@@ -336,8 +314,8 @@
 			<!--button type="button" class="btn btn-link">Apply</button-->			
 			<!-- toggle to see more job details -->
 			<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>	
-			<button type="button" class="btn btn-link" ng-click="job_.$remove()">Delete</button>
-			<button type="button" class="job-status-label btn btn-link" disabled>{{ jobStatuses[job_.status]}}</button>
+			<ll-delete item="job_" collection="job_"></ll-delete>			
+			<button type="button" class="job-status-label btn btn-link pull-right" disabled>{{ jobStatuses[job_.status]}}</button>
 		</div>		
 		<span class="dateModified pull-right">
 			Updated {{job_.dateModified | date:'MM/dd'}}

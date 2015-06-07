@@ -110,6 +110,14 @@
       templateUrl: 'views/jobview.html',
       controller: 'JobviewCtrl'
     })
+    .when('/books', {
+      templateUrl: 'views/books.html',
+      controller: 'BooksCtrl'
+    })
+    .when('/booksEdit', {
+      templateUrl: 'views/booksedit.html',
+      controller: 'BookseditCtrl'
+    })
     .otherwise({
       redirectTo: '/'
     });

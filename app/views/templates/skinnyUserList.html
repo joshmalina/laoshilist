@@ -1,0 +1,24 @@
+<table class="table" ng-if="skinny">
+	<thead>
+		<tr>
+			<th class="th-btn" ng-click="orderByFn('firstName')">Name</th>
+			<th class="th-btn" ng-click="orderByFn('roles')">Role</th>
+			<th class="th-btn" ng-click="orderByFn('dateAdded')">Date Added</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText" class="users-table-body">
+			<td ng-click="viewProfile(user.$id)" class="firstName">{{user.firstName}} {{user.lastName}}</td>
+			<td>
+				<explode wrap="roles" array="user.roles"></explode>
+
+			</td>
+			<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
+			<td>
+				<!--ll-delete collection="users" item="user"></ll-delete-->
+				<span ng-if="user.interviewed" class="label label-info">Inteviewed</span>
+			</td>
+		</tr>
+	</tbody>
+</table>

@@ -7,34 +7,54 @@
  * # user
  * Service in the laoshiListApp.
  */
-angular.module('laoshiListApp')
-  .factory('user', ['$location', '$firebaseObject', 'firebasePath', function ($location, $firebaseObject, firebasePath) {
-  	
+ angular.module('laoshiListApp')
+ .factory('user', ['$location', '$firebaseObject', 'firebasePath', '$firebaseArray', function ($location, $firebaseObject, firebasePath, $firebaseArray) {
+  
+  function User(userID) {
 
-  	var user = function(userID) {
-  		this.userID = userID;
-  	};
+    this.userID = userID;
 
-  	user.prototype.getInfo = function() {
-  		
-  		var self = this;
+    var ref = new Firebase (firebasePath + '/users/' + userID);
 
-  		var url = firebasePath + '/users/' + this.userID;
+    var userObj = $firebaseObject(ref);
 
-  		var ref = new Firebase (url);
+    var self = this;
 
-  		var obj = $firebaseObject(ref);
+    userObj.$loaded().then(function(userReturned) {
+      self.firstName = userReturned.firstName;
+      // self.jobs = userReturned.jobs;     
+    });
 
-  		obj.$loaded().then(function() {
-  			self.firstName = obj.firstName;
-  		});
-  		
-  	}
+  }
 
-  	user.prototype.visit = function() { 		
-  		$location.path('/profile/' + this.userID);
-  	}
-  	    
-    return user;
+  User.prototype.getFirstName = function() {
+    return this.firstName;
+  };
 
-  }]);
+  User.prototype.assignJob = function(jobID) {
+
+    var self = this;
+
+    var ref = new Firebase (firebasePath + '/users/' + self.userID);
+
+    var jobs = $firebaseObject(ref.child('jobs'));
+
+    var obj = {};
+
+    obj[jobID] = true;
+
+    //jobs[jobID] = true;   
+
+    // ref.child('jobs').set(null); 
+
+  };
+
+
+  return User;
+
+
+
+
+ 
+
+ }]);

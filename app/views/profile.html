@@ -67,7 +67,7 @@
 <div class = "clearfix profile-container container col-lg-12">
 	<div class = "col-lg-offset-0 col-xs-offset-0 col-sm-offset-0">
 		<!-- at large res, float; at small res put on top -->
-		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar.data">
+		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar && user.avatar.data">
 			<img src="{{user.avatar.data}}" class="avatar-img"/>			
 		</div>		
 		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
@@ -112,9 +112,13 @@
 			<span class="fields-name">CV</span>
 			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Open</a></span>
 		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12">
-			<span class="fields-name">Associated with </span>
-			<span class="fields-value">{{jobKeys | json}}</span>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="jobKeys.length > 0">
+			<span class="fields-name">Jobs</span><br>
+			<jobs-assoc jobs="jobKeys"></jobs-assoc>		 
+		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="teacherFor.length > 0">
+			<span class="fields-name">Teacher For</span><br>
+			 <jobs-assoc jobs="teacherFor"></jobs-assoc>
 		</div>
 		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12">
 			<span class="fields-name">Notes</span><br>

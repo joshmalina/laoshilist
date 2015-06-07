@@ -11,13 +11,11 @@
 
 
 <div class="page-header">
-	<h1 class="col-lg-8">Users</h1>
-	<div class = "form-group col-lg-3">
-		<input type="text" class="form-control" ng-model="filterText.$">
-	</div>
-	<button class = "btn btn-primary" ng-click="skinny = !skinny">ToggleViews</button>
-	<button class="btn btn-primary pull-right" ng-click="addUser()">New</button></h1>
+	<h1>Users<small class="pull-right"><input type="text" class="" ng-model="filterText.$" placeholder="">
+	<button class = "btn btn-warning btn-link" ng-click="skinny = !skinny">Toggle View</button>
+	<button class="btn btn-primary btn-link" ng-click="addUser()">New Job</button></small></h1>		
 </div>
+	
 
 <div class = "skinnyView" ng-if="skinny">
 	<ng-include src="'views/templates/skinnyUserList.html'"></ng-include>

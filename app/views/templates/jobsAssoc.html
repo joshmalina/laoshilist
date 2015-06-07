@@ -1,0 +1,3 @@
+<span class="fields-value" ng-repeat="k in jobs">
+	<a ng-href="#/jobview/{{k.$id}}">{{k.title | limitTo:20}} - {{k.dateModified | date:'MM/dd'}}</a><br>
+</span>

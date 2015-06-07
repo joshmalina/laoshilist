@@ -10,6 +10,8 @@
  angular.module('laoshiListApp')
  .controller('ProfileCtrl', ['$firebaseArray', '$q', 'subjects', 'roles', '$scope', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'cities', 'ethnicities', 'countries', function ($firebaseArray, $q, subjects, roles, $scope, $location, $routeParams, firebasePath, $firebaseObject, cities, ethnicities, countries) {
 
+    // should redirect if username empty in routeparams.username
+
    var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
 
    $scope.user = $firebaseObject(ref);  	
@@ -33,70 +35,31 @@
 
   var jobsRef = new Firebase (firebasePath + '/jobs');
 
-  var theJobs = $firebaseArray(jobsRef.orderByChild("clientID").equalTo($scope.user.$id));
+  var theJobs = $firebaseArray(jobsRef.orderByChild('clientID').equalTo($scope.user.$id));
+  var teacherFor = $firebaseArray(jobsRef.orderByChild('teacherID').equalTo($scope.user.$id));
 
   $scope.jobKeys = [];
+  $scope.teacherFor = [];
 
   theJobs.$loaded().then(function(jobs) {
-    console.log(jobs);
     angular.forEach(jobs, function(value, key) {
-      $scope.jobKeys.push(value.$id);
+      $scope.jobKeys.push(value);
     });
   })
 
-  $scope.jobRef = function(jobKey) {
-    return '<a ng-href="/jobView/'+jobKey+'"></a>';
-  }
-
-
-
-    // .on("value", function(snapshot) {
-    //   var jobKeys = Object.keys(snapshot.val());
-    //   console.log(jobKeys);
-    //   jobKeys = $firebaseObject(snapshot.val());
-    //   console.log(jobKeys)
-    //   $scope.jobKeys = jobKeys;
-    // });
-
-
-
-
-  function a () {
-
-    var jobsPromise = $q.defer();
-    var jobs = [];
-
-
-    jobsRef.orderByChild('clientID').on('value', function(snapshot) {
-
-      snapshot.forEach(function(client) {
-        var clientID = client.child('clientID').val();
-        if(clientID === $scope.user.$id) {
-          console.log(clientID);
-          jobs.push(clientID);
-        };
-      });
-
-
+  teacherFor.$loaded().then(function(jobs) {
+    angular.forEach(jobs, function(value, key) {
+        $scope.teacherFor.push(value);
     });
-
-    return jobsPromise.resolve(jobs);
-  }
-
-  var get_jobs = function() {
-    return a();
-  }
-
-  $scope.jobs = get_jobs();
+  })
 
 
 
 
 
 
+ 
 
-
-  	// need to do some checking to make sure we got a user, else redirect
 
 
   }]);

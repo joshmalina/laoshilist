@@ -10,7 +10,8 @@ angular.module('laoshiListApp')
   .directive('explode', function () {
 
   	function link (scope) {
-  		var keys = Object.keys(scope.array);  	
+
+  		var keys = scope.array.isArray ? scope.array : Object.keys(scope.array);  	
 
   		if(scope.wrap) {
   			keys = keys.map(function(key) {

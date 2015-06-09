@@ -28,6 +28,8 @@
   $scope.addUser = function() {
     $scope.users.$add({      
       dateAdded: Firebase.ServerValue.TIMESTAMP
+    }).then(function(ref) {
+      $location.path('/profile_edit/' + ref.key());
     });
   };
 

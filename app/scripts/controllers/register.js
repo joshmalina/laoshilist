@@ -34,17 +34,16 @@
  		});	
  	};
 
- 	// consider implementing this as a transaction so we don't have issues
+ 	// consider implementing this atomically so we don't have issues
  	// also consider putting this in a service
 	// register user as a DB object, indexed by a username based on the first name
 	function createDbUser(uid) {
-		var newUserRef = ref.child('users').child(username.new($scope.usr.firstName));
+		//var newUserRef = ref.child('users').child(username.new($scope.usr.firstName));
+		var newUserRef = ref.child('users').child(uid);
 		newUserRef.set({
-			email: $scope.usr.email,
-			uid: uid,
-			firstName: $scope.usr.firstName//,
-			// lastName: $scope.usr.lastName,
-			//created: Firebase.ServerValue.TIMESTAMP				
+			loginEmail: $scope.usr.email,
+			firstName: $scope.usr.firstName,
+			dateAdded: Firebase.ServerValue.TIMESTAMP				
 		}, function(error) {
 			if(error) {
 				console.log(error);

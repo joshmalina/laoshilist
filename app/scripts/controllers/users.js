@@ -33,6 +33,36 @@
     });
   };
 
+  $scope.selectedUsers = [];
+
+  $scope.deleteUsers = function() {
+    $scope.selectedUsers.forEach(function(user, idx) {
+      console.log(user);
+      //remove user from db
+      $scope.users.$remove(user).then(function(ref) {
+        // remove user from selected list
+        $scope.selectedUsers.splice(idx, 1);
+      }).catch(function(error) {
+      });
+    });
+  }
+
+  $scope.toggleSelectedUser = function(user) {
+
+    var idx = $scope.selectedUsers.indexOf(user);
+
+    // if selected already, remove from array
+    if(idx > -1) {
+      $scope.selectedUsers.splice(idx, 1);
+    } 
+
+    // else add to array
+    else {
+      $scope.selectedUsers.push(user);
+    }
+
+  };
+
   $scope.skinny = true;
 
   ref.on('value', function(snapshot) {

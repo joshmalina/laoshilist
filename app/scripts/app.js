@@ -78,7 +78,7 @@
         // Auth refers to our $firebaseAuth wrapper in the example above
         "currentAuth": ["Auth", function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
-          return Auth.$requireAuth();
+          return Auth.$waitForAuth();
         }]
       }
     })
@@ -108,15 +108,23 @@
     })
     .when('/jobview/:jobid', {
       templateUrl: 'views/jobview.html',
-      controller: 'JobviewCtrl'
+      controller: 'JobviewCtrl',
+      resolve: {
+        // controller will not be loaded until $waitForAuth resolves
+        // Auth refers to our $firebaseAuth wrapper in the example above
+        "currentAuth": ["Auth", function(Auth) {
+          // $waitForAuth returns a promise so the resolve waits for it to complete
+          return Auth.$requireAuth();
+        }]
+      }
     })
-    .when('/books', {
-      templateUrl: 'views/books.html',
-      controller: 'BooksCtrl'
+    .when('/payments', {
+      templateUrl: 'views/payments.html',
+      controller: 'PaymentsCtrl'
     })
-    .when('/booksEdit', {
-      templateUrl: 'views/booksedit.html',
-      controller: 'BookseditCtrl'
+    .when('/paymentsEdit', {
+      templateUrl: 'views/paymentsedit.html',
+      controller: 'PaymentseditCtrl'
     })
     .otherwise({
       redirectTo: '/'

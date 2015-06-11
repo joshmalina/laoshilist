@@ -1,6 +1,7 @@
 <table class="table" ng-if="skinny">
 	<thead>
 		<tr>
+			<th></th>
 			<th class="th-btn" ng-click="orderByFn('firstName')">Name</th>
 			<th class="th-btn" ng-click="orderByFn('roles')">Role</th>
 			<th class="th-btn" ng-click="orderByFn('dateAdded')">Date Added</th>
@@ -9,10 +10,10 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText" class="users-table-body">
+			<td><input type="checkbox" ng-checked="selectedUsers.indexOf(user) > -1" ng-click="toggleSelectedUser(user)"></td>
 			<td ng-click="viewProfile(user.$id)" class="firstName">{{user.firstName}} {{user.lastName}}</td>
 			<td>
-				<explode wrap="roles" array="user.roles"></explode>
-
+				<explode wrap="roles" obj="user.roles"></explode>
 			</td>
 			<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
 			<td>

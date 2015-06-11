@@ -71,7 +71,7 @@
 			<img src="{{user.avatar.data}}" class="avatar-img"/>			
 		</div>		
 		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
-			<span class = "fields-name">Is a</span> <explode wrap="roles" array="user.roles"></explode> 
+			<span class = "fields-name">Is a</span> <explode wrap="roles" obj="user.roles"></explode> 		
 		</div>
 		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.interviewed">
 			<span class = "fields-name">Has been </span>interviewed

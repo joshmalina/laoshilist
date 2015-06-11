@@ -86,9 +86,6 @@
 	padding-right: 5px;
 }
 
-.panel-heading-subtitle { 
-}
-
 .panel-body {
 	padding-left:0;
 	padding-bottom:0;
@@ -137,6 +134,11 @@
 	border:none !important;
 }
 
+.panel-heading-subtitle a {
+	color:black;
+	opacity: .8;
+}
+
 /* END JOBS PAGE */
 </style>
 
@@ -153,7 +155,7 @@
 			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a>
 		</h3>
 		<div class = "panel-heading-subtitle">
-			<span class = "client-name">{{client.firstName}}</span>
+			<span class = "client-name"><a ng-href="/#/profile/{{client.userID}}">{{client.firstName}}</a></span>
 			<span> - </span>
 			<span class = "subtitle-location">			
 				<span class = "short-location" ng-if="job_.shortLocation">{{job_.shortLocation}}<i>, </i></span>				

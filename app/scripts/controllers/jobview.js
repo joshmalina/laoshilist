@@ -8,12 +8,13 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobviewCtrl', ['subjects', 'ages', '$routeParams', '$scope', 'firebasePath', '$firebaseObject', 'cities', '$firebaseArray', function (subjects, ages, $routeParams, $scope, firebasePath, $firebaseObject, cities, $firebaseArray) {
+  .controller('JobviewCtrl', ['currentAuth', 'subjects', 'ages', '$routeParams', '$scope', 'firebasePath', '$firebaseObject', 'cities', '$firebaseArray', function (currentAuth, subjects, ages, $routeParams, $scope, firebasePath, $firebaseObject, cities, $firebaseArray) {
     
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
     var ref = new Firebase (firebasePath + '/jobs/' + $routeParams.jobid);
 
+    $scope.userID = currentAuth.uid;
     $scope.job = $firebaseObject(ref);
     $scope.cities = cities;
     $scope.ages = ages;

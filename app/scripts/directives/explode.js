@@ -9,15 +9,24 @@
 angular.module('laoshiListApp')
   .directive('explode', function () {
 
-  	function link (scope) {
+  	function link (scope) {        
 
-  		var keys = scope.array.isArray ? scope.array : Object.keys(scope.array);  	
 
-  		if(scope.wrap) {
-  			keys = keys.map(function(key) {
-  				return scope.wrap[key];
-  			});
-  		}	
+      var keys = null;
+
+      if(scope.array) {
+        keys = Array.isArray(scope.array) ? scope.array : Object.keys(scope.array);   
+      } else if (scope.obj) {
+        keys = Object.keys(scope.obj);
+      }
+      
+
+
+      if(scope.wrap) {
+        keys = keys.map(function(key) {
+          return scope.wrap[key];
+        });
+      } 
 
       if(scope.funcWrap) {
         keys = keys.map(function(key) {
@@ -25,7 +34,10 @@ angular.module('laoshiListApp')
         });
       }
 
-  		scope.joined = keys.join(', ');
+      scope.joined = keys.join(', ');
+      
+
+  		
   	}
 
     return {
@@ -34,7 +46,7 @@ angular.module('laoshiListApp')
       scope: {
       	array: '=',
       	wrap: '=',
-        funcWrap: '='
+        obj: '='
       },
       link: link
     };

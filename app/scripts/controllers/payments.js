@@ -8,8 +8,8 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('BooksCtrl', ['$scope', '$firebaseArray', 'firebasePath', 'fbMethods', function ($scope, $firebaseArray, firebasePath, fbMethods) {
-    var ref = new Firebase (firebasePath + '/books');
+  .controller('PaymentsCtrl', ['$scope', '$firebaseArray', 'firebasePath', 'fbMethods', function ($scope, $firebaseArray, firebasePath, fbMethods) {
+    var ref = new Firebase (firebasePath + '/payments');
 
     $scope.items = $firebaseArray(ref);
 

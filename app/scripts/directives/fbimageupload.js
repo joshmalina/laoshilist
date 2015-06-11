@@ -12,9 +12,10 @@ angular.module('laoshiListApp')
 		link: function(scope, element) {
 			// Modified from https://developer.mozilla.org/en-US/docs/Web/API/FileReader
 			var fileReader = new FileReader();
-			var fileFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+			var fileFilter = /^(?:image\/bmp|image\/cis\-cod|image\/gif|application\/pdf|application\/PDF|image\/ief|image\/jpeg|image\/jpeg|image\/jpeg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
 			var wasUploading = false;
- 
+
+
 			scope.image = {valid: false};
  
 			scope.$watch('image.isUploading', function () {
@@ -40,6 +41,8 @@ angular.module('laoshiListApp')
  
 				var file = imageInput.files[0];
  
+				console.log(file);
+
 				scope.image.filename = file.name;
  
 				if (!fileFilter.test(file.type)) { 

@@ -93,16 +93,19 @@
 			{{job.longDesc}}
 		</div>
 	</div>
-	<div class = "apply-job"></div>
+	<apply user = "userID"></apply>	
 </div>
 <div class = "right col-lg-4">
 	<div class = "related-jobs">
 		<h3>Other Jobs</h3>
-		<div class = "job_" ng-repeat="job_ in jobs | limitTo:4">
-			<a>{{job_.title}}</a><br>
+		<div class = "job_" ng-repeat="job_ in jobs | limitTo:4">	
+			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a><br>
 			<small>{{cities[job_.city].en}},</small>
 			<small>{{job_.shortLocation}}</small>
 		</div>
 	</div>
 	<div class = "share-job"></div>
 </div>
+
+{{userID}}
+

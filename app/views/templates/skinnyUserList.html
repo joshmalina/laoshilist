@@ -12,12 +12,11 @@
 		<tr ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText" class="users-table-body">
 			<td><input type="checkbox" ng-checked="selectedUsers.indexOf(user) > -1" ng-click="toggleSelectedUser(user)"></td>
 			<td ng-click="viewProfile(user.$id)" class="firstName">{{user.firstName}} {{user.lastName}}</td>
-			<td>
+			<td ng-if="user.roles">
 				<explode wrap="roles" obj="user.roles"></explode>
 			</td>
 			<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
 			<td>
-				<!--ll-delete collection="users" item="user"></ll-delete-->
 				<span ng-if="user.interviewed" class="label label-info">Inteviewed</span>
 			</td>
 		</tr>

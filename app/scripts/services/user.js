@@ -22,14 +22,15 @@
 
     userObj.$loaded().then(function(userReturned) {
       self.firstName = userReturned.firstName;
-      // self.jobs = userReturned.jobs;     
+      self.lastName = userReturned.lastName;
     });
 
   }
 
-  User.prototype.getFirstName = function() {
-    return this.firstName;
-  };
+  // might not be being used
+  // User.prototype.getFirstName = function() {
+  //   return this.firstName;
+  // };
 
   User.prototype.assignJob = function(jobID) {
 
@@ -41,11 +42,7 @@
 
     var obj = {};
 
-    obj[jobID] = true;
-
-    //jobs[jobID] = true;   
-
-    // ref.child('jobs').set(null); 
+    obj[jobID] = true;    
 
   };
 

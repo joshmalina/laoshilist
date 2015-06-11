@@ -283,7 +283,7 @@
 				<li class="list-group-item subjects-list-item">
 					<!-- maybe typeahead at some points -->
 					<span class="select-dropdown"><label>Client:</label>
-						<a ng-if="job_.clientID" ng-href="/#/profile/{{job_.teacherID}}">View Profile</a>
+						<a ng-if="job_.clientID" ng-href="/#/profile/{{job_.clientID}}">View Profile</a>
 					</span>
 					<select ng-model="job_.clientID" ng-change="save(); updateClient()" ng-options="c.id as c.firstName for c in clients" class="form-control reign-in">
 						<option value=""></option>							
@@ -296,8 +296,8 @@
 						<a ng-if="job_.teacherID" class="btn btn-link" ng-href="/#/profile/{{job_.teacherID}}">View Profile</a>
 					</span>
 					<select ng-model="job_.teacherID" ng-change="save()" ng-options="t.id as t.firstName for t in teachers" class="form-control reign-in">
-						<option value=""></option>							
-					</select>					
+						<option value=""></option>										
+					</select>		
 				</li>
 				<li class="list-group-item subjects-list-item">
 					<span class="select-dropdown"><label>Status:</label></span>

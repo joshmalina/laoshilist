@@ -6,7 +6,7 @@
 
 
 <div class="page-header">
-	<h1 class="col-lg-8">Payments</h1>
+	<h1>Payments</h1>
 	<button class="btn btn-primary pull-right" ng-click="addItem()">New</button></h1>
 </div>
 
@@ -14,30 +14,22 @@
 <table class = "table table-striped booksTbl">
 	<thead>
 		<th>Date Paid</th>
-		<th>Date Added</th>
-		<th>Date Modified</th>
+		<!-- <th>Date Added</th>
+		<th>Date Modified</th> -->
 		<th>Amount</th>
-		<th>In/Out</th>
-		<th>Purpose</th>
 		<th>Job</th>
-		<th>Payer</th>
-		<th>Recipient</th>
-		<th>Invested</th>
-		<th>Profited</th>		
+		<th>Paid By</th>
+		<th>Paid To</th>
 	</thead>
 	<tbody>
 		<tr ng-repeat="i in items">
-			<td>{{i.datePaid | date:'MM/dd/yy'}}</td>
-			<td>{{i.dateAdded | date:'MM/dd/yy'}}</td>
-			<td>{{i.dateModified | date:'MM/dd/yy'}}</td>
+			<td>{{i.whenPaid | date:'MM/dd/yy'}}</td>
+			<!-- <td>{{i.whenAdded | date:'MM/dd/yy'}}</td>
+			<td>{{i.whenUpdated | date:'MM/dd/yy'}}</td> -->
 			<td>{{i.amount}}</td>
-			<td>{{i.inOut}}</td>
-			<td>{{i.purpose}}</td>
-			<td>{{i.job}}</td>
-			<td>{{i.payer}}</td>
-			<td>{{i.recipient}}</td>
-			<td>{{i.invested}}</td>
-			<td>{{i.profited}}</td>
+			<td><a ng-href="#/jobview/{{i.job}}">visit job</a></td>
+			<td><visit who="i.paidBy"></visit></td>
+			<td><visit who="i.paidTo"></visit></td>
 		</tr>
 	</tbody>
 </table>

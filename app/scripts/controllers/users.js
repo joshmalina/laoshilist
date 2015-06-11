@@ -8,11 +8,11 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('UsersCtrl', ['$modal', 'roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function ($modal, roles, $scope, firebasePath, $firebaseArray, $location) {
+ .controller('UsersCtrl', ['users', '$modal', 'roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function (users, $modal, roles, $scope, firebasePath, $firebaseArray, $location) {
 
   var ref = new Firebase (firebasePath + '/users');
-  var users = $firebaseArray(ref);
-  $scope.users = users;
+  var users_ = $firebaseArray(ref);
+  $scope.users = users_;
   $scope.roles = roles;
 
   $scope.viewProfile = function(userID) {
@@ -72,42 +72,8 @@
   });
 
 
-  ref.on('value', function(querySnapshot) {
-    var teachers = [];
-    querySnapshot.forEach(function(userSnap) {
-      var user = userSnap.val();
-      if(user.roles[0]) {
-          teachers.push({firstName: user.firstName, id: userSnap.key()});
-      }
-    });
-  });
-
-  // $scope.deleteConfirm = function(toDelete) {
-
-  //   console.log(toDelete);
-
-  //   var modalObj = {
-  //     templateUrl: 'views/templates/delete.html',
-  //     controller: 'DeleteCtrl',
-  //     animation: false,
-  //     size: 'sm',
-  //     resolve: {
-  //       toDelete: function() {
-  //         return toDelete;
-  //       },
-  //       collection: function() {
-  //         return $scope.users;
-  //       }
-  //     }
-  //   }
-
-  //   var modalInstance = $modal.open(modalObj);
-
-  //   modalInstance.result.then(function (deletedItem) {
-  //     console.log(deletedItem);
-  //   });
-  // };
-
+  
+  
  
 
 

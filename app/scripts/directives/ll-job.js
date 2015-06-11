@@ -7,7 +7,7 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+ .directive('llJob', ['users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
 
    function link (scope) {
 
@@ -15,36 +15,20 @@
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
-      var usersRef = new Firebase(firebasePath + '/users');
-
   		// make available to scope
   		scope.job_ = $firebaseObject(ref); 
 
-      scope.teachers = [];
-      scope.clients = [];
+      scope.teachers = users.getTeachers();
+      scope.clients = users.getClients();
 
       var client = null;
 
       scope.updateClient = function() {        
         scope.client = new user(scope.job_.clientID);
-        //scope.client.assignJob(scope.job_.$id);
       };
 
       scope.job_.$loaded().then(function() {
         scope.updateClient();
-      });
-
-      usersRef.on('value', function(querySnapshot) {
-        querySnapshot.forEach(function(userSnap) {
-          var user = userSnap.val();
-          // two seperate conditionals because at some point our students / teachers could overlap
-          if(user.roles[0]) {
-            scope.teachers.push({firstName: user.firstName, id: userSnap.key()});
-          }
-          if(user.roles[1]) {
-            scope.clients.push({firstName: user.firstName, id: userSnap.key()});
-          }
-        });
       });
 
       scope.notes = $firebaseArray(ref.child('notes'));      

@@ -2,16 +2,12 @@
 
 /**
  * @ngdoc function
- * @name laoshiListApp.controller:BookseditCtrl
+ * @name laoshiListApp.controller:PaymentseditCtrl
  * @description
- * # BookseditCtrl
+ * # PaymentseditCtrl
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('PaymentsseditCtrl', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-  });
+  .controller('PaymentseditCtrl', ['firebasePath', '$firebaseObject', function (firebasePath, $firebaseObject, $scope) {
+    
+  }]);

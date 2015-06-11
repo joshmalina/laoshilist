@@ -11,7 +11,6 @@ angular.module('laoshiListApp')
 
   	function link (scope) {        
 
-
       var keys = null;
 
       if(scope.array) {
@@ -19,22 +18,20 @@ angular.module('laoshiListApp')
       } else if (scope.obj) {
         keys = Object.keys(scope.obj);
       }
-      
 
+      if(scope.array || scope.obj) {
 
-      if(scope.wrap) {
+        if(scope.wrap) {
         keys = keys.map(function(key) {
           return scope.wrap[key];
-        });
-      } 
+          });
+        }      
 
-      if(scope.funcWrap) {
-        keys = keys.map(function(key) {
-          return scope.funcWrap(key);
-        });
+        scope.joined = keys.join(', ');
+      
+
       }
 
-      scope.joined = keys.join(', ');
       
 
   		

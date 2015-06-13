@@ -9,10 +9,15 @@
 	<h1>Payments</h1>
 	<button class="btn btn-primary pull-right" ng-click="addItem()">New</button></h1>
 </div>
+<button class="btn btn-default" ng-click="focusinControl.deleteItems()">Delete</button>
+
+
+
 
 
 <table class = "table table-striped booksTbl">
 	<thead>
+		<th></th>
 		<th>Date Paid</th>
 		<!-- <th>Date Added</th>
 		<th>Date Modified</th> -->
@@ -23,11 +28,12 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="i in items">
-			<td>{{i.whenPaid | date:'MM/dd/yy'}}</td>
+			<td><batch-delete item="i" control="focusinControl"></batch-delete></td>
+			<td><a ng-href="#/paymentsEdit/{{i.$id}}">{{i.whenPaid | date:'MM/dd/yy'}}</a></td>
 			<!-- <td>{{i.whenAdded | date:'MM/dd/yy'}}</td>
 			<td>{{i.whenUpdated | date:'MM/dd/yy'}}</td> -->
-			<td>{{i.amount}}</td>
-			<td><a ng-href="#/jobview/{{i.job}}">visit job</a></td>
+			<td>{{i.amount}} {{i.currency}}</td>
+			<td><a ng-href="#/jobview/{{i.job}}">Job</a></td>
 			<td><visit who="i.paidBy"></visit></td>
 			<td><visit who="i.paidTo"></visit></td>
 		</tr>

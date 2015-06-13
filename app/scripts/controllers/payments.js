@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('PaymentsCtrl', ['job', '$scope', '$firebaseArray', 'firebasePath', 'fbMethods', 'user', function (job, $scope, $firebaseArray, firebasePath, fbMethods, user) {
+ .controller('PaymentsCtrl', ['$location', 'job', '$scope', '$firebaseArray', 'firebasePath', 'user', 'fbMethods', function ($location, job, $scope, $firebaseArray, firebasePath, user, fbMethods) {
 
   var ref = new Firebase (firebasePath + '/payments');
 
@@ -17,12 +17,21 @@
   $scope.getJobTitle = function(id) {
     var job = new Job(id);
     return job.title;
-  };
+  }; 
 
-  $scope.newItem = function() {
+  $scope.selectedItems = [];
+   $scope.focusinControl = {
+    selectedItems: [],
+    collection: $scope.items
+  }; 
+
+  $scope.addItem = function() {
+    console.log('cats');
    $scope.items.$add({
-    dateAdded: fbMethods.getTime(),
-    dateModified: fbMethods.getTime()
+    whenAdded: fbMethods.getTime(),
+    whenModified: fbMethods.getTime()
+  }).then(function(ref) {
+    $location.path('/paymentsEdit/' + ref.key());
   });
  };
 

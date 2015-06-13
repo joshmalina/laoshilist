@@ -124,6 +124,24 @@
 			<span class="fields-name">Notes</span><br>
 			<notes notes="notes" can-add="true"></notes>
 		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.alipay">
+			<span class="fields-name">支付宝是</span>
+			<span class="fields-value">{{user.payment.alipay}}</span>
+		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.weChatPay">
+			<span class="fields-name">微信包是</span>
+			<span class="fields-value">{{user.payment.weChatPay}}</span>
+		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-repeat="bank in user.payment.banks" ng-if="user.payment.banks">
+			<span class="fields-name">Name of bank is</span>
+			<span class="fields-value">{{bank.nameOfBank}}</span>
+			<br>
+			<span class="fields-name">Name on account is</span>
+			<span class="fields-value">{{bank.nameOnAcct}}</span>
+			<br>
+			<span class="fields-name">Account number is</span>
+			<span class="fields-value">{{bank.acctNum}}</span>
+		</div>
 
 	</div>
 	<!-- to add: jobs associated with, jobs applied for, payables, bank info, education potentially -->	

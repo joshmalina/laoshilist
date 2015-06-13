@@ -33,7 +33,6 @@
 
 
 		scope.internalControl.deleteItems = function() {
-			console.log('clicked');
 			scope.internalControl.selectedItems.forEach(function(item, idx) {
 				console.log(item);
 		      	//remove item from db

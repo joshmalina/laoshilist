@@ -8,12 +8,14 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('UsersCtrl', ['users', '$modal', 'roles', '$scope', 'firebasePath', '$firebaseArray', '$location', function (users, $modal, roles, $scope, firebasePath, $firebaseArray, $location) {
+ .controller('UsersCtrl', ['users', '$modal', 'roles', 'countries', 'subjects', '$scope', 'firebasePath', '$firebaseArray', '$location', function (users, $modal, roles, countries, subjects, $scope, firebasePath, $firebaseArray, $location) {
 
   var ref = new Firebase (firebasePath + '/users');
   var users_ = $firebaseArray(ref);
   $scope.users = users_;
   $scope.roles = roles;
+  $scope.subjects = subjects;
+  $scope.countries = countries;
 
   $scope.viewProfile = function(userID) {
     $location.path('/profile/' + userID);

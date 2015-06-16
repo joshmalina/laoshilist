@@ -6,16 +6,28 @@
 </style>
 
 <div class="media" ng-repeat="(name, user) in users | orderBy: orderBy | filter:filterText">
-  <div class="media-left">
+ <!--  <div class="media-left">
     <a ng-href="#/profile/{{user.$id}}/">
       <img class="media-object" ng-if="user.avatar" ng-src="{{user.avatar.data}}" alt="...">      
     </a>
     <a ng-href="#/profile/{{user.$id}}/">
       <img class="media-object" ng-if="!user.avatar" src="images/blank_teacher.png" alt="...">      
     </a>
-  </div>
+  </div> -->
   <div class="media-body">
-    <h4 class="media-heading"><a ng-href="#/profile/{{user.$id}}/">{{user.firstName}} {{user.lastName}}</a></h4>
-	<notes notes="user.notes" canAdd="false"></notes>
+    <h4 class="media-heading">
+      <a ng-href="#/profile/{{user.$id}}/">{{user.firstName}} {{user.lastName}}</a>      
+      <small ng-if="user.roles">- <explode obj="user.roles" wrap="roles"></small>   
+      <small ng-if="user.location"><br>{{user.location}}</small>
+      <small ng-if="user.location && user.city">, </small>
+      <small ng-if="user.city">{{cities[user.city]}}</small>
+      <small ng-if="user.country"><br>{{countries[user.country]}}</small>
+      <br><br>
+      <small ng-if="user.subjects">
+        Subjects: 
+        <explode obj="user.subjects" wrap="subjects"></explode>
+      </small>
+    </h4>
+	 <notes notes="user.notes" canAdd="false"></notes>
   </div>
 </div>

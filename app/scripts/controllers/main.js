@@ -8,6 +8,11 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('MainCtrl', function () {
- 	
- });
+ .controller('MainCtrl', ['Mandrill', '$scope', function (Mandrill, $scope) {
+ 	// test to see if our local node server is working
+ 	$scope.sendMail = function() {
+ 		Mandrill.test('any response', 'any message').then(function(data) {
+ 			console.log(data);
+ 		});
+ 	};
+ }]);

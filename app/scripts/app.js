@@ -18,7 +18,8 @@
   'ngTouch',
   'firebase',
   'ui.bootstrap',
-  'monospaced.elastic'
+  'monospaced.elastic',
+  'ngFileUpload'
   ])
  .config(function ($routeProvider, $provide) {
   $routeProvider

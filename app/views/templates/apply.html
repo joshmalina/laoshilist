@@ -1,7 +1,7 @@
 <style>
-.applySocially, .uploadCV {
-	text-align: center;
-}
+	.applySocially, .uploadCV {
+		text-align: center;
+	}
 </style>
 
 <div class = "apply well">
@@ -10,30 +10,17 @@
 		Apply Socially
 		<div class = "applyLinkedIn"></div>
 	</div>
-	<div class = "uploadCV">
-		<!-- if logged in, show CV and opportunity to edit it, and form details -->
-		<div class = "upload_area">
-			<div class = "form-group">
-				<label>CV</label><br>
-				<img src="{{user.resume.data}}" class="avatar-img"/>
-				<form ng-submit="uploadImage(image)">
-					<div class="fb-error" ng-show="error">{{error}}</div>
-					<div class="fb-inputs" ng-hide="image.isUploading">
-						<input class="fb-image-upload" fb-image-upload class="fb-input" type="file" name="image"/>
-						<input class="fb-submit" type="submit" value="Upload Image" ng-show="image.valid"/>
-					</div>
-					<div class="fb-uploading" ng-show="image.isUploading">
-						Uploading...
-					</div>
-					<div class="" ng-show="status">{{status}}</div>
-				</form>
-			</div>
-		</div>
-		<div class = "" ng-if="user.resume && user.resume.data">
-			<img src="{{user.resume.data}}"/>			
-		</div>
-		<div class = "registrationForm">
-			
-		</div>
+	<div>
+		<input type="file" class="form-control btn" id="image" onchange="angular.element(this).scope().s3Upload(this)">
+		<p id="status">Please select a file</p>
+		<img id="preview" src="/images/blank_teacher.png" />
+
+		<form method="POST" action="/submit_form/">
+			<input type="hidden" id="avatar_url" name="avatar_url" value="/public/default.png" />
+			<input type="text" name="username" placeholder="Username" /><br />
+			<input type="text" name="full_name" placeholder="Full name" /><br /><br />
+			<input type="submit" value="Update profile" />
+		</form>
 	</div>
+
 </div>

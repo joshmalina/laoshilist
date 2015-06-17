@@ -91,7 +91,7 @@
 			{{job.longDesc}}
 		</div>
 	</div>
-	<apply user = "userID"></apply>	
+	<!-- <apply user = "userID"></apply>	 -->
 </div>
 <div class = "right col-lg-4">
 	<div class = "related-jobs">
@@ -104,4 +104,9 @@
 	</div>
 	<div class = "share-job"></div>
 </div>
+
+
+    <div class="button" ngf-select ngf-change="upload($files)">Upload on file change</div>
+    <img ngf-src="files[0]" ngf-default-src="'/thumb.jpg'" ngf-accept="'image/*'">
+
 

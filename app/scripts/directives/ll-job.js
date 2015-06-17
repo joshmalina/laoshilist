@@ -11,7 +11,7 @@
 
    function link (scope) {
 
-    var authObj = Auth.$getAuth();
+      var authObj = Auth.$getAuth();
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
@@ -32,19 +32,15 @@
       });
 
       scope.notes = $firebaseArray(ref.child('notes'));      
+      
+      // when anything about the job changes, including adding notes,
+      // the dateModified field gets updated
+      ref.on('child_changed', function() {
+        ref.child('dateModified').set(fbMethods.getTime());
+      })
 
-      scope.pushNote = function(newNote) {
-        scope.notes.$add({
-          notevalue: newNote,
-          userid: authObj.password.email,
-          date: fbMethods.getTime()
-        })
-        scope.newNote = null;
-      };
-
-      // generic save function, also updates datemodified value
+      // generic save function, now unnecessary b/c time gets updated automatically
       scope.save = function() {
-        scope.job_.dateModified = fbMethods.getTime();
         scope.job_.$save().catch(function(error) {
          console.log('Couldn\'t update', error);
        });
@@ -52,7 +48,6 @@
 
       scope.saveSubjects = function(model) {
         ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));
-        ref.child('dateModified').set(fbMethods.getTime()); 
       };
 
 

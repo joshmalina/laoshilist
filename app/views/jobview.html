@@ -45,7 +45,7 @@
 </style>
 
 <div class="page-header">
-	<h1>{{job.title}}<button class="btn btn-primary pull-right" ng-href="#/#apply">Apply</button>
+	<h1>{{job.title}}<!--button class="btn btn-primary pull-right" data-spy="scroll" data-target="#apply">Apply</button-->
 	</h1>
 	<small>Last updated on {{job.dateModified | date:'MM/dd/yy'}}</small>
 </div>
@@ -91,7 +91,19 @@
 			{{job.longDesc}}
 		</div>
 	</div>
-	<!-- <apply user = "userID"></apply>	 -->
+	<div id="apply" class = "apply_box well text-center">
+		<h4>Apply</h4>
+		<div class = "apply_socially"></div>
+		<div class = "apply_traditionally">
+			<div class="button btn btn-default" ngf-select ngf-change="upload($files)">
+				Upload Your CV
+			</div>
+			<div class = "path_to_cv" ng-show="path_to_cv.length > 0">
+				<a ng-href="{{path_to_cv}}" target="blank_">Your Uploaded CV</a>
+			</div>
+		</div>
+	</div>
+	<!--<apply user = "userID"></apply>-->
 </div>
 <div class = "right col-lg-4">
 	<div class = "related-jobs">
@@ -105,8 +117,6 @@
 	<div class = "share-job"></div>
 </div>
 
-
-    <div class="button" ngf-select ngf-change="upload($files)">Upload on file change</div>
-    <img ngf-src="files[0]" ngf-default-src="'/thumb.jpg'" ngf-accept="'image/*'">
+    <!--img ngf-src="files[0]" ngf-default-src="'/thumb.jpg'" ngf-accept="'image/*'"-->
 
 

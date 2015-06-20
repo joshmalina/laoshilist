@@ -7,9 +7,9 @@
  * # JobviewCtrl
  * Controller of the laoshiListApp
  */
-angular.module('laoshiListApp')
-  .controller('JobviewCtrl', ['$q', '$http', 'Upload', 'currentAuth', 'subjects', 'ages', '$routeParams', '$scope', 'firebasePath', '$firebaseObject', 'cities', '$firebaseArray', function ($q, $http, Upload, currentAuth, subjects, ages, $routeParams, $scope, firebasePath, $firebaseObject, cities, $firebaseArray) {
-    
+ angular.module('laoshiListApp')
+ .controller('JobviewCtrl', ['$q', '$http', 'Upload', 'currentAuth', 'subjects', 'ages', '$routeParams', '$scope', 'firebasePath', '$firebaseObject', 'cities', '$firebaseArray', 'laoshiListApi', function ($q, $http, Upload, currentAuth, subjects, ages, $routeParams, $scope, firebasePath, $firebaseObject, cities, $firebaseArray, laoshiListApi) {
+
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
     var ref = new Firebase (firebasePath + '/jobs/' + $routeParams.jobid);
@@ -26,52 +26,58 @@ angular.module('laoshiListApp')
 
     $scope.jobs = $firebaseArray(jobsRef);
 
+    $scope.showPath = false;
+
     $scope.upload = function (files) {
 
-        if(files && files.length) {
+        // if(files && files.length) {
 
+        //     var file = files[0];
+        //     console.log(file.type);
+        //     console.log(file);
 
+        //     $http.get('http://localhost:3000/api/sign?file_name=' + file.name + '&file_type=' + file.type + '&userID=' + $scope.userID).then(function(resp) {
+               
+        //         $scope.d_completed = $q.defer(); // since I'm working with Angular, I use $q for asynchronous control flow, but it's not mandatory
+        //         var xhr = new XMLHttpRequest();
+        //         xhr.addEventListener("error", transferFailure, false);
+        //         xhr.file = files[0]; // not necessary if you create scopes like this
 
-            $http.get('http://localhost:3000/api/sign').then(function(resp) {
-            console.log(resp);
+        //         xhr.onreadystatechange = function(e) {
+        //             console.log(this.readyState);
+        //             if(this.readyState === 4) {
+        //                 // assign path to view
+        //                 $scope.path_to_cv = resp.data.url_;        
+        //                 // make sure it updates   
+        //                 $scope.$apply();
+        //             }
+        //             if ( 4 == this.readyState ) {
 
-            var d_completed = $q.defer(); // since I'm working with Angular, I use $q for asynchronous control flow, but it's not mandatory
-            var xhr = new XMLHttpRequest();
-            xhr.file = files[0]; // not necessary if you create scopes like this
+        //                 // done uploading! HURRAY!
+        //                 //$scope.showPath = true;
+        //                 $scope.d_completed.resolve(resp.data.url_);
+        //             }                    
+        //         };
+        //         //var r = "https://laoshi-list-avatars.s3.amazonaws.com/tits?AWSAccessKeyId=AKIAIS6GSDKG5D6G3CTQ&Expires=1434634512&Signature=4GwljlorTNAJz17V4FrDFaCfh0E%3D&x-amz-acl=public-read";
+        //         xhr.open('PUT', resp.data.signed_request, true);
 
-            xhr.onreadystatechange = function(e) {
-              if ( 4 == this.readyState ) {
-                // done uploading! HURRAY!
-                d_completed.resolve(true);
-              }
-            };
-            xhr.open('PUT', resp.signed_request, true);
-            xhr.setRequestHeader("Content-Type","application/octet-stream");
-            xhr.send(xhr.file);
+        //         function transferFailure(evt) {
+        //             console.log(evt);
+        //         }
+        //         // either leave this blank of match the content type of the subsequent put
+        //         //xhr.setRequestHeader("Content-Type","application/octet-stream");
+        //         xhr.send(xhr.file);    
 
-        });
-
-
-
-        }
-        
-        // if (files && files.length) {
-        //     for (var i = 0; i < files.length; i++) {
-        //         var file = files[i];
-        //         Upload.upload({
-        //             url: 'http://localhost:3000/api/sign',
-        //             //fields: {'username': $scope.username},
-        //             file: file
-        //         }).progress(function (evt) {
-        //             var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-        //             console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
-        //         }).success(function (data, status, headers, config) {
-        //             console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
-        //         });
-        //     }
+        //     })
         // }
+
+        $scope.path_to_cv = laoshiListApi.uploadCV(files, $scope.userID);
+        // $scope.$apply();
+
+        // (function(url) {
+        //     = url;
+        //     $scope.$apply();
+        // });
     };
 
-
-
-  }]);
+}]);

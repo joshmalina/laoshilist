@@ -71,8 +71,13 @@
         //     })
         // }
 
-        $scope.path_to_cv = laoshiListApi.uploadCV(files, $scope.userID);
-        // $scope.$apply();
+        laoshiListApi.uploadCV(files, $scope.userID).then(function(url) {
+            $scope.path_to_cv = url;
+        }, function(error) {
+            // push an alert
+        }, function(update) {
+            // push an update
+        });
 
         // (function(url) {
         //     = url;

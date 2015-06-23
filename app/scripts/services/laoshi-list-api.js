@@ -17,7 +17,7 @@
 
   function expectedType(file, typeExpectations) {   
     var a = typeExpectations.indexOf(file.type) > -1;
-    console.log(a);
+    console.log('expected type', a);
     return a;
   }
 
@@ -62,12 +62,16 @@
         deffered.reject(event);
       }
 
+      console.log(xhr.status);
+
 
       xhr.open('PUT', resp.data.signed_request, true);
 
       xhr.send(file); 
 
       xhr.onreadystatechange = function(e) {
+              console.log(xhr.status);
+
         console.log(e);
         if(this.readyState === 4) {
           deffered.resolve(resp.data.url_);                  
@@ -95,7 +99,9 @@
         defer.reject(error);
       });
     } else {
-      defer.reject('Your file is either too large or not the right kind.');
+      if(files.length > 0) {
+        defer.reject('Your file is either too large or not the right kind. CVs may be in the following forms: pdf, txt, rtf, pages, doc, docx');
+      }
     }
 
     return defer.promise;

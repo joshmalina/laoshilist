@@ -89,7 +89,8 @@
 	<div class = "job-results col-lg-9 col-xl-9">
 		<div class = "resultsNum">Showing {{filteredJobs.length}} results</div>
 		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch ))">
-			<ll-job job="job" key="key"></ll-job>
+			<!--ll-job job="job"></ll-job-->
+			<job-snapshot job="job"></job-snapshot>
 		</div>
 	</div>
 

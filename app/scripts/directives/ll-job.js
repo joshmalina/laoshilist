@@ -7,7 +7,7 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+ .directive('llJob', ['User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (User_, users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
 
    function link (scope) {
 
@@ -30,6 +30,16 @@
       scope.job_.$loaded().then(function() {
         scope.updateClient();
       });
+
+      scope.applicants = $firebaseArray(ref.child('applicants'));
+
+      scope.addApplicant = function() {
+        scope.applicants.$add(scope.newApplicant)
+      };
+
+      scope.applicantInfo = function(applicantID) {
+        return User_(applicantID);
+      }
 
       scope.notes = $firebaseArray(ref.child('notes'));      
       

@@ -1,0 +1,15 @@
+<div class = "jobSnapshot">	
+	<h4>	
+		<a ng-href="#/jobview/{{job.$id}}">{{job.title | capitalizeFirst }}</a><br>	
+	</h4>
+	<small>{{cities[job.city].en}}</small>
+	<small ng-if="job.city > -1 && job.shortLocation">, </small>
+	<small>{{job.shortLocation}}</small>
+	<p>{{job.longDesc}}</p>
+	
+	<a class = "btn btn-link" ng-href="#/job-edit/{{job.$id}}">Edit</a>
+<!-- 	<button class = "btn btn-link">Apply</button>
+ --><!-- 	<button class = "btn btn-link">Share</button>
+ --></div>
+
+<!-- <pre>{{job|json}}</pre> -->

@@ -25,12 +25,7 @@
       self.lastName = userReturned.lastName;
     });
 
-  }
-
-  // might not be being used
-  // User.prototype.getFirstName = function() {
-  //   return this.firstName;
-  // };
+  }  
 
   User.prototype.assignJob = function(jobID) {
 

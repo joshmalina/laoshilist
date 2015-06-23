@@ -8,29 +8,29 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', ['fbMethods', 'roles', '$firebaseArray', '$scope', '$log', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'subjects', 'countries', 'ages', 'ethnicities', 'degrees', 'colleges', 'majors', '$filter', 'languageLevel', 'cities', function (fbMethods, roles, $firebaseArray, $scope, $log, $location, $routeParams, firebasePath, $firebaseObject, subjects, countries, ages, ethnicities, degrees, colleges, majors, $filter, languageLevel, cities) {
+ .controller('ProfileEditCtrl', ['User_', 'fbMethods', 'llConstants', '$firebaseArray', '$scope', '$location', '$routeParams', 'firebasePath', '$filter', 'laoshiListApi', function (User_, fbMethods, llConstants, $firebaseArray, $scope, $location, $routeParams, firebasePath, $filter, laoshiListApi) {
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
 		
- 	$scope.user = $firebaseObject(ref);
- 	$scope.subjects = subjects;
- 	$scope.ages = ages;
- 	$scope.countries = countries;
- 	$scope.races = ethnicities;	
- 	$scope.degrees = degrees;
- 	$scope.colleges = colleges;
- 	$scope.majors = majors;
- 	$scope.languageLevel = languageLevel;
- 	$scope.cities = cities;
- 	$scope.roles = roles;
+ 	$scope.user = User_($routeParams.username);
+ 	$scope.subjects = llConstants.subjects();
+ 	$scope.ages = llConstants.ages();
+ 	$scope.countries = llConstants.countries();
+ 	$scope.races = llConstants.ethnicities();	
+ 	$scope.degrees = llConstants.degrees();
+ 	$scope.colleges = llConstants.colleges();
+ 	$scope.majors = llConstants.majors();
+ 	$scope.languageLevel = llConstants.languageLevel();
+ 	$scope.cities = llConstants.cities();
+ 	$scope.roles = llConstants.roles();
 
  	$scope.goToProfile = function() {
  		$location.path('/profile/' + $routeParams.username);
  	};
 
  	$scope.notes = $firebaseArray(ref.child('notes'));
-
  	$scope.contacts = $firebaseArray(ref.child('contact'));
+
  	var bankRef = new Firebase (firebasePath + '/users/' + $routeParams.username + '/payment/banks');
  	$scope.banks = $firebaseArray(bankRef);
 
@@ -100,6 +100,32 @@
 		var tms = Date.parse(date);
 		ref.child('birthday').set(tms);
 	};
+
+	$scope.alerts = [];
+
+	$scope.upload = function (files) {
+
+        $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});        
+
+        laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
+            // store in firebase
+            $scope.user.cv = url;
+            $scope.user.$save();
+
+            // success
+            $scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+
+        }, function(error) {
+            // push an alert
+            $scope.alerts.push({type:'danger', msg: error});
+            //$scope.path_to_cv = null;
+        }, function(update) {
+            // push an update
+            $scope.alerts.push({type:'info', msg:update});
+        });
+
+        
+    };
 
 	
 

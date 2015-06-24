@@ -18,6 +18,7 @@
   function expectedType(file, typeExpectations) {   
     var a = typeExpectations.indexOf(file.type) > -1;
     console.log('expected type', a);
+    console.log(file.type);
     return a;
   }
 

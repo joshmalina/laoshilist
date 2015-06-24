@@ -16,7 +16,7 @@ angular.module('laoshiListApp')
     $scope.auth.$onAuth(function(authData) {
     	if(authData) {
     		$scope.authUser = authData.uid;
-    		console.log(authData);
+    		//console.log(authData);
     	}
     });
   }]);

@@ -7,14 +7,15 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', function (User_, users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject) {
+ .directive('llJob', ['User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', 'countries', function (User_, users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject, countries) {
 
    function link (scope) {
 
-      var authObj = Auth.$getAuth();
+    var authObj = Auth.$getAuth();
 
   		// get our job object from firebase
       var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
+
   		// make available to scope
   		scope.job_ = $firebaseObject(ref); 
 
@@ -27,19 +28,49 @@
         scope.client = new user(scope.job_.clientID);
       };
 
-      scope.job_.$loaded().then(function() {
+      scope.job_.$loaded().then(function(o) {
         scope.updateClient();
+        if(o.$value === null) {
+          $location.path('/');
+        }
       });
 
       scope.applicants = $firebaseArray(ref.child('applicants'));
 
-      scope.addApplicant = function() {
-        scope.applicants.$add(scope.newApplicant)
+      scope.addApplicant = function(appID) {
+        scope.applicants.$add({
+          id: appID,
+          when: fbMethods.getTime()
+        })
+        updateApplicantList();
       };
 
-      scope.applicantInfo = function(applicantID) {
-        return User_(applicantID);
-      }
+      
+      // not responding to changes on its own
+      ref.child('applicants').on('value', function() {
+        updateApplicantList();
+      });
+
+
+      // fire this once when the application loads and then again every time a child is loaded
+      // good candidate for .on(child-added)
+      function updateApplicantList() {
+       scope.applicants.$loaded().then(function(list) {
+        console.log(list);
+           scope.appFormatted = list.map(function(app) {
+            return {
+              user: User_(app.id),
+              when: app.when
+            };       
+          });
+       });
+     }
+
+     
+
+      // scope.applicantInfo = function(applicantID) {
+      //   return User_(applicantID);
+      // }
 
       scope.notes = $firebaseArray(ref.child('notes'));      
       
@@ -67,6 +98,7 @@
   		scope.cities = cities;
   		scope.ages = ages;
   		scope.jobStatuses = jobStatus;
+      scope.countries = countries;
 
   		// config collapsable -- might refactor into a service - might turn into a modal or even a seperate page
   		scope.isCollapsed = true;

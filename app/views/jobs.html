@@ -45,8 +45,8 @@
 </style>
 <!-- filters -->
 <div class ="jobPageWrapper row">
-	<div class = "filterBar col-lg-3 col-xl-3">
-	<div class = "filterContent">
+	<div class = "filterBar col-sm-1 col-lg-3 col-xl-3">
+		<div class = "filterContent">
 			<div class="form-group">
 				<label>Search</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterSearch)">clear</button>
 				<input type="text" class="form-control" ng-model="filterSearch" placeholder="Search">
@@ -86,11 +86,11 @@
 		</div>	
 	</div>
 
-	<div class = "job-results col-lg-9 col-xl-9">
-		<div class = "resultsNum">Showing {{filteredJobs.length}} results</div>
-		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch ))">
+	<div class = "job-results col-lg-8 col-xl-9">
+		<div class = "resultsNum">Showing {{filteredJobs.length}} jobs</div>
+		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch))">
 			<!--ll-job job="job"></ll-job-->
-			<job-snapshot job="job"></job-snapshot>
+			<job-snapshot job="job.$id"></job-snapshot>
 		</div>
 	</div>
 

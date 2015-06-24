@@ -60,8 +60,8 @@
 		<tab heading="Personal">
 			<div class = "form-group">
 				<label>Photo</label><br>
-				<img src="{{user.avatar.data}}" class="avatar-img"/>
-				<form ng-submit="uploadImage(image)">
+<!-- 				<img src="{{user.avatar.data}}" class="avatar-img"/>
+ -->				<form ng-submit="uploadImage(image)">
 					<div class="fb-error" ng-show="error">{{error}}</div>
 					<div class="fb-inputs" ng-hide="image.isUploading">
 						<input class="fb-image-upload" fb-image-upload class="fb-input" type="file" name="image"/>

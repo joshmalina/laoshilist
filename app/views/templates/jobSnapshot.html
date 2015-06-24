@@ -1,15 +1,27 @@
+<style>
+	.whenUpdated {
+		font-style: oblique;
+		color:gray;
+	}
+	.citySub {
+		color:#F78D3F;
+		font-weight: bold;
+		font-size:.9em;
+	}
+</style>
+
 <div class = "jobSnapshot">	
 	<h4>	
-		<a ng-href="#/jobview/{{job.$id}}">{{job.title | capitalizeFirst }}</a><br>	
+		<a ng-href="#/jobview/{{job.$id}}">{{job.title}}</a><br>	
 	</h4>
-	<small>{{cities[job.city].en}}</small>
-	<small ng-if="job.city > -1 && job.shortLocation">, </small>
-	<small>{{job.shortLocation}}</small>
-	<p>{{job.longDesc}}</p>
-	
-	<a class = "btn btn-link" ng-href="#/job-edit/{{job.$id}}">Edit</a>
-<!-- 	<button class = "btn btn-link">Apply</button>
- --><!-- 	<button class = "btn btn-link">Share</button>
- --></div>
+	<small class="citySub">
+		{{job.shortLocation}}
+		<i ng-if="job.city && job.shortLocation">-</i>
+		{{cities[job.city].en}}
+	</small>
+	<p>{{job.longDesc}}</p>	
+	<a class = "" ng-href="#/job-edit/{{job.$id}}">Edit</a>
+	<small class="whenUpdated pull-right"><span am-time-ago="job.dateModified"></span></small>
+</div>
 
 <!-- <pre>{{job|json}}</pre> -->

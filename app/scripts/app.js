@@ -19,7 +19,8 @@
   'firebase',
   'ui.bootstrap',
   'monospaced.elastic',
-  'ngFileUpload'
+  'ngFileUpload',
+  'angularMoment'
   ])
  .config(function ($routeProvider, $provide) {
   $routeProvider

@@ -4,8 +4,9 @@
 			<th></th>
 			<th class="th-btn" ng-click="orderByFn('firstName')">Name</th>
 			<th class="th-btn" ng-click="orderByFn('roles')">Role</th>
-			<th class="th-btn" ng-click="orderByFn('dateAdded')">Date Added</th>
-			<th></th>
+			<th class="th-btn" ng-click="orderByFn('country')">Country</th>
+			<th class="th-btn" ng-click="orderByFn('dateAdded')">Added</th>
+			<th class="th-btn" ng-click="orderByFn('interviewed')">Interviewed</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -15,9 +16,10 @@
 			<td ng-if="user.roles">
 				<explode wrap="roles" obj="user.roles"></explode>
 			</td>
-			<td>{{user.dateAdded | date:'MM/dd/yy'}}</td>
-			<td>
-				<span ng-if="user.interviewed" class="label label-info">Inteviewed</span>
+			<td>{{countries[user.country]}}</td>
+			<td><span am-time-ago="user.dateAdded"></span></td>
+			<td class="text-center">
+				<span ng-if="user.interviewed" class="text-center">✓</span>
 			</td>
 		</tr>
 	</tbody>

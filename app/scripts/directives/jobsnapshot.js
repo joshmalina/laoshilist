@@ -10,8 +10,9 @@ angular.module('laoshiListApp')
   .directive('jobSnapshot', ['Job_', 'cities', 'firebasePath', '$firebaseObject', function (Job_, cities, firebasePath, $firebaseObject) {
 
   	function link(scope) {
-  		var ref = new Firebase (firebasePath + '/jobs/' + scope.job.$id);
+  		var ref = new Firebase (firebasePath + '/jobs/' + scope.job);
   		scope.job = $firebaseObject(ref);
+      scope.cities = cities;
   	}
 
 

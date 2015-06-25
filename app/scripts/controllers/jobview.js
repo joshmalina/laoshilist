@@ -17,6 +17,10 @@
     $scope.user = User_(currentAuth.uid);
     $scope.job = Job_($routeParams.jobid);
 
+    $scope.job.$loaded().then(function(j) {
+        console.log(j);
+    });
+
     // might be able to factor this into a larger object with properties: cities, ages, subjects
     // or a service that gets only the constants you want
     $scope.cities = cities;
@@ -27,6 +31,25 @@
     $scope.jobs = Jobs();
 
     $scope.alerts = [];
+
+    $scope.deleteCV = function () {        
+
+        // remove file from s3
+        // how to identify it?
+        // laoshiListApi.deleteCV(user.cv).then(function(response) {
+            // remove reference from firebase
+            // $scope.job.cv = null;
+            // $scope.job.$save().then(function() {
+            //     $scope.alerts.push({type:'success', msg: 'Your cv was succesfully deleted'});
+            // })
+
+        //}, function(error) {
+        //     $scope.alerts.push({type:'danger', msg: 'Your cv could not be deleted at this time'});
+
+        // }, function(update) {
+        //     $scope.alerts.push({type: 'info', msg: 'Attempting to delete your cv'});
+        // })
+    }
 
     $scope.upload = function (files) {
 
@@ -48,8 +71,31 @@
             // push an update
             $scope.alerts.push({type:'info', msg:update});
         });
-
         
     };
+
+    $scope.apply = function() {
+
+        // if user
+            // already have a first name presumably
+            // already have an email address
+            // may or may not have a cv
+
+        // !if user
+            // maybe ask if they just want to sign in
+
+            // check for first name
+            // check for email
+            // maybe ask for a password
+            // maybe check for cv
+
+            // register the user
+            // send a welcome email
+            // then add as an applicant
+            // try and upload a resume
+            // send an email 
+
+
+    }
 
 }]);

@@ -325,8 +325,8 @@
 							{{a}}
 								<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
 								<td>{{countries[a.user.country]}}</td>
-								<td><a href="{{a.user.cv}}" target="blank_">CV</a></td>
-								<td>{{a.when | date:'MM/dd'}}</td>
+								<td><a href="{{a.user.cv}}" target="blank_" ng-if="a.user.cv">CV</a></td>
+								<td><span am-time-ago="a.when"></span></td>
 							</tr>
 						</tbody>
 					</table>	

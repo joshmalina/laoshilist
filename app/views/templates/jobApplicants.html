@@ -1,12 +1,19 @@
-<!-- APPLICANTS --> 
-<table class="table" ng-if="job.applicants">
+<h5 class="text-center">Applicants</h5>
+<table class="table">
 	<thead>
-		<tr><th class="admin-list-start">Applicants</th></tr>
+		<tr>
+			<th>Name</th>
+			<th>Country</th>
+			<th>CV</th>
+			<th>When Applied</th>
+		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="app in job.applicants">
-			<td ng-bind="app.id"></td>
-			<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
+		<tr ng-repeat="a in appFormatted">
+			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
+			<td>{{countries[a.user.country]}}</td>
+			<td><a href="{{a.user.cv}}" target="blank_">CV</a></td>
+			<td><span am-time-ago="a.when"></span></td>
 		</tr>
 	</tbody>
 </table>	

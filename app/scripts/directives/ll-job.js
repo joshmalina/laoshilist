@@ -7,7 +7,7 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', 'countries', function (User_, users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject, countries) {
+ .directive('llJob', ['Job_', 'User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'jobStatus', 'subjects', 'cities', 'ages', '$firebaseArray', 'firebasePath', '$firebaseObject', 'countries', function (Job_, User_, users, Auth, user, $location, fbMethods, jobStatus, subjects, cities, ages, $firebaseArray, firebasePath, $firebaseObject, countries) {
 
    function link (scope) {
 
@@ -37,12 +37,13 @@
 
       scope.applicants = $firebaseArray(ref.child('applicants'));
 
-      scope.addApplicant = function(appID) {
-        scope.applicants.$add({
-          id: appID,
-          when: fbMethods.getTime()
-        })
+      var thejob = Job_(scope.job.$id);
+
+      scope.addApplicant = function(appID) {        
+        thejob.addApplicant(appID);
+        User_(appID).applyTo(scope.job.$id);        
         updateApplicantList();
+        //scope.newApplicant = null;
       };
 
       
@@ -59,8 +60,8 @@
         console.log(list);
            scope.appFormatted = list.map(function(app) {
             return {
-              user: User_(app.id),
-              when: app.when
+              user: User_(app.$id),
+              when: app.$value
             };       
           });
        });

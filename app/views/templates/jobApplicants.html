@@ -4,16 +4,22 @@
 		<tr>
 			<th>Name</th>
 			<th>Country</th>
-			<th>CV</th>
 			<th>When Applied</th>
+			<th>
 		</tr>
 	</thead>
 	<tbody>
-		<tr ng-repeat="a in appFormatted">
+		<tr ng-repeat="a in applicants_">
 			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
 			<td>{{countries[a.user.country]}}</td>
-			<td><a href="{{a.user.cv}}" target="blank_">CV</a></td>
 			<td><span am-time-ago="a.when"></span></td>
+			<td>
+				<a ng-if="a.user.cv" href="{{a.user.cv}}" target="blank_">CV</a>
+				<!--button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button-->
+			</td>
 		</tr>
 	</tbody>
-</table>	
+</table>
+<select ng-if="canAdd === true" ng-model="newApplicant" ng-change="addApplicant(newApplicant)" ng-options="t.id as (t.firstName + ' ' + t.lastName) for t in teachers" class="form-control reign-in">
+	<option value="" class="text-center">Add New</option>										
+</select>

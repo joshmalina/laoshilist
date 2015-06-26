@@ -35,37 +35,37 @@
         }
       });
 
-      scope.applicants = $firebaseArray(ref.child('applicants'));
+      // scope.applicants = $firebaseArray(ref.child('applicants'));
 
-      var thejob = Job_(scope.job.$id);
+      // var thejob = Job_(scope.job.$id);
 
-      scope.addApplicant = function(appID) {        
-        thejob.addApplicant(appID);
-        User_(appID).applyTo(scope.job.$id);        
-        updateApplicantList();
-        //scope.newApplicant = null;
-      };
+      // scope.addApplicant = function(appID) {        
+      //   thejob.addApplicant(appID);
+      //   User_(appID).applyTo(scope.job.$id);        
+      //   updateApplicantList();
+      //   //scope.newApplicant = null;
+      // };
 
       
-      // not responding to changes on its own
-      ref.child('applicants').on('value', function() {
-        updateApplicantList();
-      });
+     //  // not responding to changes on its own
+     //  ref.child('applicants').on('value', function() {
+     //    updateApplicantList();
+     //  });
 
 
-      // fire this once when the application loads and then again every time a child is loaded
-      // good candidate for .on(child-added)
-      function updateApplicantList() {
-       scope.applicants.$loaded().then(function(list) {
-        console.log(list);
-           scope.appFormatted = list.map(function(app) {
-            return {
-              user: User_(app.$id),
-              when: app.$value
-            };       
-          });
-       });
-     }
+     //  // fire this once when the application loads and then again every time a child is loaded
+     //  // good candidate for .on(child-added)
+     //  function updateApplicantList() {
+     //   scope.applicants.$loaded().then(function(list) {
+     //    console.log(list);
+     //       scope.appFormatted = list.map(function(app) {
+     //        return {
+     //          user: User_(app.$id),
+     //          when: app.$value
+     //        };       
+     //      });
+     //   });
+     // }
 
      
 

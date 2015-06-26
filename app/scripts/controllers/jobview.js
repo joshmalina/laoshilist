@@ -56,6 +56,7 @@
         $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});        
 
         laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
+
             // store in firebase
             $scope.user.cv = url;
             $scope.user.$save();
@@ -76,6 +77,9 @@
 
     $scope.apply = function() {
 
+        if($scope.user) {
+            
+        }
         // if user
             // already have a first name presumably
             // already have an email address

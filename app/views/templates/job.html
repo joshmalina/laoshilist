@@ -308,7 +308,7 @@
 				</li>
 
 
-				<li class = "list-group-item">
+				<!--li class = "list-group-item">
 					<h5 class="text-center">Applicants</h5>
 					
 					<table class="table">
@@ -333,6 +333,10 @@
 					<select ng-model="newApplicant" ng-change="addApplicant(newApplicant)" ng-options="t.id as (t.firstName + ' ' + t.lastName) for t in teachers" class="form-control reign-in">
 						<option value="" class="text-center">Add New</option>										
 					</select>
+				</li-->
+
+				<li class = "list-group-item">
+					<ll-job-applicants jobid="job.$id" can-add="true"></ll-job-applicants>
 				</li>
 
 

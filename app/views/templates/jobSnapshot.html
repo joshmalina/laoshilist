@@ -8,6 +8,10 @@
 		font-weight: bold;
 		font-size:.9em;
 	}
+	.status {
+		font-weight: 300;
+		color:gray;
+	}
 </style>
 
 <div class = "jobSnapshot">	
@@ -20,8 +24,11 @@
 		{{cities[job.city].en}}
 	</small>
 	<p>{{job.longDesc | limitTo: 200}}<span ng-if="job.longDesc.length > 200">...</span></p>	
-	<a class = "" ng-href="#/job-edit/{{job.$id}}">Edit</a>
+	<a class = "" ng-href="#/job-edit/{{job.$id}}">Edit - </a>
+	<label class="status text-center" disabled>{{ status[job.status]}}</label>
 	<small class="whenUpdated pull-right"><span am-time-ago="job.dateModified"></span></small>
+
+
 </div>
 
 <!-- <pre>{{job|json}}</pre> -->

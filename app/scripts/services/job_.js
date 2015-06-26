@@ -14,13 +14,9 @@ angular.module('laoshiListApp')
 
   	var Job = $firebaseObject.$extend({
   		addApplicant: function(appID) {
-
-  			console.log(this);
-  			
   			// add to list of applicants in job
   			this.applicants[appID] = fbMethods.getTime();
-  			this.$save();
-  			
+  			this.$save();  			
   		}
   	});
 

@@ -14,8 +14,9 @@ angular.module('laoshiListApp')
 
   	var User = $firebaseObject.$extend({
   		applyTo: function(jobID) {
-  			var jobs = ref.child('jobs').push();
-  			jobs.set({jobID:true});  			
+  			// add to a list of jobs that this teacher has applied to
+  			var jobsRef = ref.child(this.$id).child('appliedTo').child(jobID);
+  			jobsRef.set(true);  			
   		}
   	});
 

@@ -115,6 +115,11 @@
 			<span class="fields-name">Jobs</span><br>
 			<jobs-assoc jobs="jobKeys"></jobs-assoc>		 
 		</div>
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.appliedTo">
+			<span class = "fields-name">Jobs Applied For</span><br>
+			<div ng-repeat="(key, _) in user.appliedTo">{{key}}</div>
+			<div ng-repeat="a in user.appliedTo_()">{{a|json}}</div>
+		</div>
 		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="teacherFor.length > 0">
 			<span class="fields-name">Teacher For</span><br>
 			 <jobs-assoc jobs="teacherFor"></jobs-assoc>
@@ -148,4 +153,5 @@
 	
 </div>
 
-<pre>{{user|json}}</pre>
+<pre>{{user_|json}}</pre>
+<pre>{{j}}</pre>

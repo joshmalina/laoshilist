@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileCtrl', ['$firebaseArray', '$q', 'subjects', 'roles', '$scope', '$location', '$routeParams', 'firebasePath', '$firebaseObject', 'cities', 'ethnicities', 'countries', function ($firebaseArray, $q, subjects, roles, $scope, $location, $routeParams, firebasePath, $firebaseObject, cities, ethnicities, countries) {
+ .controller('ProfileCtrl', ['User_', 'llConstants', '$firebaseArray', '$q', '$scope', '$location', '$routeParams', 'firebasePath', '$firebaseObject', function (User_, llConstants, $firebaseArray, $q, $scope, $location, $routeParams, firebasePath, $firebaseObject) {
 
     // should redirect if username empty in routeparams.username
 
@@ -16,11 +16,11 @@
 
    $scope.user = $firebaseObject(ref);  	
 
-   $scope.cities = cities;
-   $scope.ethnicities = ethnicities; 
-   $scope.countries = countries;
-   $scope.roles = roles;
-   $scope.subjects = subjects;
+   $scope.cities = llConstants.cities();
+   $scope.ethnicities = llConstants.ethnicities(); 
+   $scope.countries = llConstants.countries();
+   $scope.roles = llConstants.roles();
+   $scope.subjects = llConstants.subjects();
 
    $scope.user.$loaded().then(function(user) {
     $scope.teachesStudies = 0 in Object.keys($scope.user.roles) ? 'Teaches' : 'Studies';
@@ -29,7 +29,25 @@
 
    $scope.goToEdit = function() {
     $location.path('/profile_edit/' + $routeParams.username);
-  };
+  };  
+
+  $scope.user_ = User_($routeParams.username);
+
+  $scope.user_.$loaded().then(function(u) {
+    console.log($scope.user_.appliedTo_().then(function(a) {
+      console.log(a);
+    }));
+    $scope.user_.appliedTo_().then(function(a) {
+      $scope.j = a;
+      console.log(a);
+    })
+
+  });
+
+  $scope.user_.appliedTo_().then(function(a) {
+    console.log(a);
+  });
+
 
   $scope.firebaseUrl = ref+ '/avatar';
 

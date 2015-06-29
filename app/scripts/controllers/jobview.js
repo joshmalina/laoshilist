@@ -8,13 +8,16 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', 'subjects', 'ages', '$routeParams', '$scope', 'cities', 'laoshiListApi', function (User_, Job_, Jobs, Upload, currentAuth, subjects, ages, $routeParams, $scope, cities, laoshiListApi) {
+ .controller('JobviewCtrl', ['User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', 'subjects', 'ages', '$routeParams', '$scope', 'cities', 'laoshiListApi', 'firebasePath', '$firebaseArray', function (User_, Job_, Jobs, Upload, currentAuth, subjects, ages, $routeParams, $scope, cities, laoshiListApi, firebasePath, $firebaseArray) {
 
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
     // some logic if no user is present
+
+    if(currentAuth) {
+        $scope.user = User_(currentAuth.uid);
+    }
     
-    $scope.user = User_(currentAuth.uid);
     $scope.job = Job_($routeParams.jobid);
 
     $scope.job.$loaded().then(function(j) {
@@ -26,6 +29,18 @@
     $scope.cities = cities;
     $scope.ages = ages;
     $scope.subjects = subjects;
+
+    // $scope.manipCV = function() {
+    //     if($scope.applicant.name && $scope.appicant.email $$ applicationForm.email.$valid) {
+    //         return true;
+    //     }
+    // }
+
+    $scope.applicant = {};
+
+    $scope.y = function() {
+        console.log($scope.applicant);
+    };
 
     // this should be limited to ones that 'need teacher'
     $scope.jobs = Jobs();
@@ -49,13 +64,40 @@
         // }, function(update) {
         //     $scope.alerts.push({type: 'info', msg: 'Attempting to delete your cv'});
         // })
-    }
+}
 
-    $scope.upload = function (files) {
+$scope.upload = function (files) {
 
-        $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});        
+        if(!$scope.user) {
 
-        laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
+            // if this is a new user, we need to create one first
+            var ref = new Firebase (firebasePath + '/users');
+            var users = $firebaseArray(ref);
+
+            // need to have write permissions here
+
+            users.$add({
+                firstName: $scope.applicant.name,
+                email:$scope.applicant.email
+            }).then(function(ref) {
+                var id = ref.$key();
+                // upload CV
+                uploadCV(id);
+
+                // send them an email that they have succesffuly uploaded their cv?
+
+            });
+
+        } else {
+
+            uploadCV($scope.user.$id);
+        }
+
+        
+
+        function uploadCV (iddd) {
+
+            laoshiListApi.uploadCV(files, id).then(function(url) {
 
             // store in firebase
             $scope.user.cv = url;
@@ -64,22 +106,44 @@
             // success
             $scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
 
-        }, function(error) {
-            // push an alert
-            $scope.alerts.push({type:'danger', msg: error});
-            //$scope.path_to_cv = null;
-        }, function(update) {
-            // push an update
-            $scope.alerts.push({type:'info', msg:update});
-        });
+            }, function(error) {
+                // push an alert
+                $scope.alerts.push({type:'danger', msg: error});
+                //$scope.path_to_cv = null;
+            }, function(update) {
+                // push an update
+                $scope.alerts.push({type:'info', msg:update});
+            });
+
+        }
+
+
+
+        // $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});        
+
+        // laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
+
+        //     // store in firebase
+        //     $scope.user.cv = url;
+        //     $scope.user.$save();
+
+        //     // success
+        //     $scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+
+        // }, function(error) {
+        //     // push an alert
+        //     $scope.alerts.push({type:'danger', msg: error});
+        //     //$scope.path_to_cv = null;
+        // }, function(update) {
+        //     // push an update
+        //     $scope.alerts.push({type:'info', msg:update});
+        // });
         
     };
 
     $scope.apply = function() {
 
-        if($scope.user) {
-            
-        }
+
         // if user
             // already have a first name presumably
             // already have an email address
@@ -100,6 +164,6 @@
             // send an email 
 
 
-    }
+        }
 
-}]);
+    }]);

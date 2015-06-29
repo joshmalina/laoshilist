@@ -154,30 +154,10 @@
 
 	<!-- Public template of job details; fields should only be editable for admins -->
 	<div class="public-job-details">
-		<!-- title -->
-		<!--h3 class = "panel-heading">
-			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a>
-		</h3-->
-		<!--div class = "panel-heading-subtitle">
-			<span class = "client-name"><a ng-href="/#/profile/{{client.userID}}">{{client.firstName}}</a></span>
-			<span> - </span>
-			<span class = "subtitle-location">			
-				<span class = "short-location" ng-if="job_.shortLocation">{{job_.shortLocation}}<i>, </i></span>				
-				<span class = "subtitle-city">{{cities[job_.city].en}}</span>
-			</span>
-		</div-->
-
-		<!-- description -->
-		<!--div class = "panel-body"-->
-			<!--span>{{job_.longDesc}}</span-->
-			<!--notes notes="notes" can-add="true"></notes-->			
-		<!--/div-->
-		
+			
 
 			<form class = "edit-panel form-inline">
-				<!--div class="text-center">
-					-<button class="btn btn-link" ng-click="coll()">{{readMore}}</button>- 
-				</div-->
+
 
 				<ul class = "list-group">
 					<li class = "list-group-item">
@@ -268,21 +248,6 @@
 			<!-- begin PRIVATE -->
 			<div class="private-job-details">
 
-				<!-- begin APPLICANTS -->
-				<!-- APPLICANTS --> 
-			<!-- <table class="table job-applicants">
-				<thead>
-					<tr><th class="admin-list-start">Applicants</th></tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="app in job_.applicants">
-						<td ng-bind="app.id"></td>
-						<td>{{app.dateApplied | date:'MM/dd/yy'}}</td>
-					</tr>
-				</tbody>
-			</table>	 -->
-			<!-- end APPLICANTS -->
-
 			<!-- ADMIN DETAILS --> 
 			<ul class="list-group admin-details">
 				<!-- <li class="list-group-item admin-list-start">Admin Details</li> -->
@@ -307,34 +272,6 @@
 					</select>		
 				</li>
 
-
-				<!--li class = "list-group-item">
-					<h5 class="text-center">Applicants</h5>
-					
-					<table class="table">
-						<thead>
-							<tr>
-								<th>Name</th>
-								<th>Country</th>
-								<th>CV</th>
-								<th>When Applied</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr ng-repeat="a in appFormatted">
-							{{a}}
-								<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
-								<td>{{countries[a.user.country]}}</td>
-								<td><a href="{{a.user.cv}}" target="blank_" ng-if="a.user.cv">CV</a></td>
-								<td><span am-time-ago="a.when"></span></td>
-							</tr>
-						</tbody>
-					</table>	
-					<select ng-model="newApplicant" ng-change="addApplicant(newApplicant)" ng-options="t.id as (t.firstName + ' ' + t.lastName) for t in teachers" class="form-control reign-in">
-						<option value="" class="text-center">Add New</option>										
-					</select>
-				</li-->
-
 				<li class = "list-group-item">
 					<ll-job-applicants jobid="job.$id" can-add="true"></ll-job-applicants>
 				</li>
@@ -358,7 +295,6 @@
 		<div class="footer-buttons btn-group" role="group" aria-label="...">
 			<!--button type="button" class="btn btn-link">Apply</button-->			
 			<!-- toggle to see more job details -->
-			<!--button class="btn btn-link" ng-click="coll()">{{readMore}}</button-->	
 			<ll-delete item="job_" collection="job_"></ll-delete>			
 			<button type="button" class="job-status-label btn btn-link pull-right" disabled>{{ jobStatuses[job_.status]}}</button>
 		</div>		

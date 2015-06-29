@@ -8,13 +8,19 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobsCtrl', ['fbMethods', '$scope', '$firebaseArray', 'firebasePath', 'jobStatus', 'subjects', 'ages', 'cities', function (fbMethods, $scope, $firebaseArray, firebasePath, jobStatus, subjects, ages, cities) {
+  .controller('JobsCtrl', ['llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$firebaseArray', 'firebasePath', function (llConstants, User_, currentAuth, fbMethods, $scope, $firebaseArray, firebasePath) {
 
+    if(currentAuth) {
+      var user = User_(currentAuth.uid);
+      user.$loaded().then(function() {        
+        $scope.isAdmin = user.isAdmin();
+      });      
+    }
     // pass services to filter
-    $scope.statuses = jobStatus;
-    $scope.subjects = subjects;
-    $scope.ages = ages;
-    $scope.cities = cities;
+    $scope.statuses = llConstants.jobstatus();
+    $scope.subjects = llConstants.subjects();
+    $scope.ages = llConstants.ages();
+    $scope.cities = llConstants.cities();
    
     // clear all filters
     $scope.clearFilter = function() {

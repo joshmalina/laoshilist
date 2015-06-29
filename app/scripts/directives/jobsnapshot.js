@@ -7,21 +7,22 @@
  * # jobSnapshot
  */
 angular.module('laoshiListApp')
-  .directive('jobSnapshot', ['Job_', 'firebasePath', '$firebaseObject', 'llConstants', function (Job_, firebasePath, $firebaseObject, llConstants) {
+  .directive('jobSnapshot', ['Job_', 'llConstants', function (Job_, llConstants) {
 
   	function link(scope) {
-  		var ref = new Firebase (firebasePath + '/jobs/' + scope.job);
-  		scope.job = $firebaseObject(ref);
+      scope.job = Job_(scope.jobid);
       scope.cities = llConstants.cities();
       scope.status = llConstants.jobstatus();
+      scope.notes = scope.job.getNotes();
   	}
-
 
     return {
       templateUrl: 'views/templates/jobSnapshot.html',
       restrict: 'E',
       scope: {
-      	job: '='
+      	jobid: '=',
+        // a not-great way of exposing / hiding admin only info / options
+        admin: '='
       },
       link: link
     };

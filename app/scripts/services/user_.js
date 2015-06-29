@@ -13,7 +13,7 @@
   var ref = new Firebase (firebasePath + '/users');
 
   var User = $firebaseObject.$extend({
-    applyTo: function(jobID) {
+      applyTo: function(jobID) {
   			// add to a list of jobs that this teacher has applied to
   			var jobsRef = ref.child(this.$id).child('appliedTo').child(jobID);
   			jobsRef.set(true);  			
@@ -28,6 +28,10 @@
           };            
         }
         return $q.all(p);
+      },
+      isAdmin: function() {
+        // a non-straightforward way of indicating that the user is an admin
+        return Object.keys(this.roles).indexOf('2') > -1;
       }
   });
 

@@ -33,20 +33,11 @@
 
   $scope.user_ = User_($routeParams.username);
 
-  $scope.user_.$loaded().then(function(u) {
-    console.log($scope.user_.appliedTo_().then(function(a) {
-      console.log(a);
-    }));
-    $scope.user_.appliedTo_().then(function(a) {
-      $scope.j = a;
-      console.log(a);
+  $scope.user_.$loaded().then(function(u) {    
+    $scope.user_.appliedTo_().then(function(jobs) {
+      $scope.appliedFor = jobs;
     })
-
-  });
-
-  $scope.user_.appliedTo_().then(function(a) {
-    console.log(a);
-  });
+  }); 
 
 
   $scope.firebaseUrl = ref+ '/avatar';

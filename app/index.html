@@ -1,3 +1,9 @@
+<style>
+  .logoutBtn {
+    border:none !important;
+    cursor:pointer;
+  }
+</style>
 <!doctype html>
 <html class="no-js">
   <head>
@@ -41,13 +47,12 @@
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li ng-if="authUser" ng-cloak><a ng-href="#/jobs">Jobs</a></li>
+              <li ng-cloak><a ng-href="#/jobs">Jobs</a></li>
               <li ng-if="authUser" ng-cloak><a ng-href="#/users">Users</a></li>
               <li ng-if="!authUser" ng-cloak><a ng-href="#/login">Login</a></li>
               <li ng-if="authUser" ng-cloak><a ng-href="#/payments">Payments</a></li>
               <li ng-if="!authUser" ng-cloak><a ng-href="#/register">Register</a></li>
-              <li ng-if="authUser" ng-cloak><a ng-click="auth.$unauth()">Logout</a></li>
-              <li ng-if="authUser" ng-cloak></li>
+              <li ng-if="authUser" ng-cloak><a class="btn-link logoutBtn" ng-click="logout()">Logout</a></li>
             </ul>
           </div>
         </div>
@@ -160,6 +165,7 @@
         <script src="scripts/services/ll-constants.js"></script>
         <script src="scripts/controllers/job-edit.js"></script>
         <script src="scripts/directives/jobsnapshot.js"></script>
+        <script src="scripts/directives/applybox.js"></script>
         <!-- endbuild -->
 </body>
 </html>

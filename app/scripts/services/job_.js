@@ -15,14 +15,16 @@
  	var Job = $firebaseObject.$extend({
  		addApplicant: function(appID) {
   			// add to list of applicants in job
-  			this.applicants[appID] = fbMethods.getTime();
-  			this.$save();  			
+        // doing it this way as opposed to this.applicants[jobID] ... because if there are no extant applicants it will fail
+        ref.child(this.$id).child('applicants').child(appID).set(fbMethods.getTime());		
   		},
   		// return a $firebaseArray of the applicants
   		getApplicants: function() {
-  			var applicantsRef = ref.child(this.$id).child('applicants');
-  			return $firebaseArray(applicantsRef);
-  		}
+  			return $firebaseArray(ref.child(this.$id).child('applicants'));
+  		},
+      getNotes: function() {
+        return $firebaseArray(ref.child(this.$id).child('notes'));
+      }
   	});
 
 

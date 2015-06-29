@@ -124,7 +124,7 @@
 						<small class="text-center">Already a user? Apply easily by <a ng-href="/#/login">logging in</a> first.</small>
 					</div>				
 					<div class = "form-group">
-						<input class="form-control" type="text" ng-model="applicant.name" placeholder="Enter name" ng-change="y()">
+						<input class="form-control" type="text" ng-model="applicant.name" placeholder="Enter name">
 					</div>
 					<div class = "form-group">
 						<input class="form-control" type="email" ng-model="applicant.email" name="email" placeholder="Enter email" >
@@ -132,7 +132,7 @@
 					</div>
 				</div>
 				<div class = "coverLetter form-group">
-					<textarea class="textarea form-control" placeholder="Enter a note / cover letter (optional)"></textarea>
+					<textarea class="textarea form-control" placeholder="Enter a note / cover letter (optional)" ng-model="applicant.why"></textarea>
 				</div>
 			</form>
 				<div class = "form-group">

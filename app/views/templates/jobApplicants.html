@@ -10,6 +10,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="a in applicants_">
+				<!-- <td><pre>{{a|json}}</pre></td> -->
 			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
 			<td>{{countries[a.user.country]}}</td>
 			<td><span am-time-ago="a.when"></span></td>

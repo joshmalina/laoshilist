@@ -37,6 +37,7 @@
 
   $scope.selectedUsers = [];
 
+  // NEED TO AMMEND THIS FUNCTION TO ALSO DELETE THE RELEVANT S3 FOLDER
   $scope.deleteUsers = function() {
     $scope.selectedUsers.forEach(function(user, idx) {
       console.log(user);

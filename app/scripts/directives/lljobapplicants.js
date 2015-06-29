@@ -21,12 +21,14 @@ angular.module('laoshiListApp')
       
       function updateApplicantList() {
         applicants.$loaded().then(function(list) {
+          console.log(applicants);
           scope.applicants_ = list.map(function(app) {
             return {
               user: User_(app.$id),
-              when: app.$value
+              when: app.$value || app.when
             }
           })
+          console.log(scope.applicants_);
         });
       }
 

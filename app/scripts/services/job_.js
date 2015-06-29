@@ -13,10 +13,17 @@
  	var ref = new Firebase (firebasePath + '/jobs');
 
  	var Job = $firebaseObject.$extend({
- 		addApplicant: function(appID) {
+ 		 addApplicant: function(appID, note) {
+
+        var datum = {
+          when: fbMethods.getTime(),
+          why: note || null
+        };
+
+        console.log(datum);
   			// add to list of applicants in job
         // doing it this way as opposed to this.applicants[jobID] ... because if there are no extant applicants it will fail
-        ref.child(this.$id).child('applicants').child(appID).set(fbMethods.getTime());		
+        ref.child(this.$id).child('applicants').child(appID).set(datum);		
   		},
   		// return a $firebaseArray of the applicants
   		getApplicants: function() {

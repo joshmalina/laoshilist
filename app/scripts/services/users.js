@@ -19,7 +19,7 @@
       var naiveUsers = [];
 
       // query DB
-      userRef.on('value', function(querySnapshot) {
+      userRef.orderByChild('firstName').on('value', function(querySnapshot) {
         querySnapshot.forEach(function(userSnap) {         
 
           // if we have one of this kind

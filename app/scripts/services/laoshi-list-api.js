@@ -8,7 +8,7 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('laoshiListApi', ['Upload', '$http', '$q', function (Upload, $http, $q) {
+ .factory('laoshiListApi', ['Upload', '$http', '$q', 'User_', function (Upload, $http, $q, User_) {
 
   var basePathToAPI = 'http://localhost:3000/api/';
 
@@ -41,9 +41,12 @@
   }
 
   function getCVPath(file, userID) {
-    var path = basePathToAPI + 'sign?file_name=' + file.name + '&file_type=' + file.type + '&userID=' + userID;
-    console.log(path);
-    return path;
+    var user = User_(userID);
+    return user.$loaded().then(function(u) {
+      var path = basePathToAPI + 'sign?username='+u.getFullestName()+ '&file_type=' + file.type + '&userID=' + userID;
+      return path;
+    });
+
   }
 
 
@@ -51,7 +54,10 @@
 
    var deffered = $q.defer();
 
-    $http.get(path).then(function(resp) {
+   path.then(function(promise) {
+
+    console.log(promise);
+    $http.get(promise).then(function(resp) {
 
       var xhr = new XMLHttpRequest();
 
@@ -80,6 +86,10 @@
       };      
 
     });
+
+   })
+
+    
 
     return deffered.promise;
   }

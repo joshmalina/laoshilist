@@ -32,6 +32,9 @@
       isAdmin: function() {
         // a non-straightforward way of indicating that the user is an admin
         return Object.keys(this.roles).indexOf('2') > -1;
+      },
+      getFullestName: function() {
+        return this.lastName ? name = this.firstName + ' ' + this.lastName : this.firstName;        
       }
   });
 

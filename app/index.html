@@ -51,6 +51,7 @@
               <li ng-if="authUser" ng-cloak><a ng-href="#/users">Users</a></li>
               <li ng-if="!authUser" ng-cloak><a ng-href="#/login">Login</a></li>
               <li ng-if="authUser" ng-cloak><a ng-href="#/payments">Payments</a></li>
+              <li ng-if="authUser" ng-cloak><a ng-href="#/profile/{{authUser}}">Profile</a></li>
               <li ng-if="!authUser" ng-cloak><a ng-href="#/register">Register</a></li>
               <li ng-if="authUser" ng-cloak><a class="btn-link logoutBtn" ng-click="logout()">Logout</a></li>
             </ul>
@@ -167,6 +168,7 @@
         <script src="scripts/directives/jobsnapshot.js"></script>
         <script src="scripts/directives/applybox.js"></script>
         <script src="scripts/services/users_.js"></script>
+        <script src="scripts/services/apply.js"></script>
         <!-- endbuild -->
 </body>
 </html>

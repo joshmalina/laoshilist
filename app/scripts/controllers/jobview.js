@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', function (Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray) {
+ .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray) {
 
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
@@ -18,6 +18,18 @@
         var ref = new Firebase (firebasePath + '/users');
         var users = $firebaseArray(ref);
     }
+
+    function alreadyApplied() {
+
+        // if a logged in user already applied
+        $scope.user.$loaded.then(function() {
+            $scope.alreadyApplied = $scope.user.hasApplied($routeParams.jobid);
+        });
+
+        // if a user who is not logged in already applied
+    }
+
+    
     
     $scope.job = Job_($routeParams.jobid);    
 
@@ -90,8 +102,9 @@ function uploadCV (id, files) {
 
 $scope.upload = function (files) {   
 
-    if(!$scope.user) {
+    $scope.alerts.push({type: 'info', msg: 'Attempting to upload your CV...'});
 
+    if(!$scope.user) {
         addNewUser().then(function(ref) {
             uploadCV(ref.key(), files)
         });
@@ -102,9 +115,34 @@ $scope.upload = function (files) {
 
 };
 
+$scope.doneApplied = 'Submit';
+
 function addApplicant () {
-    $scope.user.applyTo($scope.job.$id);
-    $scope.job.addApplicant($scope.user.$id, $scope.applicant.why);
+
+    $scope.alerts.push({type:'success', msg: 'Attempting to submit application...'});
+
+    var coverLetter = null;
+    if($scope.applicant.why) {
+        coverLetter = {
+            text: $scope.applicant.why,
+            type: 'text/plain'
+        }
+        // call laoshilist API, when returns add url to firebase
+    }
+   
+
+    apply.addApplicant($scope.user.$id, $scope.job.$id, coverLetter).then(
+        function(success) {
+            console.log(success);
+            $scope.alerts.push({type:'success', msg: 'Your job application has been submitted'});
+            $scope.doneApplied = 'Thanks for applying!';
+        }, function(error) {
+            // would like to keep a log of this error, it's informative
+            console.log(error);
+            // probably also alert the admins of this error
+            $scope.alerts.push({type:'warning', msg: 'Unable to submit job applicant'});
+        }
+    );
 }
 
 $scope.apply = function() {

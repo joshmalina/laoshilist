@@ -8,15 +8,24 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('User_', ['$firebaseObject', 'firebasePath', 'Job_', '$q', function ($firebaseObject, firebasePath, Job_, $q) {
+ .factory('User_', ['$firebaseObject', 'firebasePath', 'Job_', '$q', 'fbMethods', function ($firebaseObject, firebasePath, Job_, $q, fbMethods) {
 
   var ref = new Firebase (firebasePath + '/users');
 
   var User = $firebaseObject.$extend({
-      applyTo: function(jobID) {
+      applyTo: function(jobID, note) {
+
+        var datum = {
+          when: fbMethods.getTime(),
+          note: note || null
+        };
+
   			// add to a list of jobs that this teacher has applied to
   			var jobsRef = ref.child(this.$id).child('appliedTo').child(jobID);
-  			jobsRef.set(true);  			
+  			jobsRef.set(datum, function(error) {
+          return error;
+        });  		
+        	
   		},      
       // wrapped list of jobs applied to
       appliedTo_: function() {
@@ -35,6 +44,10 @@
       },
       getFullestName: function() {
         return this.lastName ? name = this.firstName + ' ' + this.lastName : this.firstName;        
+      },
+      // bool indicates whether user has already applied to this job
+      hasApplied: function(jobID) {
+        return Object.keys(this.appliedTo).indexOf(jobID) > -1;
       }
   });
 

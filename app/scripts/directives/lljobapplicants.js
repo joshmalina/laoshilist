@@ -7,7 +7,7 @@
  * # llJobApplicants
  */
 angular.module('laoshiListApp')
-  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', function (Job_, User_, countries, users) {
+  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', 'apply', function (Job_, User_, countries, users, apply) {
 
   	function link (scope) {  		
 
@@ -21,13 +21,16 @@ angular.module('laoshiListApp')
       
       function updateApplicantList() {
         applicants.$loaded().then(function(list) {
-          console.log(applicants);
           scope.applicants_ = list.map(function(app) {
-            return {
-              user: User_(app.$id),
-              when: app.$value || app.when
-            }
-          })
+            return User_(app.$id);
+            // var user = User_(app.$id);
+            // user.$loaded().then(function(u) {
+            //   return {
+            //     user: u,
+            //     when: app.$value || app.when || u.appliedTo[scope.jobid].when
+            //   }
+            // })            
+          });
           console.log(scope.applicants_);
         });
       }
@@ -38,9 +41,11 @@ angular.module('laoshiListApp')
 
       scope.addApplicant = function(appID) {
         // update list on job
-        scope.job.addApplicant(appID);
+        //scope.job.addApplicant(appID);
         // update list on applicant
-        User_(appID).applyTo(scope.job.$id);
+        //User_(appID).applyTo(scope.job.$id);
+        apply.addApplicant(appID, scope.jobid);
+
         // update list
         updateApplicantList();
       }

@@ -5,20 +5,19 @@
 			<th>Name</th>
 			<th>Country</th>
 			<th>When Applied</th>
-			<th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="a in applicants_">
-				<!-- <td><pre>{{a|json}}</pre></td> -->
-			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.user.firstName}} {{a.user.lastName}}</a></td>
-			<td>{{countries[a.user.country]}}</td>
-			<td><span am-time-ago="a.when"></span></td>
+			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.firstName}} {{a.lastName}}</a></td>
+			<td>{{countries[a.country]}}</td>
+			<td><span am-time-ago="a.appliedTo[jobid].when"></span></td>
 			<td>
-				<a ng-if="a.user.cv" href="{{a.user.cv}}" target="blank_">CV</a>
+				<a ng-if="a.cv" href="{{a.cv}}" target="blank_">CV</a>
 				<!--button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button-->
-			</td>
-		</tr>
+			</td>			
+		</tr>		
 	</tbody>
 </table>
 <select ng-if="canAdd === true" ng-model="newApplicant" ng-change="addApplicant(newApplicant)" ng-options="t.id as (t.firstName + ' ' + t.lastName) for t in teachers" class="form-control reign-in">

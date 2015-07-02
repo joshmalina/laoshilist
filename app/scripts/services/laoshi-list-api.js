@@ -43,10 +43,16 @@
   function getCVPath(file, userID) {
     var user = User_(userID);
     return user.$loaded().then(function(u) {
-      var path = basePathToAPI + 'sign?username='+u.getFullestName()+ '&file_type=' + file.type + '&userID=' + userID;
+      var path = basePathToAPI + 'sign?username=' + u.getFullestName() + '&file_type=' + file.type + '&userID=' + userID;
       return path;
     });
 
+  }
+
+  function getCoverLetterPath(file, userID, username, jobTitle) {
+    
+    // i think there is a function for writing out these get paramaters rather than writing the url by hand
+    return basePathToAPI + 'coverLetter?username=' + username + '&file_type=' + file.type + '&jobtitle=' + jobTitle + '&userID=' + userID;
   }
 
 
@@ -87,11 +93,24 @@
 
     });
 
-   })
-
-    
+   })   
 
     return deffered.promise;
+  }
+
+  function uploadCoverLetter(letter, userID, username, jobTitle) {
+
+    var defer = $q.defer();
+
+    var path = getCoverLetterPath(letter, userID, username, jobTitle);
+
+    getSignedURL(letter, userID, path).then(function(url) {
+      defer.resolve(url);
+    }, function(error) {
+      defer.reject(error);
+    });
+
+    return defer.promise;
   }
 
   function uploadCV(files, userID) {

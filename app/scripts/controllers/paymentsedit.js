@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('PaymentseditCtrl', ['$firebaseArray', 'users', 'firebasePath', '$firebaseObject', '$scope', '$routeParams', function ($firebaseArray, users, firebasePath, $firebaseObject, $scope, $routeParams) {
+  .controller('PaymentseditCtrl', ['$firebaseArray', 'users', 'firebasePath', '$firebaseObject', '$scope', '$routeParams', 'Jobs', function ($firebaseArray, users, firebasePath, $firebaseObject, $scope, $routeParams, Jobs) {
     
   	var ref = new Firebase (firebasePath + '/payments/' + $routeParams.paymentID);
 
@@ -17,6 +17,8 @@ angular.module('laoshiListApp')
   	$scope.users = users.getAllUsers();
 
   	$scope.notes = $firebaseArray(ref.child('notes'));
+
+  	$scope.jobs = Jobs();
 
   	$scope.saveDate = function(date_) {
   		ref.child('whenPaid').set(Date.parse(date_));

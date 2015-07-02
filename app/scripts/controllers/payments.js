@@ -8,15 +8,19 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('PaymentsCtrl', ['$location', 'job', '$scope', '$firebaseArray', 'firebasePath', 'user', 'fbMethods', function ($location, job, $scope, $firebaseArray, firebasePath, user, fbMethods) {
+ .controller('PaymentsCtrl', ['$location', 'Job_', '$scope', '$firebaseArray', 'firebasePath', 'user', 'fbMethods', function ($location, Job_, $scope, $firebaseArray, firebasePath, user, fbMethods) {
 
   var ref = new Firebase (firebasePath + '/payments');
 
   $scope.items = $firebaseArray(ref);
 
+  var jobsRef = new Firebase (firebasePath + '/jobs');
+
   $scope.getJobTitle = function(id) {
-    var job = new Job(id);
-    return job.title;
+    var job = new Job_(id);
+    job.$loaded().then(function(j) {
+      return j.title;
+    })
   }; 
 
   $scope.selectedItems = [];
@@ -26,7 +30,6 @@
   }; 
 
   $scope.addItem = function() {
-    console.log('cats');
    $scope.items.$add({
     whenAdded: fbMethods.getTime(),
     whenModified: fbMethods.getTime()
@@ -34,20 +37,5 @@
     $location.path('/paymentsEdit/' + ref.key());
   });
  };
-
- // var twins = {
- //  whenPaid: 1431769367,
- //  whenAdded: fbMethods.getTime(),
- //  whenUpdated: fbMethods.getTime(),
- //  amount: 9000,
- //  currency: 'RMB',
- //  job: '-Jr44sQpOjHshwQfKusR',
- //  paidBy: '-Jr44xUzrQhrg-ASW-Kr',
- //  paidTo: 'simplelogin:28'
- // }
-
- //$scope.items.$add(twins);
-
-
 
 }]);

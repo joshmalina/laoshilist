@@ -7,7 +7,7 @@
  * # llJobApplicants
  */
 angular.module('laoshiListApp')
-  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', 'apply', function (Job_, User_, countries, users, apply) {
+  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', 'apply', 'firebasePath', '$q', function (Job_, User_, countries, users, apply, firebasePath, $q) {
 
   	function link (scope) {  		
 
@@ -15,44 +15,23 @@ angular.module('laoshiListApp')
   		
       scope.job = Job_(scope.jobid);
 
-      var applicants = scope.job.getApplicants();
+      scope.applicants = scope.job.getApplicants();
 
-      // consider factoring this out to job_
-      
-      function updateApplicantList() {
-        applicants.$loaded().then(function(list) {
-          scope.applicants_ = list.map(function(app) {
-            return User_(app.$id);
-            // var user = User_(app.$id);
-            // user.$loaded().then(function(u) {
-            //   return {
-            //     user: u,
-            //     when: app.$value || app.when || u.appliedTo[scope.jobid].when
-            //   }
-            // })            
-          });
-          console.log(scope.applicants_);
+      var ref = new Firebase (firebasePath + '/jobs/' + scope.jobid + '/applicants');
+
+      ref.on('value', function(apps) {
+        var applicantIDs = Object.keys(apps.val());       
+        scope.applicants_ = applicantIDs.map(function(app) {
+          return User_(app);
         });
-      }
-
-      // do this once when page loads
-      // ideally this would happen on child_added all over
-      updateApplicantList();
+      });     
 
       scope.addApplicant = function(appID) {
-        // update list on job
-        //scope.job.addApplicant(appID);
-        // update list on applicant
-        //User_(appID).applyTo(scope.job.$id);
-        apply.addApplicant(appID, scope.jobid);
-
-        // update list
-        updateApplicantList();
+        apply.addApplicant(appID, scope.jobid);       
       }
 
       scope.deleteApplicant = function(idx) {
-        applicants.$remove(idx);
-        updateApplicantList();
+        scope.applicants.$remove(idx);
       }
 
       scope.requestInterview = function() {
@@ -64,9 +43,8 @@ angular.module('laoshiListApp')
       }
 
       scope.rejectCandidate = function(idx) {
-        applicants[idx].rejected = true;
-        applicants.$save();
-        updateApplicantList();
+        scope.applicants[idx].appliedTo[scope.jobid].rejected = $scope.applicants[idx] === true ? false : true;
+        scope.applicants.$save();
       }
 
       // if canAdd is true

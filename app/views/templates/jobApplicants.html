@@ -15,7 +15,8 @@
 			<td><span am-time-ago="a.appliedTo[jobid].when"></span></td>
 			<td>
 				<a ng-if="a.cv" href="{{a.cv}}" target="blank_">CV</a>
-				<!--button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button-->
+				<button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button>
+				<!--button class="btn btn-xs btn-warning" ng-click="rejectApplicant($index)">Reject</button-->
 			</td>			
 		</tr>		
 	</tbody>

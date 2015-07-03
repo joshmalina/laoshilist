@@ -188,7 +188,7 @@
 					<!-- schedule -->
 					<li class="list-group-item">
 						<label>Schedule:</label><br>
-						<textarea msd-elastic ng-model="job_.schedule" class="form-control"></textarea>
+						<textarea msd-elastic="\n" ng-model="job_.schedule" class="form-control" ng-change="save()"></textarea>
 					</li>
 				</ul>
 

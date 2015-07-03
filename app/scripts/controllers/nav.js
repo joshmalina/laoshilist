@@ -23,4 +23,11 @@ angular.module('laoshiListApp')
     		$scope.authUser = authData.uid;
     	}
     });
+
+    console.log($location.path());
+
+    $scope.isActive = function (viewLocation) { 
+        return viewLocation === $location.path();
+    };
+
   }]);

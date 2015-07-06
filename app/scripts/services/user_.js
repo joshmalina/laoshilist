@@ -12,6 +12,8 @@
 
   var ref = new Firebase (firebasePath + '/users');
 
+  
+
   var User = $firebaseObject.$extend({
       applyTo: function(jobID, note) {
 
@@ -32,9 +34,9 @@
         var p = [];        
         for (var property in this.appliedTo) {
           if(this.appliedTo.hasOwnProperty(property)) {              
-            var job = Job_(property);
+            var job = new Job_(property);
             p.push(job);             
-          };            
+          }            
         }
         return $q.all(p);
       },
@@ -43,7 +45,7 @@
         return Object.keys(this.roles).indexOf('2') > -1;
       },
       getFullestName: function() {
-        return this.lastName ? name = this.firstName + ' ' + this.lastName : this.firstName;        
+        return this.lastName ? this.firstName + ' ' + this.lastName : this.firstName;        
       },
       // bool indicates whether user has already applied to this job
       hasApplied: function(jobID) {
@@ -52,6 +54,8 @@
   });
 
   return function(userID) {
-    return new User(ref.child(userID));
-  }   
+    
+      return new User(ref.child(userID));
+    
+  };
 }]);

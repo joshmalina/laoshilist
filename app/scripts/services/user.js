@@ -8,7 +8,7 @@
  * Service in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('user', ['$location', '$firebaseObject', 'firebasePath', '$firebaseArray', function ($location, $firebaseObject, firebasePath, $firebaseArray) {
+ .factory('user', ['$location', '$firebaseObject', 'firebasePath', function ($location, $firebaseObject, firebasePath) {
   
   function User(userID) {
 

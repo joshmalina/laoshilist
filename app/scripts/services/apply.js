@@ -8,43 +8,104 @@
  * Factory in the laoshiListApp.
  */
 angular.module('laoshiListApp')
-  .factory('apply', ['User_', 'Job_', '$q', function (User_, Job_, $q) {
+  .factory('apply', ['User_', 'Job_', '$q', 'laoshiListApi', function (User_, Job_, $q, laoshiListApi) {
 
    function applySuccessEmail() {
     // contact server
    }
-   
+
+   /* @name: addApplicant
+    * @param: userid, jobid, coverletter=optional
+    * @desc:  combines the add on the job side and user side
+    * would be nice if they could happen atomically 
+    * should also make space on s3 for a cover letter
+    * and return a signed url for one if present
+    */
    function addApplicant(user_id, job_id, note) {
 
+    // return a promise
     var defer = $q.defer();
 
+    // it should never get this far, but if it does
     if(!user_id || !job_id) {
+      // the plan is for all these reject messages to be logged and sent to the admin
       defer.reject('user_id || job_id === false');
-    }
+    }    
 
-    var user = User_(user_id);
-    var job = Job_(job_id);
+    var user = User_(user_id),
+        job = Job_(job_id);
 
-    // would like to be able to do this atomically
+    // wait for user object to load
     user.$loaded().then(function() {
+
+      // wait for job object to load
       job.$loaded().then(function() {
+
+        // if both have loaded
         if(user && job) {
-          var userError = user.applyTo(job.$id, note);          
+
+          // apply on the user side, return an error
+          var userError = user.applyTo(job.$id, note);        
+
+          // if no user error
           if(!userError) {
+
+            // apply on the job side
             var jobError = job.addApplicant(user.$id);
+
+            // if there is an error
             if(jobError) {
+
+              // log this error
               defer.reject('application added to user record but not job record'); 
+
+              // send me an email with that error
+
+              // roll back apply on the user side
+
+            // no errors
             } else {
-              defer.resolve('Application successfully submitted');
+
+              // if cover letter present
+              if(note) {
+
+                // try to get a presigned url
+                laoshiListApi.uploadCoverLetter(note, user.$id, user.getFullestName(), job.title).then(
+                  // if we got it
+                  function(url) {
+
+                    // save to db
+                    user.appliedTo[job.$id].note = url;
+                    user.$save();
+
+                    // couldn't get url
+                }, function(error) {
+
+                    console.log(error);
+                    defer.reject('Cover letter upload failure');
+                })
+              } 
+
+                // let them know
+                defer.resolve('Application successfully submitted');
+
+                // send an email        
+                laoshiListApi.email(user, job);
+              
             }
+
+          // if there was an error adding to the user record
           } else {
-            defer.reject('application not added to user record')
+
+            // send me an email with this error, log it
+            defer.reject('application not added to user nor job');
           }
         }
 
       })
     })
 
+    // return the good or bad news
     return defer.promise;
 
    }

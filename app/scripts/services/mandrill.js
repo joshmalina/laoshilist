@@ -18,7 +18,7 @@ angular.module('laoshiListApp')
       .success(function(data, status, headers, config) {
         return data;
       });
-    }
+    };
 
     // Public API here
     return {

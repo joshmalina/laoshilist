@@ -10,7 +10,7 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="a in applicants_">
-			<td><a ng-href="#/profile/{{a.user.$id}}">{{a.firstName}} {{a.lastName}}</a></td>
+			<td><a ng-href="#/profile/{{a.$id}}">{{a.firstName}} {{a.lastName}}</a></td>
 			<td>{{countries[a.country]}}</td>
 			<td><span am-time-ago="a.appliedTo[jobid].when"></span></td>
 			<td>

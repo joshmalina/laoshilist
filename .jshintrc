@@ -21,3 +21,10 @@
     "angular": false
   }
 }
+
+"jshint_options":
+    {
+        "predef": {
+            "Firebase": false
+        }
+     }

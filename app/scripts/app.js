@@ -30,7 +30,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$waitForAuth();
         }]
@@ -42,7 +42,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$waitForAuth();
         }]
@@ -54,7 +54,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -66,7 +66,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$waitForAuth();
         }]
@@ -78,7 +78,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$waitForAuth();
         }]
@@ -90,7 +90,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -102,7 +102,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -114,7 +114,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$waitForAuth();
         }]
@@ -126,7 +126,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -138,7 +138,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -150,7 +150,7 @@
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above
-        "currentAuth": ["Auth", function(Auth) {
+        'currentAuth': ['Auth', function(Auth) {
           // $waitForAuth returns a promise so the resolve waits for it to complete
           return Auth.$requireAuth();
         }]
@@ -173,12 +173,12 @@
 
 
 
-.run(["$rootScope", "$location", function($rootScope, $location) {
-  $rootScope.$on("$routeChangeError", function(event, next, previous, error) {
+.run(['$rootScope', '$location', function($rootScope, $location) {
+  $rootScope.$on('$routeChangeError', function(event, next, previous, error) {
   // We can catch the error thrown when the $requireAuth promise is rejected
   // and redirect the user back to the home page
-  if (error === "AUTH_REQUIRED") {
-    $location.path("/login");
+  if (error === 'AUTH_REQUIRED') {
+    $location.path('/login');
   }
 });
 }]);

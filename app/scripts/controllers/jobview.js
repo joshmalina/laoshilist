@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray) {
+ .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', 'fbMethods', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray, fbMethods) {
 
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
@@ -66,12 +66,11 @@
 
 function addNewUser () {
 
-    var data = {
+    return users.$add({
         firstName: $scope.applicant.name,
-        email: $scope.applicant.email
-    }
-
-    return users.$add(data);
+        loginEmail: $scope.applicant.email,
+        dateAdded: fbMethods.getTime()
+    });
 }
 
 function uploadCV (id, files) {
@@ -117,23 +116,38 @@ $scope.upload = function (files) {
 
 $scope.doneApplied = 'Submit';
 
-function addApplicant () {
+$scope.apply = function() {
 
-    $scope.alerts.push({type:'success', msg: 'Attempting to submit application...'});
+    $scope.alerts.push({type:'success', msg: 'Attempting to submit application...'});   
 
-    var coverLetter = null;
+    // if cover letter present
     if($scope.applicant.why) {
-        coverLetter = {
+        var coverLetter = {
             text: $scope.applicant.why,
             type: 'text/plain'
         }
-        // call laoshilist API, when returns add url to firebase
     }
-   
 
-    apply.addApplicant($scope.user.$id, $scope.job.$id, coverLetter).then(
+    // if not logged in / doesn't exist
+    if(!$scope.user) {
+        addNewUser().then(function(ref) {
+            var userid = ref.key(); 
+            addApplicant(userid, $scope.job.$id, coverLetter);           
+        });
+    } else {
+        addApplicant($scope.user.$id, $scope.job.$id, coverLetter);  
+    }
+    
+    
+};
+
+function addApplicant (userid, jobid, coverLetter) {
+
+    apply.addApplicant(userid, jobid, coverLetter).then(
+
         function(success) {
-            console.log(success);
+                $scope.alerts.splice(0,1);
+
             $scope.alerts.push({type:'success', msg: 'Your job application has been submitted'});
             $scope.doneApplied = 'Thanks for applying!';
         }, function(error) {
@@ -143,19 +157,6 @@ function addApplicant () {
             $scope.alerts.push({type:'warning', msg: 'Unable to submit job applicant'});
         }
     );
-}
-
-$scope.apply = function() {
-
-    if(!$scope.user) {
-        addNewUser().then(function(ref) {
-            var id = ref.key();
-            $scope.user = User_(id);
-            addApplicant();
-        });
-    } else {
-        addApplicant();
-    }
 }
 
 }]);

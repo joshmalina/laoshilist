@@ -24,7 +24,6 @@
  			password : $scope.usr.password
  		}).then(function(authData) {
  			$scope.alerts.push({type:'success', msg: authData.password.email + ' has been logged in. You will now be redirected.'});
- 			console.log(authData.expires);
  			$location.path('/');
  		}).catch(function(error) {
  			$scope.alerts.push({type: 'danger', msg: 'Login failed. Please try again, reset your password, or contact an administrator.'});

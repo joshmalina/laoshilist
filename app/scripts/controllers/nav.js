@@ -24,8 +24,6 @@ angular.module('laoshiListApp')
     	}
     });
 
-    console.log($location.path());
-
     $scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
     };

@@ -15,9 +15,17 @@
   var expectedCVfileTypes = ['application/x-iwork-pages-sffpages', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/pdf', 'txt', 'text/rtf', 'text/plain'];
   var expectedCVsize = 1000000;
 
+  function email(applicant, job) {
+
+    var path = basePathToAPI + 'applySuccess' + '?applicant_email=' + applicant.loginEmail + '&applicant_name=' + applicant.getFullestName() + '&job_title=' + job.title + '&job_desc=' + job.longDesc + '&job_id=' + job.$id;
+    $http.post(path).then(function(response) {
+      console.log(response);
+    })
+  }
+
   function expectedType(file, typeExpectations) {   
     var a = typeExpectations.indexOf(file.type) > -1;
-    console.log('expected type', a);
+    console.log('expected type', a);s
     console.log(file.type);
     return a;
   }
@@ -51,8 +59,14 @@
 
   function getCoverLetterPath(file, userID, username, jobTitle) {
     
+    // remove promise from other one
+    var defer = $q.defer();
     // i think there is a function for writing out these get paramaters rather than writing the url by hand
-    return basePathToAPI + 'coverLetter?username=' + username + '&file_type=' + file.type + '&jobtitle=' + jobTitle + '&userID=' + userID;
+    var path = basePathToAPI + 'coverLetter?username=' + username + '&file_type=' + file.type + '&jobtitle=' + jobTitle + '&userID=' + userID;
+  
+    defer.resolve(path);
+
+    return defer.promise;
   }
 
 
@@ -62,7 +76,6 @@
 
    path.then(function(promise) {
 
-    console.log(promise);
     $http.get(promise).then(function(resp) {
 
       var xhr = new XMLHttpRequest();
@@ -77,13 +90,16 @@
 
       console.log(xhr.status);
 
-
       xhr.open('PUT', resp.data.signed_request, true);
+
+      if(file.text) {
+        file = file.text;
+      }
 
       xhr.send(file); 
 
       xhr.onreadystatechange = function(e) {
-              console.log(xhr.status);
+        console.log(xhr.status);
 
         console.log(e);
         if(this.readyState === 4) {
@@ -142,6 +158,13 @@
     return {
       uploadCV: function (files, userID) {
         return uploadCV(files, userID);
+      },
+      uploadCoverLetter: function(letter, userID, username, jobTitle) {
+        return uploadCoverLetter(letter, userID, username, jobTitle);
+      },
+      email: function(applicant, job) {
+        return email(applicant, job)
       }
+
     };
   }]);

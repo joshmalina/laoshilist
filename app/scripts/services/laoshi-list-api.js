@@ -93,8 +93,10 @@
       xhr.open('PUT', resp.data.signed_request, true);
 
       if(file.text) {
-        file = file.text;
+        file = new Blob([file.text], {type:'text/plain'});
       }
+
+      console.log(file);
 
       xhr.send(file); 
 
@@ -117,6 +119,8 @@
   function uploadCoverLetter(letter, userID, username, jobTitle) {
 
     var defer = $q.defer();
+
+    console.log(letter);
 
     var path = getCoverLetterPath(letter, userID, username, jobTitle);
 

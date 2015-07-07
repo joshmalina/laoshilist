@@ -10,12 +10,14 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="a in applicants_">
+		<!--td>{{a.appliedTo[jobid]}}</td-->
 			<td><a ng-href="#/profile/{{a.$id}}">{{a.firstName}} {{a.lastName}}</a></td>
 			<td>{{countries[a.country]}}</td>
 			<td><span am-time-ago="a.appliedTo[jobid].when"></span></td>
 			<td>
 				<a ng-if="a.cv" href="{{a.cv}}" target="blank_">CV</a>
-				<button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button>
+				<a ng-if="a.appliedTo[jobid].note" href="{{a.appliedTo[jobid].note}}" target="blank_">Cover Letter</a>
+				<!--button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button-->
 				<!--button class="btn btn-xs btn-warning" ng-click="rejectApplicant($index)">Reject</button-->
 			</td>			
 		</tr>		

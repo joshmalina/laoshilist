@@ -12,7 +12,7 @@
 
   var ref = new Firebase (firebasePath + '/payments');
 
-  $scope.items = $firebaseArray(ref);
+  $scope.items = $firebaseArray(ref.orderByChild('whenPaid'));
 
   var jobsRef = new Firebase (firebasePath + '/jobs');
 

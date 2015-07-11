@@ -25,7 +25,7 @@
 
   function expectedType(file, typeExpectations) {   
     var a = typeExpectations.indexOf(file.type) > -1;
-    console.log('expected type', a);s
+    console.log('expected type', a);
     console.log(file.type);
     return a;
   }
@@ -144,6 +144,7 @@
       var path = getCVPath(file, userID);
 
       getSignedURL(file, userID, path).then(function(url) {
+        defer.notify('crabsss');
         defer.resolve(url);
       }, function(error) {
         defer.reject(error);

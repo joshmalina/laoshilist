@@ -8,10 +8,18 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('users', ['firebasePath', '$firebaseArray', 'roles', function (firebasePath, $firebaseArray, roles) {     
+ .factory('users', ['firebasePath', '$firebaseArray', 'roles', 'fbMethods', function (firebasePath, $firebaseArray, roles, fbMethods) {     
 
     // ref to all users
     var userRef = new Firebase(firebasePath + '/users');
+
+    function addNew(firstName, loginEmail) {
+      return firebaseArray(userRef).$add({
+        firstName: firstName,
+        loginEmail: loginEmail,
+        dateAdded: fbMethods.getTime()
+      });
+    }     
 
     function returnKind(kind) {     
 
@@ -43,6 +51,9 @@
 
     // Public API here
     return {
+      addNew: function(firstName, loginEmail) {
+        return addNew(firstName, loginEmail);
+      },
       getAllUsers: function() {
         return $firebaseArray(userRef);
       },

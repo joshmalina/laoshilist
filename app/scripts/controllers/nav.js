@@ -14,7 +14,7 @@ angular.module('laoshiListApp')
 
     $scope.logout = function() {
         $scope.auth.$unauth();
-        $location.path('/');
+        $location.path('/login');
     };
     
     // any time auth status updates, add the user data to scope

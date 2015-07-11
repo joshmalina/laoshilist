@@ -17,6 +17,8 @@
   var User = $firebaseObject.$extend({
       applyTo: function(jobID, note) {
 
+        var note_ = note || true;
+
         var datum = {
           when: fbMethods.getTime(),
           note: note || null
@@ -41,6 +43,9 @@
         return $q.all(p);
       },
       isAdmin: function() {
+        if(!this.roles) {
+          return false;
+        }
         // a non-straightforward way of indicating that the user is an admin
         return Object.keys(this.roles).indexOf('2') > -1;
       },

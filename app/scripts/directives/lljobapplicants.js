@@ -19,7 +19,8 @@ angular.module('laoshiListApp')
 
       var ref = new Firebase (firebasePath + '/jobs/' + scope.jobid + '/applicants');
 
-      ref.orderByChild('when').on('value', function(apps) {
+      ref.orderByKey().on('value', function(apps) {
+        console.log(apps.val())
         var applicantIDs = Object.keys(apps.val());       
         scope.applicants_ = applicantIDs.map(function(app) {
           return User_(app);

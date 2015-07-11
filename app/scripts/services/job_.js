@@ -16,7 +16,7 @@
  		 addApplicant: function(appID) {
   			// add to list of applicants in job
         // doing it this way as opposed to this.applicants[jobID] ... because if there are no extant applicants it will fail
-        ref.child(this.$id).child('applicants').child(appID).set(true, function(error) {
+        ref.child(this.$id).child('applicants').child(appID).set(fbMethods.getTime(), function(error) {
           return error;
         });		
   		},

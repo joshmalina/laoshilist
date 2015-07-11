@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', 'fbMethods', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray, fbMethods) {
+ .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', 'fbMethods', '$timeout', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray, fbMethods, $timeout) {
 
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
@@ -74,6 +74,12 @@ function addNewUser () {
 }
 
 function uploadCV (id, files) {
+    
+    // supress double notifications
+    if($scope.alerts.length === 0) {
+        $scope.alerts.push({type: 'info', msg: 'Attempting to upload your CV...'});
+    }
+
 
     laoshiListApi.uploadCV(files, id).then(function(url) {
 
@@ -94,14 +100,13 @@ function uploadCV (id, files) {
             //$scope.path_to_cv = null;
         }, function(update) {
             // push an update
-            $scope.alerts.push({type:'info', msg:update});
+            //$scope.alerts.push({type:'info', msg:update});
         });
 
 }
 
 $scope.upload = function (files) {   
 
-    $scope.alerts.push({type: 'info', msg: 'Attempting to upload your CV...'});
 
     if(!$scope.user) {
         addNewUser().then(function(ref) {
@@ -146,7 +151,7 @@ function addApplicant (userid, jobid, coverLetter) {
     apply.addApplicant(userid, jobid, coverLetter).then(
 
         function(success) {
-                $scope.alerts.splice(0,1);
+            $scope.alerts.splice(0,1);
 
             $scope.alerts.push({type:'success', msg: 'Your job application has been submitted'});
             $scope.doneApplied = 'Thanks for applying!';

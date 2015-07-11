@@ -150,10 +150,10 @@
 			<div class = "submitApplication form-group text-center" ng-show="applicant.name && applicant.email || user">
 				<button class="btn btn-primary" ng-click="apply()">{{doneApplied}}</button>
 			</div>
-		</div>
 	</div>
-	<!--<apply user = "userID"></apply>-->
 </div>
+</div>
+
 <div class = "right col-lg-4 col-md-5 col-sm-6">
 	<div class = "related-jobs">
 		<h3>Other Jobs</h3>
@@ -165,6 +165,9 @@
 	</div>
 	<div class = "share-job"></div>
 </div>
+
+
+<apply user-id="user.$id" job-id="job.$id"></apply>
 
     <!--img ngf-src="files[0]" ngf-default-src="'/thumb.jpg'" ngf-accept="'image/*'"-->
 

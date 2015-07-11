@@ -17,5 +17,6 @@ angular.module('laoshiListApp')
   	'Pending Payment',
   	'Paid',
   	'Unpaid',
-  	'On Hold'
+  	'On Hold',
+    'Won\'t resolve'
 ]);

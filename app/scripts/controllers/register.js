@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('RegisterCtrl', ['Auth', '$scope', 'firebasePath', 'username', function (Auth, $scope, firebasePath, username) {
+ .controller('RegisterCtrl', ['Auth', '$scope', 'firebasePath', 'username', '$location', '$timeout', function (Auth, $scope, firebasePath, username, $location, $timeout) {
 
  	var ref = new Firebase(firebasePath);
 
@@ -26,6 +26,9 @@
  			password: $scope.usr.password
  		}).then(function(userData) {
  			$scope.alerts.push({type:'success', msg:'You have successfully registered. You will now be redirected.'});
+ 			$timeout(function() {
+ 				$location.path('/login');
+ 			}, 2000);
  			console.log(userData);
  			createDbUser(userData.uid);
  		}).catch(function (error) {

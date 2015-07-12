@@ -29,7 +29,7 @@
 		</form>
 			<div class = "form-group">
 				<!--button class="btn btn-default llClear" ng-if="user.cv" ng-click="deleteCV()">Delete</button-->
-				<span class="btn btn-default llClear" ngf-select ngf-change="upload($files)" ng-show="applicant.name && applicant.email || user">
+				<span class="btn btn-default llClear" ngf-select ngf-change="uploadCV($files)" ng-show="applicant.name && applicant.email || user">
 					<span ng-if="user.cv">Update CV</span>
 					<span ng-if="!user.cv">Upload CV</span>
 				</span>

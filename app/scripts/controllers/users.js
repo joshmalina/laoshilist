@@ -12,7 +12,7 @@
 
   var ref = new Firebase (firebasePath + '/users');
   var users_ = $firebaseArray(ref);
-  $scope.users = users_;
+  $scope.users = users_.reverse();
   $scope.roles = roles;
   $scope.subjects = subjects;
   $scope.countries = countries;

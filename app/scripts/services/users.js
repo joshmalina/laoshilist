@@ -14,7 +14,7 @@
     var userRef = new Firebase(firebasePath + '/users');
 
     function addNew(firstName, loginEmail) {
-      return firebaseArray(userRef).$add({
+      return $firebaseArray(userRef).$add({
         firstName: firstName,
         loginEmail: loginEmail,
         dateAdded: fbMethods.getTime()

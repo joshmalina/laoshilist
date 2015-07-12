@@ -8,14 +8,26 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobsCtrl', ['llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$firebaseArray', 'firebasePath', function (llConstants, User_, currentAuth, fbMethods, $scope, $firebaseArray, firebasePath) {
+  .controller('JobsCtrl', ['jobs_', 'llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$firebaseArray', 'firebasePath', function (jobs_, llConstants, User_, currentAuth, fbMethods, $scope, $firebaseArray, firebasePath) {
 
     if(currentAuth) {
       var user = User_(currentAuth.uid);
       user.$loaded().then(function() {        
         $scope.isAdmin = user.isAdmin();
+        // only display jobs that need teachers to non-admins
+        $scope.jobs = user.isAdmin() ? jobs_() : jobs_('Needs Teacher') ;
       });      
+    } else {
+      // if you're not logged in, only show jobs that need teachers
+      $scope.jobs = jobs_('Needs Teacher');
     }
+
+    console.log($scope.isAdmin);
+
+
+ // get all jobs, pass to view
+    //var limited = ref.orderByChild('status').equalTo('2');
+
     // pass services to filter
     $scope.statuses = llConstants.jobstatus();
     $scope.subjects = llConstants.subjects();
@@ -45,9 +57,7 @@ angular.module('laoshiListApp')
       }
     };
 
-    // get all jobs, pass to view
-  	var ref = new Firebase(firebasePath + '/jobs');
-  	$scope.jobs = $firebaseArray(ref);
+   
 
     // add new job, set default status
   	$scope.addJob = function() {

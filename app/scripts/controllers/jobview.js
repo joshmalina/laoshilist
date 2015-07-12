@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', 'fbMethods', '$timeout', function (apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray, fbMethods, $timeout) {
+ .controller('JobviewCtrl', ['jobs_', 'apply', 'Users_', 'llConstants', 'User_', 'Job_', 'Jobs', 'Upload', 'currentAuth', '$routeParams', '$scope', 'laoshiListApi', 'firebasePath', '$firebaseArray', 'fbMethods', '$timeout', function (jobs_, apply, Users_, llConstants, User_, Job_, Jobs, Upload, currentAuth, $routeParams, $scope, laoshiListApi, firebasePath, $firebaseArray, fbMethods, $timeout) {
 
     // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
 
@@ -40,7 +40,7 @@
     $scope.applicant = {};
 
     // this should be limited to ones that 'need teacher'
-    $scope.jobs = Jobs();
+    $scope.jobs = jobs_('Needs Teacher');
     $scope.alerts = [];
 
     $scope.deleteCV = function () {        

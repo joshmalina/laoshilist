@@ -7,26 +7,13 @@
  * # apply
  */
  angular.module('laoshiListApp')
- .directive('apply', ['Job_', 'User_', 'laoshiListApi', 'users', 'apply', function (Job_, User_, laoshiListApi, users, apply) { 	
+ .directive('apply', ['Job_', 'User_', 'laoshiListApi', 'users', 'apply', '$q', function (Job_, User_, laoshiListApi, users, apply, $q) { 	
 
  	
  	
  	
 
- 	// checks to see if we have a user, and if not, updates userID
- 	// a getter and setter method
- 	function getUserId() {
-
- 		if(userID === null) {
- 			users.addNew(scope.applicant.firstName, scope.applicant.email).then(function(ref) {
- 				userID = ref.key();
- 				return ref.key();
- 			})
- 		} else {
- 			return userID;
- 		}
-
- 	}
+ 	
 
  	// update the firebase DB with a link to the CV in S3
  	function updateUserCV(id, cvURL) {
@@ -38,12 +25,32 @@
  	// main set of functions
  	function link (scope) {
 
+ 		// checks to see if we have a user, and if not, updates userID
+	 	// a getter and setter method
+	 	function getUserId() {
 
- 		// the applicant may not be logged in or have an account
- 		var userID = scope.userID || null;
+	 		var defer = $q.defer();
 
- 		if(userID) {
- 			scope.user = User_(userID);
+	 		if(scope.userid) {
+	 			defer.resolve(scope.userid);
+	 		}
+	 		
+ 			users.addNew(scope.applicant.name, scope.applicant.email).then(function(ref) {
+ 				scope.userid = ref.key();
+ 				defer.resolve(ref.key());
+ 			}, function(error) {
+ 				defer.reject(error);
+ 				console.log(error);
+ 			})
+	 		
+
+	 		return defer.promise;
+
+	 	}	
+ 		
+
+ 		if(scope.userid) {
+ 			scope.user = User_(scope.userid);
  		}
 
  		// all alerts start empty
@@ -62,22 +69,28 @@
  				scope.alerts.push({type: 'info', msg: 'Attempting to upload your CV...'});
  			}
 
- 			var userID = getUserId();
+ 			getUserId().then(function(userID) {
 
- 			laoshiListApi.uploadCV(cv, userID).then(
+ 				laoshiListApi.uploadCV(cv, userID).then(
 
- 				function(cvURL) {
-	 				
-	 				updateUserCV(userID, cvURL).then(function() {
-	 					scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + cvURL + '">' + cvURL + '</a>'});
+	 				function(cvURL) {
+		 				
+		 				updateUserCV(userID, cvURL).then(function() {
+		 					scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + cvURL + '">' + cvURL + '</a>'});
+		 				}, function(error) {
+		 					scope.alerts.push({type:'danger', msg: 'link to cv not saved'});
+		 				});
+
 	 				}, function(error) {
-	 					scope.alerts.push({type:'danger', msg: 'link to cv not saved'});
-	 				});
+	 					scope.alerts.push({type: 'danger', msg: error});
+	 				}
+				)
 
- 				}, function(error) {
- 					scope.alerts.push({type: 'danger', msg: error});
- 				}
-			)
+
+ 			})
+
+
+ 			
 		}
 
  		// calls methods that log the applicant and email him/her
@@ -92,19 +105,23 @@
  				}
  			}
 
- 			var userID = getUserId();
+ 			getUserId().then(function(userid) {
 
- 			apply.addApplicant(userID, scope.jobID, coverLetter).then(
- 				function(success) {
- 					//$scope.alerts.splice(0,1);
-            		scope.alerts.push({type:'success', msg: 'Your job application has been submitted'});
-            		scope.doneApplied = 'Thanks for applying!';
- 				}, function(error) {
- 					console.log(error);
- 					scope.alerts.push({type:'warning', msg: 'Unable to submit job applicant'});
+ 				apply.addApplicant(userid, scope.jobid, coverLetter).then(
+	 				function(success) {
+	 					//$scope.alerts.splice(0,1);
+	            		scope.alerts.push({type:'success', msg: 'Your job application has been submitted'});
+	            		scope.doneApplied = 'Thanks for applying!';
+	 				}, function(error) {
+	 					console.log(error);
+	 					scope.alerts.push({type:'warning', msg: 'Unable to submit job applicant'});
 
- 				}
-			)
+	 				}
+				)
+
+ 			});
+
+ 			
  		}
 
  	}
@@ -113,8 +130,8 @@
  		templateUrl: 'views/templates/apply.html',
  		restrict: 'E',
  		scope: {
- 			jobID: '=',
- 			userID: '='
+ 			jobid: '=',
+ 			userid: '='
  		},
  		link: link
  	}

@@ -27,13 +27,14 @@
 		{{cities[job.city].en}}
 	</small>
 	<p>{{job.longDesc | limitTo: 200}}<span ng-if="job.longDesc.length > 200">...</span></p>
-	<span ng-if="admin">	
-		<a class = "" ng-href="#/job-edit/{{job.$id}}" ng-if="admin">Edit</a>
-		<label class="status text-center" disabled>{{ ' - ' + status[job.status]}}</label>
-	</span>
 	<span>
 		<a>Share</a>
 	</span>
+	<span ng-if="admin">	
+		<a class = "" ng-href="#/job-edit/{{job.$id}}" ng-if="admin">| Edit</a>
+		<label class="status text-center" disabled>{{ '     ' + status[job.status]}}</label>
+	</span>
+	
 	<small class="whenUpdated pull-right"><span am-time-ago="job.dateModified"></span></small>
 	<!--notes notes="notes" can-add="true"></notes-->
 </div>

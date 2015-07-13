@@ -7,7 +7,7 @@
  * # llJobApplicants
  */
 angular.module('laoshiListApp')
-  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', 'apply', 'firebasePath', '$q', function (Job_, User_, countries, users, apply, firebasePath, $q) {
+  .directive('llJobApplicants', ['Job_', 'User_', 'countries', 'users', 'apply', 'firebasePath', 'batchFunctions', function (Job_, User_, countries, users, apply, firebasePath, batchFunctions) {
 
   	function link (scope) {  		
 
@@ -20,19 +20,35 @@ angular.module('laoshiListApp')
       var ref = new Firebase (firebasePath + '/jobs/' + scope.jobid + '/applicants');
 
       ref.orderByKey().on('value', function(apps) {
-        console.log(apps.val())
         var applicantIDs = Object.keys(apps.val());       
         scope.applicants_ = applicantIDs.map(function(app) {
           return User_(app);
         });
-      });     
+      });
+
+      scope.toggleSelect = batchFunctions.toggleSelect;       
+
+      scope.deleteApplicants = function() {
+        // pass a partially defined remove applicant function
+        batchFunctions.foldAndDeselect(function(applicant) {
+          return apply.removeApplicant(scope.jobid, applicant.$id);
+        });
+      };
+      
+
+
+
+      // batchFunctions.foldAndDeselect(function(applicant) {
+      //   scope.applicants.$remove(applicant);
+      // });
 
       scope.addApplicant = function(appID) {
         apply.addApplicant(appID, scope.jobid);       
       }
 
-      scope.deleteApplicant = function(idx) {
-        scope.applicants.$remove(idx);
+      scope.deleteApplicant = function(uid, jid) {
+        //scope.applicants.$remove(idx);
+        apply.removeApplicant(jid, uid);
       }
 
       scope.requestInterview = function() {

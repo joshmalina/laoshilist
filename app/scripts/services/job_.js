@@ -39,6 +39,9 @@
       // },
       getNotes: function() {
         return $firebaseArray(ref.child(this.$id).child('notes'));
+      },
+      deleteApplicant: function(appID) {
+        ref.child(this.$id).child('applicants').child(appID).set(null);
       }
   	});
 

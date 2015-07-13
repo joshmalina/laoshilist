@@ -14,6 +14,45 @@ angular.module('laoshiListApp')
     // contact server
    }
 
+   function instantiateUserAndJob(uid, jid) {
+    
+    var defer = $q.defer();
+
+    if(!uid || !jid) {
+      defer.reject('user id or job id missing');
+    }
+
+    var user = User_(uid),
+        job = Job_(jid);
+
+    user.$loaded().then(function() {
+      job.$loaded().then(function() {
+        if(user && job) {
+          defer.resolve({u: user, j: job});
+        }
+      })
+    })
+
+    return defer.promise;
+
+
+   }
+
+   function removeApplicant(userid, jobid) {
+
+      var defer = $q.defer();
+
+      instantiateUserAndJob(userid, jobid).then(function(combo) {
+        combo.j.deleteApplicant(userid);
+        combo.u.dontApply(jobid);
+      });
+
+      defer.resolve('');
+
+      return defer.promise;
+
+   }
+
    /* @name: addApplicant
     * @param: userid, jobid, coverletter=optional
     * @desc:  combines the add on the job side and user side
@@ -114,6 +153,9 @@ angular.module('laoshiListApp')
     return {
       addApplicant: function (user_id, job_id, note) {
         return addApplicant(user_id, job_id, note);
+      },
+      removeApplicant: function(jid, uid) {
+        return removeApplicant(uid, jid);
       }
     };
   }]);

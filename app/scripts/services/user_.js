@@ -55,6 +55,9 @@
       // bool indicates whether user has already applied to this job
       hasApplied: function(jobID) {
         return Object.keys(this.appliedTo).indexOf(jobID) > -1;
+      },
+      dontApply: function(jobID) {
+        ref.child(this.$id).child('appliedTo').child(jobID).set(null);
       }
   });
 

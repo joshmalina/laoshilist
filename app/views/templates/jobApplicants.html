@@ -1,13 +1,13 @@
-<h5 class="text-center">Applicants</h5>
+<h6 class="text-center">Applicants</h6>
 <table class="table">
 	<thead>
 		<tr>
 			<th></th>
-			<th>Name</th>
-			<th>Country</th>
-			<th>When Applied</th>
+			<th></th>
+			<th></th>
+			<th></th>
 			<th>
-				<button class="btn btn-xs">delete</button>
+				<button class="btn btn-xs" ng-click="deleteApplicants()">delete</button>
 				<button class="btn btn-xs">cv</button>
 				<button class="btn btn-xs">cover letter</button>
 			</th>
@@ -15,15 +15,14 @@
 	</thead>
 	<tbody>
 		<tr ng-repeat="a in applicants_">
-		<!--td>{{a.appliedTo[jobid]}}</td-->
-			<td><input type="checkbox"></td>
+			<td><input type="checkbox" ng-click="toggleSelect(a)"></td>
 			<td><a ng-href="#/profile/{{a.$id}}">{{a.firstName}} {{a.lastName}}</a></td>
 			<td>{{countries[a.country]}}</td>
 			<td><span am-time-ago="a.appliedTo[jobid].when"></span></td>
 			<td>
 				<a ng-if="a.cv" href="{{a.cv}}" target="blank_">CV</a>
 				<a ng-if="a.appliedTo[jobid].note" href="{{a.appliedTo[jobid].note}}" target="blank_">Cover Letter</a>
-				<button class="btn btn-xs" ng-click="deleteApplicant($index)">delete</button>
+				<button class="btn btn-xs" ng-click="deleteApplicant(a.$id, jobid)">delete</button>
 				<!--button class="btn btn-xs btn-warning" ng-click="rejectApplicant($index)">Reject</button-->
 			</td>			
 		</tr>		

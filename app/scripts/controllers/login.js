@@ -19,6 +19,7 @@
  	$scope.alerts = [];
 
  	$scope.login = function() {
+ 		$scope.alerts.push({type:'info', msg: 'Attempting to log you in...'});
  		Auth.$authWithPassword({
  			email    : $scope.usr.email,
  			password : $scope.usr.password

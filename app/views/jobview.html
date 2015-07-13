@@ -15,23 +15,23 @@
 	}
 	.fast-facts {
 		background: #eee;
-  		margin-bottom: 20px;
-  		padding: 20px 20px 10px 20px;	
+		margin-bottom: 20px;
+		padding: 20px 20px 10px 20px;	
 	}
 	.fast-facts table {
 		max-width: 100%;
-  		background-color: transparent;
-  		border-collapse: collapse;
-  		border-spacing: 0;
+		background-color: transparent;
+		border-collapse: collapse;
+		border-spacing: 0;
 	}
 	.fast-facts td {
-  		vertical-align: top;
-  		font-size:1.2em;
-  		padding-bottom: 16px;
+		vertical-align: top;
+		font-size:1.2em;
+		padding-bottom: 16px;
 	}
 	.catValue {
 		font-weight: 400;
-  		
+
 	}
 	.catName {
 		padding-right: 20px;
@@ -56,12 +56,11 @@
 	.loginSuggest {
 		padding-bottom: 5px;
 	}
-  .css-form input.ng-invalid.ng-touched {
-    background-color:#FA787E;
-  }
+	.css-form input.ng-invalid.ng-touched {
+		background-color:#FA787E;
+	}
 
-  
-</style>
+
 </style>
 
 <div class="page-header">
@@ -102,24 +101,34 @@
 					<tr ng-if="job.subjects">
 						<td class="catName"><strong>Subject:</strong></td>
 						<td class="catValue"><explode wrap="subjects" array="job.subjects"></td>
+					</tr>					
+				</tbody>
+				<tbody ng-if="isAdmin">
+					<tr ng-if="job.status">
+						<td class="catName"><strong>Status:</strong></td>
+						<td class="catValue">{{status[job.status]}}</td>
+					</tr>
+					<tr ng-if="job.clientID">
+						<td class="catName"><strong>Client:</strong></td>
+						<td class="catValue"><a href="#/profile/{{job.clientID}}">Visit</a></td>
 					</tr>
 				</tbody>
 			</table>
-		</div>	
+		</div>		
 		<div class = "description">
 			{{job.longDesc}}
 		</div>
-		<apply userid="user.$id" jobid="job.$id"></apply>
-
+		<div>
+			<apply userid="user.$id" jobid="job.$id"></apply>
+		</div>
+		<div ng-if="isAdmin">
+			<notes notes="job.notes"></notes>
+			<ll-job-applicants jobid="job.$id"></ll-job-applicants>
+		</div>
 	</div>
-	
-	</div>
-	</div>
-
-	
 </div>
 
-
+<!--pre>{{job| json}}</pre-->
 
 
 <div class = "right col-lg-4 col-md-5 col-sm-6">
@@ -133,10 +142,3 @@
 	</div>
 	<div class = "share-job"></div>
 </div>
-
-
-    <!--img ngf-src="files[0]" ngf-default-src="'/thumb.jpg'" ngf-accept="'image/*'"-->
-
-
-{{u.cv}}
-

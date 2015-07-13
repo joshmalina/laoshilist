@@ -9,12 +9,6 @@
  angular.module('laoshiListApp')
  .directive('apply', ['Job_', 'User_', 'laoshiListApi', 'users', 'apply', '$q', function (Job_, User_, laoshiListApi, users, apply, $q) { 	
 
- 	
- 	
- 	
-
- 	
-
  	// update the firebase DB with a link to the CV in S3
  	function updateUserCV(id, cvURL) {
  		var user = User_(id);

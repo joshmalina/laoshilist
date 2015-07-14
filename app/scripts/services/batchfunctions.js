@@ -54,8 +54,8 @@ angular.module('laoshiListApp')
       foldAndDeselect: function(someFunction) {
         return foldAndDeselect(someFunction)
       },
-      selectedObjects: function() {
-        return selectedObjects;
+      someSelected: function() {
+        return selectedObjects.length > 0;
       }
     };
   });

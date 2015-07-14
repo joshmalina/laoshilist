@@ -22,12 +22,6 @@ angular.module('laoshiListApp')
       $scope.jobs = jobs_('Needs Teacher');
     }
 
-    console.log($scope.isAdmin);
-
-
- // get all jobs, pass to view
-    //var limited = ref.orderByChild('status').equalTo('2');
-
     // pass services to filter
     $scope.statuses = llConstants.jobstatus();
     $scope.subjects = llConstants.subjects();

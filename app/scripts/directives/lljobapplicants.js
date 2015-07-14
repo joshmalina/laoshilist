@@ -15,16 +15,27 @@ angular.module('laoshiListApp')
   		
       scope.job = Job_(scope.jobid);
 
-      scope.applicants = scope.job.getApplicants();
-
       var ref = new Firebase (firebasePath + '/jobs/' + scope.jobid + '/applicants');
 
       ref.orderByKey().on('value', function(apps) {
+        if(apps.val() === null) {
+          return;
+        }
         var applicantIDs = Object.keys(apps.val());       
         scope.applicants_ = applicantIDs.map(function(app) {
           return User_(app);
         });
       });
+
+      ref.on('child_removed', function(apps) {
+        if(apps.val() === null) {
+          return;
+        }
+        var applicantIDs = Object.keys(apps.val());       
+        scope.applicants_ = applicantIDs.map(function(app) {
+          return User_(app);
+        });
+      })
 
       scope.toggleSelect = batchFunctions.toggleSelect;       
 
@@ -33,23 +44,13 @@ angular.module('laoshiListApp')
         batchFunctions.foldAndDeselect(function(applicant) {
           return apply.removeApplicant(scope.jobid, applicant.$id);
         });
-      };
-      
+      };     
 
-
-
-      // batchFunctions.foldAndDeselect(function(applicant) {
-      //   scope.applicants.$remove(applicant);
-      // });
+      scope.someSelected = batchFunctions.someSelected();
 
       scope.addApplicant = function(appID) {
         apply.addApplicant(appID, scope.jobid);       
-      }
-
-      scope.deleteApplicant = function(uid, jid) {
-        //scope.applicants.$remove(idx);
-        apply.removeApplicant(jid, uid);
-      }
+      }      
 
       scope.requestInterview = function() {
         // pass request to mandrill to choose time to interview

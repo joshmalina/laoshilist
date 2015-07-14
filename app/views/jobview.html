@@ -42,10 +42,6 @@
 	.left {
 		padding-left: 0;
 	}
-	.apply_box {
-		margin-top:30px;
-		background: white;
-	}
 	.llClear {
 		border-radius: 4px;
 		border:1px solid darkgray;
@@ -56,15 +52,12 @@
 	.loginSuggest {
 		padding-bottom: 5px;
 	}
-	.css-form input.ng-invalid.ng-touched {
-		background-color:#FA787E;
-	}
-
-
 </style>
 
 <div class="page-header">
-	<h1>{{job.title}}<!--button class="btn btn-primary pull-right" data-spy="scroll" data-target="#apply">Apply</button-->
+	<h1>
+		{{job.title}}
+		<button ng-if="isAdmin" class="btn btn-primary pull-right" ng-click="edit()">Edit</button>
 	</h1>
 	<small>Last updated <span am-time-ago="job.dateModified"></span></small>
 </div>
@@ -112,6 +105,10 @@
 						<td class="catName"><strong>Client:</strong></td>
 						<td class="catValue"><a href="#/profile/{{job.clientID}}">Visit</a></td>
 					</tr>
+					<tr ng-if="job.fee">
+						<td class="catName"><strong>Fee:</strong></td>
+						<td class="catValue">{{job.fee}}</td>
+					</tr>
 				</tbody>
 			</table>
 		</div>		
@@ -128,16 +125,14 @@
 	</div>
 </div>
 
-<!--pre>{{job| json}}</pre-->
-
-
 <div class = "right col-lg-4 col-md-5 col-sm-6">
 	<div class = "related-jobs">
 		<h3>Other Jobs</h3>
 		<div class = "job_" ng-repeat="job_ in jobs | limitTo:4">	
 			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a><br>
-			<small>{{cities[job_.city].en}},</small>
-			<small>{{job_.shortLocation}}</small>
+			<small>{{job_.shortLocation}}<span ng-if="job_.city && job_.shortLocation">,</span>
+</small>
+			<small>{{cities[job_.city].en}}</small>
 		</div>
 	</div>
 	<div class = "share-job"></div>

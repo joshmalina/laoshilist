@@ -8,11 +8,12 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('users', ['firebasePath', '$firebaseArray', 'roles', 'fbMethods', function (firebasePath, $firebaseArray, roles, fbMethods) {     
+ .factory('users', ['firebasePath', '$firebaseArray', 'roles', 'fbMethods', '$q', function (firebasePath, $firebaseArray, roles, fbMethods, $q) {     
 
     // ref to all users
     var userRef = new Firebase(firebasePath + '/users');
 
+    // should also add roles {teacher: true}
     function addNew(firstName, loginEmail) {
       return $firebaseArray(userRef).$add({
         firstName: firstName,
@@ -49,6 +50,27 @@
       return naiveUsers;
     }
 
+    // iterate through the users, see if an applicant has already applied to a job
+    // with an extant email
+    // if so, return id; if not, return false
+    function emailExists (email) {
+
+      var defer = $q.defer();
+
+      userRef.orderByChild('loginEmail').equalTo(email).once('value', function(snapshot) {
+
+        if(snapshot.exists() && snapshot.numChildren() === 1) {
+          snapshot.forEach(function(childSnapshot) {
+            defer.resolve(childSnapshot.key());
+          })
+        } else {
+          defer.reject();
+        }
+      });
+
+      return defer.promise;
+    }
+
     // Public API here
     return {
       addNew: function(firstName, loginEmail) {
@@ -65,6 +87,9 @@
       },
       getClients: function() {
         return returnKind('Client');
+      },
+      emailExists: function(email) {
+        return emailExists(email);
       }
     };
   }]);

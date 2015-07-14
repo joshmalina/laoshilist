@@ -8,19 +8,43 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['jobs_', 'llConstants', 'User_', 'Job_', 'currentAuth', '$routeParams', '$scope', 'firebasePath', '$firebaseArray', 'fbMethods', function (jobs_, llConstants, User_, Job_, currentAuth, $routeParams, $scope, firebasePath, $firebaseArray) {
+ .controller('JobviewCtrl', ['jobs_', 'llConstants', 'User_', 'Job_', 'currentAuth', '$routeParams', '$scope', 'firebasePath', '$firebaseArray', '$cookies', '$location', function (jobs_, llConstants, User_, Job_, currentAuth, $routeParams, $scope, firebasePath, $firebaseArray, $cookies, $location) {
+    
+    // set job
+    $scope.job = Job_($routeParams.jobid);
 
-    // some message about not being able to find that certain job if nothing is returned from db for that job or id is not present
+    // if job does not exist, redirect
+    // better if displayed some error message
+    $scope.job.$loaded().then(function(ref) {
+        if(ref.$value === null) {
+            $location.path('/jobs');
+        }
+    });    
 
+    // if logged in
     if(currentAuth) {
-        $scope.user = User_(currentAuth.uid);
+        // set user
+        $scope.user = User_(currentAuth.uid);  
+    // if previously applied without logging in     
+    } else if ($cookies.get('applicant_id')) {
+        // set user
+        $scope.user = User_($cookies.get('applicant_id'));
+        // $scope.applicant.name = $scope.user.firstName;
+        // $scope.applicant.email = $scope.user.email;        
+    }
+
+    // if any kind of user
+    if($scope.user) {
+        // check to see if admin
         $scope.user.$loaded().then(function() {
             $scope.isAdmin = $scope.user.isAdmin();
         });
-    } else {
-        var ref = new Firebase (firebasePath + '/users');
-        var users = $firebaseArray(ref);
     }
+
+    $scope.edit = function() {
+        $location.path('/job-edit/' + $routeParams.jobid);
+    }
+
 
     function alreadyApplied() {
 
@@ -34,7 +58,6 @@
 
     
     
-    $scope.job = Job_($routeParams.jobid);    
 
     $scope.status = llConstants.jobstatus();
     $scope.cities = llConstants.cities();

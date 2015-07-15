@@ -67,15 +67,83 @@
 <div class = "clearfix profile-container container col-lg-12">
 	<div class = "col-lg-offset-0 col-xs-offset-0 col-sm-offset-0">
 		<!-- at large res, float; at small res put on top -->
+
+		<!-- THINGS ONLY ADMINS SHOULD SEE -->
+		<div ng-if="isAdmin">
+			<!-- ROLES -->
+			<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
+				<span class = "fields-name">Is a</span> <explode wrap="roles" obj="user.roles"></explode> 		
+			</div>
+			<!-- INTERVIEW STATUS -->
+			<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.interviewed">
+				<span class = "fields-name">Has been </span>interviewed
+			</div>
+			<!-- ETHNICITY -->
+			<div class = "ethnicity styled col-xs-12 col-md-12 col-sm-12 col-lg-12" ng-if="user.ethnicity">
+				<span class = "fields-name">Ethnically </span>
+				{{ ethnicities[user.ethnicity] }}
+			</div>
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12">
+				<span class="fields-name">Notes</span><br>
+				<notes notes="notes" can-add="true"></notes>
+			</div>
+		</div>
+
+		<!-- THINGS ONLY AN ADMIN OR THE USER HIM/HERSELF SHOULD SEE -->
+		<div ng-if="isAdmin">
+			<!-- CONTACT INFO  -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.contact">			
+				<profile-box label="contact" obj="user.contact"></profile-box>
+			</div>
+			<!-- ELECTRONIC PAYMENT INFO: ALIPAY -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.alipay">
+				<span class="fields-name">支付宝是</span>
+				<span class="fields-value">{{user.payment.alipay}}</span>
+			</div>
+			<!-- ELECTRONIC PAYMENT INFO: WECHAT -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.weChatPay">
+				<span class="fields-name">微信包是</span>
+				<span class="fields-value">{{user.payment.weChatPay}}</span>
+			</div>
+			<!-- BANKING INFO -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-repeat="bank in user.payment.banks" ng-if="user.payment.banks">
+				<span class="fields-name">Name of bank is</span>
+				<span class="fields-value">{{bank.nameOfBank}}</span>
+				<br>
+				<span class="fields-name">Name on account is</span>
+				<span class="fields-value">{{bank.nameOnAcct}}</span>
+				<br>
+				<span class="fields-name">Account number is</span>
+				<span class="fields-value">{{bank.acctNum}}</span>
+			</div>
+			<!-- UPLOADED CV -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
+				<span class="fields-value"><a target="_blank" href="{{user.cv}}">Original Resume</a></span>
+			</div>			
+			<!-- JOBS APPLIED FOR -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="appliedFor">
+				<span class = "fields-name">Jobs Applied For</span><br>
+				<div ng-repeat="val in appliedFor"><a ng-href="#/jobview/{{val.$id}}">{{val.title}}</a></div>
+			</div>
+			<!-- JOBS WORKING FOR -->
+			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="teacherFor.length > 0">
+				<span class="fields-name">Teacher For</span><br>
+				<jobs-assoc jobs="teacherFor"></jobs-assoc>
+			</div>
+			<!-- JOBS -->
+			<!--div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="jobKeys.length > 0">
+				<span class="fields-name">Jobs</span><br>
+				<jobs-assoc jobs="jobKeys"></jobs-assoc>		 
+			</div-->
+		</div>
+
+
+
 		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar && user.avatar.data">
 			<!--img src="{{user.avatar.data}}" class="avatar-img"/-->			
 		</div>		
-		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
-			<span class = "fields-name">Is a</span> <explode wrap="roles" obj="user.roles"></explode> 		
-		</div>
-		<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.interviewed">
-			<span class = "fields-name">Has been </span>interviewed
-		</div>
+		
+		
 		<div class = "col-lg-7 col-sm-12 col-md-12 styled col-xs-12" ng-if="user.city">
 			<span class = "fields-name">Lives in </span>{{ cities[user.city].zh }}
 		</div>
@@ -91,10 +159,7 @@
 		<div class = "since styled col-xs-12 col-md-12 col-sm-12 col-lg-12" ng-if="user.dateAdded">
 			<span class = "fields-name">Joined </span>{{ user.dateAdded | date:'MM/dd/yy' }}
 		</div>
-		<div class = "ethnicity styled col-xs-12 col-md-12 col-sm-12 col-lg-12" ng-if="user.ethnicity">
-			<span class = "fields-name">Ethnically </span>
-			{{ ethnicities[user.ethnicity] }}
-		</div>
+		
 		<div class = "styled col-xs-12 col-lg-12 col-sm-12 col-md-7" ng-if="user.ages">
 			<span class = "fields-name">Lived </span><explode array="user.ages"></explode> <span class = "fields-name"> years</span>
 		</div>		
@@ -102,52 +167,16 @@
 			<span class = "fields-name">{{teachesStudies}} </span>
 			<explode wrap="subjects" array="user.subjects"></explode>
 		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.contact">			
-			<profile-box label="contact" obj="user.contact"></profile-box>
-		</div>
+		
 		<div class = "styled col-lg-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.schedule">
-			<span class = "fields-name">Available <br></span> {{user.schedule}}			
+			<span class = "fields-name">Available <br></span> {{user.schedule}}		
 		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
-			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Original Resume</a></span>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="jobKeys.length > 0">
-			<span class="fields-name">Jobs</span><br>
-			<jobs-assoc jobs="jobKeys"></jobs-assoc>		 
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="appliedFor">
-			<span class = "fields-name">Jobs Applied For</span><br>
-			<div ng-repeat="val in appliedFor"><a ng-href="#/jobview/{{val.$id}}">{{val.title}}</a></div>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="teacherFor.length > 0">
-			<span class="fields-name">Teacher For</span><br>
-			 <jobs-assoc jobs="teacherFor"></jobs-assoc>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12">
-			<span class="fields-name">Notes</span><br>
-			<notes notes="notes" can-add="true"></notes>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.alipay">
-			<span class="fields-name">支付宝是</span>
-			<span class="fields-value">{{user.payment.alipay}}</span>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.payment.weChatPay">
-			<span class="fields-name">微信包是</span>
-			<span class="fields-value">{{user.payment.weChatPay}}</span>
-		</div>
-		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-repeat="bank in user.payment.banks" ng-if="user.payment.banks">
-			<span class="fields-name">Name of bank is</span>
-			<span class="fields-value">{{bank.nameOfBank}}</span>
-			<br>
-			<span class="fields-name">Name on account is</span>
-			<span class="fields-value">{{bank.nameOnAcct}}</span>
-			<br>
-			<span class="fields-name">Account number is</span>
-			<span class="fields-value">{{bank.acctNum}}</span>
-		</div>
+		
+		
+		
 
 	</div>
-	<!-- to add: jobs associated with, jobs applied for, payables, bank info, education potentially -->	
+	<!-- to add: jobs associated with, jobs applied for, education potentially -->	
 
 	
 </div>

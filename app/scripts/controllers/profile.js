@@ -8,9 +8,18 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileCtrl', ['User_', 'llConstants', '$firebaseArray', '$q', '$scope', '$location', '$routeParams', 'firebasePath', '$firebaseObject', function (User_, llConstants, $firebaseArray, $q, $scope, $location, $routeParams, firebasePath, $firebaseObject) {
+ .controller('ProfileCtrl', ['currentAuth', 'User_', 'llConstants', '$firebaseArray', '$q', '$scope', '$location', '$routeParams', 'firebasePath', '$firebaseObject', function (currentAuth, User_, llConstants, $firebaseArray, $q, $scope, $location, $routeParams, firebasePath, $firebaseObject) {
 
-    // should redirect if username empty in routeparams.username
+  // should redirect if username empty in routeparams.username
+
+
+  if(currentAuth) {
+    var currentUser = User_(currentAuth.uid);
+    currentUser.$loaded().then(function() {
+          $scope.isAdmin = currentUser.isAdmin();
+    })
+  }
+
 
    var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
 

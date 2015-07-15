@@ -1,5 +1,5 @@
 <div class="page-header col-lg-12 col-sm-12">
-	<h1>Jobs<button class="btn btn-primary pull-right" ng-click="addJob()">New</button>
+	<h1>Jobs<button class="btn btn-primary pull-right" ng-click="addJob()" ng-if="isAdmin">New</button>
 </h1>
 </div>
 
@@ -65,7 +65,7 @@
 				<select ng-model="filterText.city" class="reign-in form-control" multiple ng-options="key as city.en for (key, city) in cities">
 				</select>
 			</div>			
-			<div class = "form-group filter-status">
+			<div class = "form-group filter-status" ng-if="isAdmin">
 				<label>Status</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterText.status)">clear</button>
 				<select ng-model="filterText.status" class="form-control" multiple ng-options="key as status for (key, status) in statuses">
 				</select>

@@ -13,6 +13,16 @@
     // set job
     $scope.job = Job_($routeParams.jobid);
 
+    // include the client's name 
+    $scope.job.$loaded().then(function(job) {
+        console.log(job);
+        var client = User_(job.clientID);
+        client.$loaded().then(function(client_) {
+            $scope.job.clientName = client_.getFullestName();
+        })
+
+    })
+
     // if job does not exist, redirect
     // better if displayed some error message
     $scope.job.$loaded().then(function(ref) {

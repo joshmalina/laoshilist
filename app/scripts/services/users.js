@@ -77,7 +77,7 @@
         return addNew(firstName, loginEmail);
       },
       getAllUsers: function() {
-        return $firebaseArray(userRef);
+        return $firebaseArray(userRef.orderByChild('firstName'));
       },
       getAdmins: function() {
         return returnKind('Admin');

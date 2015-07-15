@@ -94,7 +94,11 @@
 					<tr ng-if="job.subjects">
 						<td class="catName"><strong>Subject:</strong></td>
 						<td class="catValue"><explode wrap="subjects" array="job.subjects"></td>
-					</tr>					
+					</tr>	
+					<tr ng-if="job.schedule">
+						<td class="catName"><strong>Schedule:</strong></td>
+						<td class="catValue">{{job.schedule}}</td>
+					</tr>	
 				</tbody>
 				<tbody ng-if="isAdmin">
 					<tr ng-if="job.status">
@@ -103,7 +107,7 @@
 					</tr>
 					<tr ng-if="job.clientID">
 						<td class="catName"><strong>Client:</strong></td>
-						<td class="catValue"><a href="#/profile/{{job.clientID}}">Visit</a></td>
+						<td class="catValue"><a href="#/profile/{{job.clientID}}">{{job.clientName}}</a></td>
 					</tr>
 					<tr ng-if="job.fee">
 						<td class="catName"><strong>Fee:</strong></td>

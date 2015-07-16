@@ -39,6 +39,12 @@
 			<div class = "form-group country">
 				<label>Country of Citizenship</label>
 				<select class="form-control" ng-model="user.country" ng-change="user.$save()">
+					<option value="234">United States</option>
+					<option value="233">United Kingdom</option>
+					<option value="39">Canada</option>
+					<option value="14">Australia</option>
+					<option value="157">New Zealand</option>
+					<option>-----</option>
 					<option ng-repeat="c in countries" value="{{$index}}">{{c}}</option>
 				</select>
 			</div>

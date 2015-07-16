@@ -12,6 +12,6 @@ angular.module('laoshiListApp')
     return function() {
       var ref = new Firebase (firebasePath);
       var jobsRef = ref.child('jobs');
-      return $firebaseArray(jobsRef);
+      return $firebaseArray(jobsRef.orderByChild('title'));
     }
   }]);

@@ -15,17 +15,24 @@
 	.jobSnapshot {
 		padding-bottom: 10px;
 	}
+	.clientName {
+		font-weight: bolder;
+	}
 </style>
 
 <div class = "jobSnapshot">	
-	<h4>	
-		<a ng-href="#/jobview/{{job.$id}}">{{job.title}}</a><br>	
+
+	<h4>
+		<a ng-href="#/jobview/{{job.$id}}">{{job.title}}</a><small ng-if="admin && job.clientID" class="pull-right clientName">{{client.getFullestName()}}</small><br>	
+	
+	
 	</h4>
 	<small class="citySub">
 		{{job.shortLocation}}
 		<i ng-if="job.city && job.shortLocation">-</i>
 		{{cities[job.city].en}}
 	</small>
+	
 	<p>{{job.longDesc | limitTo: 200}}<span ng-if="job.longDesc.length > 200">...</span></p>
 	<span>
 		<a>Share</a>

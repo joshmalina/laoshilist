@@ -42,7 +42,7 @@
       },
       deleteApplicant: function(appID) {
         ref.child(this.$id).child('applicants').child(appID).set(null);
-      }
+      }      
   	});
 
 

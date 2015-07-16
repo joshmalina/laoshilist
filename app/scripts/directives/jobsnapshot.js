@@ -7,10 +7,17 @@
  * # jobSnapshot
  */
 angular.module('laoshiListApp')
-  .directive('jobSnapshot', ['Job_', 'llConstants', function (Job_, llConstants) {
+  .directive('jobSnapshot', ['Job_', 'llConstants', 'User_', function (Job_, llConstants, User_) {
 
   	function link(scope) {
       scope.job = Job_(scope.jobid);
+
+      scope.job.$loaded().then(function() {
+        if(scope.job.clientID) {
+          scope.client = User_(scope.job.clientID);
+        }
+      })
+
       scope.cities = llConstants.cities();
       scope.status = llConstants.jobstatus();
       scope.notes = scope.job.getNotes();

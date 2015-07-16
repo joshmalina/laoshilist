@@ -39,19 +39,21 @@
 
 				<br>
 
-				<label><small>Unit Cost</small><label>
-				<input type="number" ng-model="payment.liability.unitCost" class="form-control">
-				<select ng-model="payment.liability.currency" ng-change="payment.$save()" class="form-control">
-					<option value=""></option>
-					<option value="0">RMB</option>
-					<option value="1">USD</option>
-				</select>
+				<label><small>Unit Cost</small>
+					<input type="number" ng-model="payment.liability.unitCost" class="form-control" ng-change="payment.$save()">
+				</label>
 
+				<label><small>Currency</small>
+					<select ng-model="payment.liability.currency" ng-change="payment.$save()" class="form-control">
+						<option value=""></option>
+						<option value="0">RMB</option>
+						<option value="1">USD</option>
+					</select>
+				</label>				
 
-				<br>
-
-				<label><small>Number of units</small></label>
-				<input type="number" ng-model="payment.liability.unitNum">
+				<label><small>Number of units</small>
+					<input type="number" class="form-control" ng-model="payment.liability.unitNum" ng-change="payment.$save()">
+				</label>
 
 			</div>
 			<div class = "form-group">

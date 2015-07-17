@@ -12,59 +12,37 @@
 
   var ref = new Firebase (firebasePath + '/payments');
 
-  var COST = '1';
-  var USD_TO_RMB = 6.2;
-  var USD = '1';
-  var RMB = '0';
-  var REVENUE = '0';
-  var TRANSFER = '2';
+  var USD_TO_RMB = 6.2,
+      USD = '1',
+      RMB = '0',
+      REVENUE = '0',
+      COST = '1',
+      TRANSFER = '2';
 
   $scope.totalCost = 0;
   $scope.totalRevenue = 0;
   $scope.totalProfits = 0;
-  $scope.grossInvestment = 0;
-
-  // return total cost / total revenue in RMB
-  ref.on('value', function(snapshot) {
-    snapshot.forEach(function(eachChild) {
-
-      var amt = eachChild.val().amount;
-      var type = eachChild.val().paymentType;
-      var investRate = ( parseFloat(eachChild.val().reinvestmentRate) / 100);
-
-      // total cost
-      if(type === COST) {       
-        amt = eachChild.val().currency === RMB ? amt : Math.round(amt * USD_TO_RMB);
-        $scope.totalCost += amt;
-      }
-
-      // total revenue
-      // careful -- these are not set up to convert from usd
-      else if(eachChild.val().paymentType === REVENUE) {
-        $scope.totalRevenue += amt;
-        $scope.grossInvestment += (amt * investRate);
-      }
-
-      // total invested
-      $scope.totalInvested = ( ($scope.totalRevenue - $scope.totalCost) * 0);
-    })
-  })
+  $scope.totalLiabilities = 0;
+  $scope.totalSavings = 0;
+  $scope.netSavings = 0;
 
 
 
-  // some checking to see if costs, revenue, investment, profits line up
 
 
-
+  $scope.payments = $firebaseArray(ref);
   $scope.paymentsIn = $firebaseArray(ref.orderByChild('paymentType').equalTo(REVENUE));
   $scope.paymentsOut = $firebaseArray(ref.orderByChild('paymentType').equalTo(COST));
   $scope.transfers = $firebaseArray(ref.orderByChild('paymentType').equalTo(TRANSFER));
+  $scope.other = $firebaseArray(ref.orderByChild('paymentType').equalTo(null));
 
 
-  // want to remap this array of payments so that there is a job title associated with the id
 
+  // remap revenue payments to calculate per payment and total:
+  // revenue, liability, savings, profit
+  // as well as adding a title to each job
   $scope.paymentsIn.$loaded().then(function(items) {
-    var newmapping = 
+
       items.map(function(eachItem) {
 
         // associate each job with a job titles
@@ -75,37 +53,45 @@
           })
         }
 
-        // calculate gross and net savings
-        if(eachItem.paymentType === REVENUE) {
-          
-          var savings = 0, 
-              liability = 0,
-              profit = 0,
-              amt = parseFloat(eachItem.amount), 
-              savingsRate = parseFloat(eachItem.reinvestmentRate) / 100;
+        
+        var savings = 0, 
+            liability = 0,
+            profit = 0,
+            amt = parseFloat(eachItem.amount), 
+            savingsRate = parseFloat(eachItem.reinvestmentRate) / 100;
+            $scope.totalRevenue += amt;
 
 
-           if(eachItem.liability) {
+         if(eachItem.liability) {
 
-              var perUnitLiability = parseFloat(eachItem.liability.unitCost),
-                  numLiabilities = parseFloat(eachItem.liability.unitNum);
+            var perUnitLiability = parseFloat(eachItem.liability.unitCost),
+                numLiabilities = parseFloat(eachItem.liability.unitNum);
 
-              liability = perUnitLiability * numLiabilities;
-              eachItem.liabilityAmt = liability;
-
-           } 
+            liability = perUnitLiability * numLiabilities;              
+            eachItem.liabilityAmt = liability;
+            $scope.totalLiabilities += liability;
+        }           
 
           savings = (amt - liability) * savingsRate;
           eachItem.savings = savings;
+          $scope.totalSavings += savings;
 
           profit = amt - liability - savings;
-          eachItem.profit = profit;
-
-        }
+          $scope.totalProfits += profit;
+          eachItem.profit = profit;        
 
         return eachItem;
       });
   });
+
+  // remap cost payments to calculate total costs
+  $scope.paymentsOut.$loaded().then(function(items) {
+    items.map(function(eachItem) {
+      var amt = parseFloat(eachItem.amount);
+      $scope.totalCost += amt;
+    })
+  })
+
 
 
   var jobsRef = new Firebase (firebasePath + '/jobs');
@@ -120,11 +106,11 @@
   $scope.selectedItems = [];
    $scope.focusinControl = {
     selectedItems: [],
-    collection: $scope.items
+    collection: $scope.payments
   }; 
 
   $scope.addItem = function() {
-   $scope.items.$add({
+   $scope.payments.$add({
     whenAdded: fbMethods.getTime(),
     whenModified: fbMethods.getTime()
   }).then(function(ref) {

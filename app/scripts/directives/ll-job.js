@@ -37,9 +37,7 @@
 
       scope.notes = scope.job_.getNotes();   
 
-      scope.view = function() {
-        $location.path('/jobview/' + scope.job.$id);
-      }   
+    
       
       // when anything about the job changes, including adding notes,
       // the dateModified field gets updated

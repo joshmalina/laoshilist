@@ -15,43 +15,19 @@ angular.module('laoshiListApp')
       user.$loaded().then(function() {        
         $scope.isAdmin = user.isAdmin();
         // only display jobs that need teachers to non-admins
-        $scope.jobs = user.isAdmin() ? jobs_() : jobs_('Needs Teacher') ;
-      });      
+        $scope.jobs = user.isAdmin() ? jobs_() : jobs_('Needs Teacher');
+      });    
+    // if not logged in at all  
     } else {
-      // if you're not logged in, only show jobs that need teachers
+      // definetly only show jobs that need teachers
       $scope.jobs = jobs_('Needs Teacher');
     }
 
-    // pass services to filter
+    // pass constants to filter
     $scope.statuses = llConstants.jobstatus();
     $scope.subjects = llConstants.subjects();
     $scope.ages = llConstants.ages();
-    $scope.cities = llConstants.cities();
-   
-    // clear all filters
-    $scope.clearFilter = function() {
-      $scope.filterText = {};
-      $scope.filterSearch = null;
-    };
-
-    $scope.clear = function() {
-      $scope.filterText.city = null;
-    };
-
-    // toggle view jobs by newest / oldest
-    $scope.groupBy = '-dateModified';
-    $scope.orderedBy = 'Newest';
-    $scope.toggleGroupBy = function() {
-      if($scope.groupBy === '-dateModified') {
-        $scope.groupBy = 'dateModified';
-        $scope.orderedBy = 'Oldest';
-      } else {
-        $scope.groupBy = '-dateModified';
-        $scope.orderedBy = 'Newest';
-      }
-    };
-
-   
+    $scope.cities = llConstants.cities();   
 
     // add new job, set default status
   	$scope.addJob = function() {

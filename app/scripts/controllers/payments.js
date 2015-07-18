@@ -27,16 +27,11 @@
   $scope.netSavings = 0;
 
 
-
-
-
   $scope.payments = $firebaseArray(ref);
   $scope.paymentsIn = $firebaseArray(ref.orderByChild('paymentType').equalTo(REVENUE));
   $scope.paymentsOut = $firebaseArray(ref.orderByChild('paymentType').equalTo(COST));
   $scope.transfers = $firebaseArray(ref.orderByChild('paymentType').equalTo(TRANSFER));
   $scope.other = $firebaseArray(ref.orderByChild('paymentType').equalTo(null));
-
-
 
   // remap revenue payments to calculate per payment and total:
   // revenue, liability, savings, profit
@@ -91,8 +86,6 @@
       $scope.totalCost += amt;
     })
   })
-
-
 
   var jobsRef = new Firebase (firebasePath + '/jobs');
 

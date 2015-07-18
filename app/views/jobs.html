@@ -11,7 +11,6 @@
 	}
 	.clearFilter {
 		font-size:x-small;
-		display:none;
 	}
 	.filterContent {
 		background:whitesmoke;
@@ -43,41 +42,41 @@
 </style>
 <!-- filters -->
 <div class ="jobPageWrapper row">
-	<div class = "filterBar col-sm-1 col-lg-3 col-xl-3">
+	<div class = "filterBar col-sm-1 col-lg-2 col-md-1 col-xl-1">
 		<div class = "filterContent">
 			<div class="form-group">
-				<label>Search</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterSearch)">clear</button>
+				<label>Search</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterSearch = undefined">clear</button>
 				<input type="text" class="form-control" ng-model="filterSearch" placeholder="Search">
 			</div>
 			<div class = "form-group filter-age">
-				<label>Ages</label><button class = "clearFilter btn-link btn btn-xs pull-right">clear</button>
-				<select ng-model="filterText.age" class="reign-in form-control" multiple>
-					<option ng-repeat="age in ages">{{age}}</option>
+				<label>Ages</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterText.age = undefined">clear</button>
+				<select ng-model="filterText.age" class="reign-in form-control" ng-options="key as age for (key, age) in ages">			
 				</select>	
 			</div>	
 			<div class = "form-group filter-subjects">
 				<label>Subjects</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterText.subjects = undefined">clear</button>
-				<select ng-model="filterText.subjects" class="form-control reign-in" multiple ng-options="key as subject for (key, subject) in subjects">	
+				<select ng-model="filterText.subjects" class="form-control reign-in" ng-options="key as subject for (key, subject) in subjects">	
 				</select>
 			</div>			
 			<div class = "form-group filter-cities">
-				<label>Cities</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear()">clear</button>
-				<select ng-model="filterText.city" class="reign-in form-control" multiple ng-options="key as city.en for (key, city) in cities">
+				<label>Cities</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterText.city = undefined">clear</button>
+				<select ng-model="filterText.city" class="reign-in form-control" ng-options="key as city.en for (key, city) in cities">
 				</select>
 			</div>			
-			<div class = "form-group filter-status" ng-if="isAdmin">
-				<label>Status</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="clear(filterText.status)">clear</button>
-				<select ng-model="filterText.status" class="form-control" multiple ng-options="key as status for (key, status) in statuses">
+			<div class = "form-group filter-status" ng-show="isAdmin">
+				<label>Status</label><button class = "clearFilter btn-link btn btn-xs pull-right" ng-click="filterText.status = undefined">clear</button>
+				<select ng-model="filterText.status" class="form-control" ng-options="key as status for (key, status) in statuses">
 				</select>
 			</div>
 			<div class ="form-group">
 				<label>Sort by</label><br>
-				<button type="button" class="btn btn-default btn" ng-click="toggleGroupBy()">
-					{{orderedBy}}
-				</button>
+				<select ng-model="groupBy" class="form-control">
+					<option value="dateModified">Oldest</option>
+					<option value="-dateModified">Newest</option>
+				</select>				
 			</div>
 			<div class = "text-center">				
-				<button type="button" class="btn btn-link" ng-click="filterText = undefined">
+				<button type="button" class="btn btn-link" ng-click="filterText = undefined; filterSearch = undefined;">
 					Clear All
 				</button>
 			</div>				

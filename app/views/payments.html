@@ -17,12 +17,11 @@
 
 <div class="">Current savings: ¥{{totalSavings - (totalCost * 6.2)}}</div>
 
-
+<div class="text-center"><h3>PAYMENTS IN</h3></div>
 
 <!-- PAYMENTS IN -->
 <table class = "table table-striped booksTbl">
 	<thead>
-		<tr><td colspan="10" class="text-center"><h3>PAYMENTS IN</h3></td></tr>
 <!-- 		<th></th>
  -->		<th></th>
 		<th>Paid On</th>
@@ -71,9 +70,9 @@
 </table>
 
 <!-- PAYMENTS OUT -->
+<div class="text-center"><h3>PAYMENTS OUT</h3></div>
 <table class = "table table-striped booksTbl">
 	<thead>
-		<tr><td colspan="10" class="text-center"><h3>PAYMENTS OUT</h3></td></tr>
 <!-- 		<th></th>
  -->		<th></th>
 		<th>Date Paid</th>
@@ -112,9 +111,9 @@
 
 
 <!-- TRANSFERS -->
+<div class="text-center"><h3>TRANSFERS</h3></div>
 <table class = "table table-striped booksTbl">
 	<thead>
-		<tr><td colspan="10" class="text-center"><h3>TRANSFERS</h3></td></tr>
 <!-- 		<th></th>
  -->		<th></th>
 		<th>Date Paid</th>
@@ -130,10 +129,11 @@
 			<td><a ng-href="#/paymentsEdit/{{i.$id}}">{{$index + 1}}</a></td>
 <!-- 			<td><batch-delete item="i" control="focusinControl"></batch-delete></td>
  -->
+ 				<td>{{i.whenPaid | date:'MM/dd/yy'}}</td>
+
 			<td>{{i.currency === "0" ? "¥" : "$"}}{{i.amount}}</td>
 			<!-- <td>{{i.whenAdded | date:'MM/dd/yy'}}</td>
 			<td>{{i.whenUpdated | date:'MM/dd/yy'}}</td> -->
-			<td>{{i.amount}} {{i.currency === "0" ? "RMB" : "USD"}}</td>
 			<td>
 				<a ng-if="i.job" ng-href="#/jobview/{{i.job}}">{{i.jobtitle}}</a>
 				<span ng-if="i.whatFor && !i.job">{{i.whatFor}}</span>
@@ -145,34 +145,38 @@
 </table>
 
 <!-- OTHER -->
-<table class = "table table-striped booksTbl">
-	<thead>
-		<tr><td colspan="10" class="text-center"><h3>OTHER</h3></td></tr>
-<!-- 		<th></th>
- -->		<th></th>
-		<th>Date Paid</th>
-		<!-- <th>Date Added</th>
-		<th>Date Modified</th> -->
-		<th>Amount</th>
-		<th>What For</th>
-		<th>From</th>
-		<th>To</th>
-	</thead>
-	<tbody>
-		<tr ng-repeat="i in other">
-			<td><a ng-href="#/paymentsEdit/{{i.$id}}">{{$index + 1}}</a></td>
-<!-- 			<td><batch-delete item="i" control="focusinControl"></batch-delete></td>
- -->
-			<td>{{i.currency === "0" ? "¥" : "$"}}{{i.amount}}</td>
-			<!-- <td>{{i.whenAdded | date:'MM/dd/yy'}}</td>
-			<td>{{i.whenUpdated | date:'MM/dd/yy'}}</td> -->
-			<td>{{i.amount}} {{i.currency === "0" ? "RMB" : "USD"}}</td>
-			<td>
-				<a ng-if="i.job" ng-href="#/jobview/{{i.job}}">{{i.jobtitle}}</a>
-				<span ng-if="i.whatFor && !i.job">{{i.whatFor}}</span>
-			</td>
-			<td><visit who="i.paidBy"></visit></td>
-			<td><visit who="i.paidTo"></visit></td>
-		</tr>
-	</tbody>
-</table>
+<div ng-if="other">
+	<div class="text-center"><h3>OTHER</h3></div>
+	<table class = "table table-striped booksTbl">
+		<thead>
+	<!-- 		<th></th>
+	 -->		<th></th>
+			<th>Date Paid</th>
+			<!-- <th>Date Added</th>
+			<th>Date Modified</th> -->
+			<th>Amount</th>
+			<th>What For</th>
+			<th>From</th>
+			<th>To</th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="i in other">
+				<td><a ng-href="#/paymentsEdit/{{i.$id}}">{{$index + 1}}</a></td>
+	<!-- 			<td><batch-delete item="i" control="focusinControl"></batch-delete></td>
+	 -->
+	 						<td>{{i.whenPaid | date:'MM/dd/yy'}}</td>
+
+				<td>{{i.currency === "0" ? "¥" : "$"}}{{i.amount}}</td>
+				<!-- <td>{{i.whenAdded | date:'MM/dd/yy'}}</td>
+				<td>{{i.whenUpdated | date:'MM/dd/yy'}}</td> -->
+				<td>{{i.amount}} {{i.currency === "0" ? "RMB" : "USD"}}</td>
+				<td>
+					<a ng-if="i.job" ng-href="#/jobview/{{i.job}}">{{i.jobtitle}}</a>
+					<span ng-if="i.whatFor && !i.job">{{i.whatFor}}</span>
+				</td>
+				<td><visit who="i.paidBy"></visit></td>
+				<td><visit who="i.paidTo"></visit></td>
+			</tr>
+		</tbody>
+	</table>
+</div>

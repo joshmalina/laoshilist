@@ -3,7 +3,6 @@
 </div>
 <div>
 	<tabset type="pills">
-		<tab heading = "Deets">
 			<div class = "form-group">
 				<label>Paid By</label>
 				<select class="form-control" ng-model="payment.paidBy" ng-options="u.$id as u.firstName for u in users" ng-change="payment.$save()"></select>
@@ -76,6 +75,5 @@
 				<span class="fields-name">Notes</span><br>
 				<notes notes="notes" can-add="true"></notes>
 			</div>
-		</tab>
 	</tabset>
 </div>

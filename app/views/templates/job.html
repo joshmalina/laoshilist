@@ -148,7 +148,6 @@
 <div class="page-header">
 	<h1>
 		<a ng-href="#/jobview/{{job_.$id}}">{{job_.title }}</a>
-		<button class="btn btn-primary pull-right" ng-click="view()">View</button>
 	</h1>
 </div>
 
@@ -168,11 +167,11 @@
 					</li>
 					<li class = "list-group-item">
 						<label>Title</label>
-						<input type="text" class="form-control" ng-model="job_.title" ng-change="save()">
+						<input type="text" class="form-control" ng-model="job_.title" ng-blur="save()">
 					</li>
 					<li class = "list-group-item">
 						<label>Description</label>
-						<textarea ng-model="job_.longDesc" msd-elastic="\n" class="form-control" ng-change="save()"></textarea>
+						<textarea ng-model="job_.longDesc" msd-elastic="\n" class="form-control" ng-blur="save()"></textarea>
 					</li>
 				</ul>
 				
@@ -191,7 +190,7 @@
 					<!-- schedule -->
 					<li class="list-group-item">
 						<label>Schedule:</label><br>
-						<textarea msd-elastic="\n" ng-model="job_.schedule" class="form-control" ng-change="save()"></textarea>
+						<textarea msd-elastic="\n" ng-model="job_.schedule" class="form-control" ng-blur="save()"></textarea>
 					</li>
 				</ul>
 
@@ -202,7 +201,7 @@
 					</li>
 					<li class = "teacherPay list-group-item">
 						<label>Teacher Pay:</label>
-						<input type="text" ng-model="job_.teacherPay" class="form-control" ng-change="save()">
+						<input type="text" ng-model="job_.teacherPay" class="form-control" ng-blur="save()">
 					</li>
 				</ul>
 
@@ -218,11 +217,11 @@
 					<!-- location -->
 					<li class="list-group-item">
 						<label>Short Location:</label>
-						<input type="text" ng-model="job_.shortLocation" class="form-control" ng-change="save()">
+						<input type="text" ng-model="job_.shortLocation" class="form-control" ng-blur="save()">
 					</li>
 					<li class = "list-group-item">
 						<label>Long Location:</label>
-						<input type="text" ng-model="job_.locationDesc" class="form-control" ng-change="save()">
+						<input type="text" ng-model="job_.locationDesc" class="form-control" ng-blur="save()">
 					</li>
 				</ul>
 
@@ -239,7 +238,7 @@
 					<!-- number of students -->
 					<li class="list-group-item">
 						<label>Number of students:</label>
-						<input type="text" ng-model="job_.numStudents" ng-change="save()">
+						<input type="text" ng-model="job_.numStudents" ng-blur="save()">
 					</li>
 
 					

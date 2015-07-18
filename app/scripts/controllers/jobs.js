@@ -23,11 +23,12 @@ angular.module('laoshiListApp')
       $scope.jobs = jobs_('Needs Teacher');
     }
 
+
     // pass constants to filter
     $scope.statuses = llConstants.jobstatus();
     $scope.subjects = llConstants.subjects();
     $scope.ages = llConstants.ages();
-    $scope.cities = llConstants.cities();   
+    $scope.cities = llConstants.cities();  
 
     // add new job, set default status
   	$scope.addJob = function() {

@@ -14,6 +14,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ng-table/dist/ng-table.min.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -48,10 +49,10 @@
             <ul class="nav navbar-nav">
               <li ng-class="{ active: isActive('/')}"><a href="#/">Home</a></li>
               <li ng-cloak ng-class="{ active: isActive('/jobs')}"><a ng-href="#/jobs">Jobs</a></li>
-              <li ng-if="authUser" ng-cloak ng-class="{ active: isActive('/users')}"><a ng-href="#/users">Users</a></li>
+              <li ng-if="isAdmin" ng-cloak ng-class="{ active: isActive('/users')}"><a ng-href="#/users">Users</a></li>
               <li ng-if="!authUser" ng-cloak ng-class="{ active: isActive('/login')}"><a ng-href="#/login">Login</a></li>
-              <li ng-if="authUser" ng-cloak ng-class="{ active: isActive('/payments')}"><a ng-href="#/payments">Payments</a></li>
-              <li ng-if="authUser" ng-cloak ng-class="{ active: isActive('/profile/{{authUser}}')}"><a ng-href="#/profile/{{authUser}}">My Profile</a></li>
+              <li ng-if="isAdmin" ng-cloak ng-class="{ active: isActive('/payments')}"><a ng-href="#/payments">Payments</a></li>
+              <li ng-if="authUser" ng-cloak ng-class="{ active: isActive('/profile/{{authUser}}')}"><a ng-href="#/profile/{{authUser}}">Profile</a></li>
               <li ng-if="!authUser" ng-cloak ng-class="{ active: isActive('/register')}"><a ng-href="#/register">Register</a></li>
               <li ng-if="authUser" ng-cloak ng-class="{ active: isActive('/logout')}"><a class="btn-link logoutBtn" ng-click="logout()">Logout</a></li>
             </ul>
@@ -105,6 +106,7 @@
     <script src="bower_components/ng-file-upload-shim/ng-file-upload-shim.js"></script>
     <script src="bower_components/moment/moment.js"></script>
     <script src="bower_components/angular-moment/angular-moment.js"></script>
+    <script src="bower_components/ng-table/dist/ng-table.min.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -175,6 +177,7 @@
         <script src="scripts/services/batchfunctions.js"></script>
         <script src="scripts/directives/sharejob.js"></script>
         <script src="scripts/services/payment.js"></script>
+        <script src="scripts/directives/lldyanmotable.js"></script>
         <!-- endbuild -->
 </body>
 </html>

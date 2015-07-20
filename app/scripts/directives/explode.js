@@ -23,7 +23,15 @@ angular.module('laoshiListApp')
 
         if(scope.wrap) {
         keys = keys.map(function(key) {
-          return scope.wrap[key];
+
+            if(scope.array && scope.array[key]) {
+                return scope.wrap[key];
+            } else if (scope.obj && scope.obj[key]) {
+                return scope.wrap[key];
+
+            }
+
+          
           });
         }      
 

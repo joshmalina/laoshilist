@@ -20,7 +20,8 @@
   'ui.bootstrap',
   'monospaced.elastic',
   'ngFileUpload',
-  'angularMoment'
+  'angularMoment',
+  'ngTable'
   ])
  .config(function ($routeProvider, $provide) {
   $routeProvider

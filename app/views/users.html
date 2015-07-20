@@ -25,3 +25,51 @@
 <div class = "thickView" ng-if="!skinny">
 	<ng-include src="'views/templates/thickUserList.html'"></ng-include>
 </div>
+
+<style>
+	.colored {
+		font-weight: bold;
+	}
+	.boldedNames {
+		padding: 0;
+		margin: -10px;
+		font-size:xx-small;
+	}
+	.well {
+	}
+
+</style>
+
+<!-- <table class="usersTable table">
+	<h3 class="text-center well">Teachers</h3>
+	<span class="pull-right boldedNames"><strong>Bolded</strong> names indicate interviewed teachers.</span>
+
+	<thead>
+		<th>Name</th>
+		<th>Country</th>
+		<th><select ng-model="thirdParam" class="form-control" style="max-width:100px;"><option value="">Contact</option><option ng-repeat="p in contactOptions">{{p}}</option></select></th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="teacher in teachers" >
+			<td ng-class="{colored:teacher.interviewed}"><a href="#/profile/{{teacher.id}}">{{teacher.firstName + ' ' + teacher.LastName}}</a></td>
+			<td>{{countries[teacher.country]}}</td>
+			<td>{{teacher[thirdParam]}}</td>
+		</tr>
+	</tbody>
+</table>
+
+<table class="table">
+	<h3 class="text-center well">Clients</h3>
+	<thead>
+		<th>Name</th>
+		<th>Recent Job</th>
+		<th><select ng-model="contactParam" class="form-control"><option value="">Contact</option><option ng-repeat="p in contactOptions">{{p}}</option></select></th>
+	</thead>
+	<tbody>
+		<tr ng-repeat="client in clients">
+			<td><a href="#/profile/{{client.id}}">{{client.firstName + ' ' + client.lastName}}</a></td>
+			<td ><a ng-show="client.firstJobID" href="#/jobview/{{client.firstJobID}}">Job</a></td>
+			<td>{{client[contactParam]}}</td>
+		</tr>
+	</tbody>
+</table> -->

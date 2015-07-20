@@ -30,7 +30,16 @@
           return error;
         });  		
         	
-  		},      
+  		},
+      // mostly for clients
+      makeJob: function(jobID) {
+        var meRef = ref.child(this.$id).child('jobs').child(jobID);
+        meRef.set(fbMethods.getTime());
+      },     
+      deleteJob: function(jobID) {
+        var meRef = ref.child(this.$id).child('jobs').child(jobID);
+        meRef.set(null);
+      },
       // wrapped list of jobs applied to
       appliedTo_: function() {
         var p = [];        

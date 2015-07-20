@@ -32,7 +32,10 @@
    $scope.subjects = llConstants.subjects();
 
    $scope.user.$loaded().then(function(user) {
-    $scope.teachesStudies = 0 in Object.keys($scope.user.roles) ? 'Teaches' : 'Studies';
+    if($scope.user.roles) {
+          $scope.teachesStudies = 0 in Object.keys($scope.user.roles) ? 'Teaches' : 'Studies';
+
+    }
     $scope.notes = $firebaseArray(ref.child('notes'));
   });
 
@@ -44,6 +47,7 @@
 
   $scope.user_.$loaded().then(function(u) {    
     $scope.user_.appliedTo_().then(function(jobs) {
+      console.log(jobs);
       $scope.appliedFor = jobs;
     })
   }); 

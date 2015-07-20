@@ -29,11 +29,17 @@
  			$timeout(function() {
  				$location.path('/login');
  			}, 2000);
- 			console.log(userData);
  			createDbUser(userData.uid);
  		}).catch(function (error) {
- 			$scope.alerts.push({type:'danger', msg:'Registration failed. Please try again.'});
- 			console.log(error);
+ 			var msg;
+ 			switch(error.code) {
+ 				case 'EMAIL_TAKEN':
+ 					msg = 'That email has already been registered. Please try logging in instead.';
+ 					break;
+				default:
+					msg = 'Registration failed. Please try again.';
+ 			}
+ 			$scope.alerts.push({type:'danger', msg:msg});
  		});	
  	};
 
@@ -51,7 +57,7 @@
 			if(error) {
 				console.log(error);
 			} else {
-				console.log('saved to db');
+				//console.log('saved to db');
 			}
 		});
 	}

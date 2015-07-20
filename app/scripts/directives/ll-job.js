@@ -25,7 +25,14 @@
       var client = null;
 
       scope.updateClient = function() {        
-        scope.client = new user(scope.job_.clientID);
+        if(scope.job_.clientID) {
+          scope.client = User_(scope.job_.clientID);
+        // add this as a job on the client side
+        scope.client.$loaded().then(function() {
+          scope.client.makeJob(scope.job.$id);
+        });
+        }
+        
       };
 
       scope.job_.$loaded().then(function(o) {

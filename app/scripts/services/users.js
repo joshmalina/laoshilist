@@ -40,6 +40,26 @@
             // append id for use in controllers
             user.id = userSnap.key();
 
+            if(userSnap.val().jobs) {
+              var jobs = userSnap.val().jobs;
+              var firstKey = Object.keys(jobs)[0];
+              user.firstJobID = firstKey;
+            }
+
+            if(userSnap.val().contact) {
+
+              // just a way to add some basic contact information to the record, so that it is easily
+              // accessible without knowning the firebase ID
+
+              var contact = userSnap.val().contact;
+              var entries = Object.keys(userSnap.val().contact);
+
+              user.email = contact[entries[0]].email || null;
+              user.phone = contact[entries[0]].phone || null;
+              user.wechat = contact[entries[0]].wechat || null;
+
+            }
+
            // add to array
            naiveUsers.push(user);
 
@@ -87,6 +107,9 @@
       },
       getClients: function() {
         return returnKind('Client');
+      },      
+      get: function(kind) {
+        return returnKind(kind);
       },
       emailExists: function(email) {
         return emailExists(email);

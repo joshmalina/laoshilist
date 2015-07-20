@@ -8,7 +8,12 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', ['User_', 'fbMethods', 'llConstants', '$firebaseArray', '$scope', '$location', '$routeParams', 'firebasePath', '$filter', 'laoshiListApi', function (User_, fbMethods, llConstants, $firebaseArray, $scope, $location, $routeParams, firebasePath, $filter, laoshiListApi) {
+ .controller('ProfileEditCtrl', ['currentAuth', 'User_', 'fbMethods', 'llConstants', '$firebaseArray', '$scope', '$location', '$routeParams', 'firebasePath', '$filter', 'laoshiListApi', function (currentAuth, User_, fbMethods, llConstants, $firebaseArray, $scope, $location, $routeParams, firebasePath, $filter, laoshiListApi) {
+
+ 	User_(currentAuth.uid).$loaded().then(function(usr) {
+ 		$scope.isAdmin = usr.isAdmin();
+ 		$scope.isAdmin || currentAuth.uid == $routeParams.username ? '' : $location.path('/jobs');
+ 	})
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
 		

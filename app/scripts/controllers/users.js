@@ -8,7 +8,16 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('UsersCtrl', ['users', 'roles', 'countries', 'llConstants', 'subjects', '$scope', 'firebasePath', '$firebaseArray', '$location', function (users, roles, countries, llConstants, subjects, $scope, firebasePath, $firebaseArray, $location) {
+ .controller('UsersCtrl', ['currentAuth', 'users', 'roles', 'countries', 'llConstants', 'subjects', '$scope', 'firebasePath', '$firebaseArray', '$location', 'User_', function (currentAuth, users, roles, countries, llConstants, subjects, $scope, firebasePath, $firebaseArray, $location, User_) {
+
+  // auth required, so don't have to check if(currentAuth)
+  // don't allow non admins to see this page
+  // at some point write better security rules
+  User_(currentAuth.uid).$loaded().then(function(usr) {
+    usr.isAdmin() ? 'load page' : $location.path('/jobs');
+  });
+
+
 
   var ref = new Firebase (firebasePath + '/users');
   var users_ = $firebaseArray(ref);
@@ -17,9 +26,19 @@
   $scope.subjects = llConstants.subjects();
   $scope.countries = countries;
 
+  $scope.teachers = users.get('Teacher');
+  $scope.clients = users.get('Client');
+  $scope.vendors = users.get('Vendor');
+  $scope.admin = users.get('Admin');
+
+  $scope.thirdParam = 'email';
+  $scope.contactParam = 'wechat';
+
   $scope.viewProfile = function(userID) {
     $location.path('/profile/' + userID);
   };
+
+  $scope.contactOptions = ['email', 'wechat', 'phone'];
 
   $scope.orderBy = '';  
 

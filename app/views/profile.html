@@ -116,15 +116,8 @@
 				<span class="fields-name">Account number is</span>
 				<span class="fields-value">{{bank.acctNum}}</span>
 			</div>
-			<!-- UPLOADED CV -->
-			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
-				<span class="fields-value"><a target="_blank" href="{{user.cv}}">Original Resume</a></span>
-			</div>			
-			<!-- JOBS APPLIED FOR -->
-			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="appliedFor">
-				<span class = "fields-name">Jobs Applied For</span><br>
-				<div ng-repeat="val in appliedFor"><a ng-href="#/jobview/{{val.$id}}">{{val.title}}</a></div>
-			</div>
+						
+			
 			<!-- JOBS WORKING FOR -->
 			<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="teacherFor.length > 0">
 				<span class="fields-name">Teacher For</span><br>
@@ -142,7 +135,17 @@
 		<div class = "profile-avatar col-xs-9 col-sm-4 col-lg-4 styled" ng-if="user.avatar && user.avatar.data">
 			<!--img src="{{user.avatar.data}}" class="avatar-img"/-->			
 		</div>		
+
+		<!-- JOBS APPLIED FOR -->
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="appliedFor.length > 0">
+			<span class = "fields-name">Jobs Applied For</span><br>
+			<div ng-repeat="val in appliedFor"><a ng-href="#/jobview/{{val.$id}}">{{val.title}}</a></div>
+		</div>
 		
+		<!-- UPLOADED CV -->
+		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
+			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Original Resume</a></span>
+		</div>
 		
 		<div class = "col-lg-7 col-sm-12 col-md-12 styled col-xs-12" ng-if="user.city">
 			<span class = "fields-name">Lives in </span>{{ cities[user.city].zh }}

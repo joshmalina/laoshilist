@@ -10,9 +10,7 @@
  angular.module('laoshiListApp')
  .factory('User_', ['$firebaseObject', 'firebasePath', 'Job_', '$q', 'fbMethods', function ($firebaseObject, firebasePath, Job_, $q, fbMethods) {
 
-  var ref = new Firebase (firebasePath + '/users');
-
-  
+  var ref = new Firebase (firebasePath + '/users');  
 
   var User = $firebaseObject.$extend({
       applyTo: function(jobID, note) {

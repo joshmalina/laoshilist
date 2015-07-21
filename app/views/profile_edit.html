@@ -22,7 +22,6 @@
 	</alert>
 
 		<tab heading="Basic">
-			<pre>{{user | json}}</pre>
 			<div class = "form-group" ng-if="isAdmin">
 				<label>Roles</label><br/>
 				<select ng-model="userRoles" class="form-control" multiple ng-change="saveRoles(userRoles)" ng-options="key as role for (key, role) in roles">

@@ -139,6 +139,10 @@
 	opacity: .8;
 }
 
+.public {
+	color: #F08080;
+}
+
 /* END JOBS PAGE */
 </style>
 
@@ -147,10 +151,12 @@
 
 <div class="page-header">
 	<h1>
+		<span ng-show="!job_.title">Hi, I'm a job. Give me a name.</span>
 		<a ng-href="#/jobview/{{job_.$id}}">{{job_.title }}</a>
 	</h1>
 </div>
 
+<emphasis class="">* fields marked in <span class="public" style="font-weight:bolder">red</span> are publicly viewable</emphasis>
 
 <div class = "panel panel-default job-panel">
 
@@ -166,19 +172,19 @@
 						<notes notes="notes" can-add="true"></notes>
 					</li>
 					<li class = "list-group-item">
-						<label>Title</label>
+						<label class="public">Title</label>
 						<input type="text" class="form-control" ng-model="job_.title" ng-blur="save()">
 					</li>
 					<li class = "list-group-item">
-						<label>Description</label>
+						<label class="public">Description</label>
 						<textarea ng-model="job_.longDesc" msd-elastic="\n" class="form-control" ng-blur="save()"></textarea>
 					</li>
 				</ul>
 				
 				<ul class="list-group">
-					<li class="list-group-item subjects-list-item">
+					<li class="list-group-item subjects-list-item ">
 						<span class="select-dropdown">
-							<label>Subjects:</label>
+							<label class="public">Subjects:</label>
 							<span ng-repeat="(key,_) in job_.subjects track by key">
 								{{subjects[key]}}{{$last ? '' : ', '}}
 							</span>
@@ -188,8 +194,8 @@
 						</select>
 					</li>
 					<!-- schedule -->
-					<li class="list-group-item">
-						<label>Schedule:</label><br>
+					<li class="list-group-item ">
+						<label class="public">Schedule:</label><br>
 						<textarea msd-elastic="\n" ng-model="job_.schedule" class="form-control" ng-blur="save()"></textarea>
 					</li>
 				</ul>
@@ -199,8 +205,8 @@
 						<span class="select-dropdown"><label>Fee:</label></span>
 						<input type="text" ng-model="job_.fee" class="form-control" ng-change="save()">
 					</li>
-					<li class = "teacherPay list-group-item">
-						<label>Teacher Pay:</label>
+					<li class = "teacherPay list-group-item ">
+						<label class="public">Teacher Pay:</label>
 						<input type="text" ng-model="job_.teacherPay" class="form-control" ng-blur="save()">
 					</li>
 				</ul>
@@ -208,19 +214,19 @@
 				<ul class = "list-group">
 
 					<!-- city -->
-					<li class="list-group-item subjects-list-item">
-						<span class="select-dropdown"><label>City:</label></span>
+					<li class="list-group-item subjects-list-item ">
+						<span class="select-dropdown"><label class="public">City:</label></span>
 						<select ng-model="job_.city" ng-change="save()" ng-options="k as c.en for (k,c) in cities" class="reign-in form-control">
 							<option value="">Choose a city</option>
 						</select>
 					</li>
 					<!-- location -->
-					<li class="list-group-item">
-						<label>Short Location:</label>
+					<li class="list-group-item ">
+						<label class="public">Short Location:</label>
 						<input type="text" ng-model="job_.shortLocation" class="form-control" ng-blur="save()">
 					</li>
-					<li class = "list-group-item">
-						<label>Long Location:</label>
+					<li class = "list-group-item ">
+						<label class="public">Long Location:</label>
 						<input type="text" ng-model="job_.locationDesc" class="form-control" ng-blur="save()">
 					</li>
 				</ul>
@@ -228,16 +234,16 @@
 				<ul class = "list-group">					
 
 					<!-- ages -->
-					<li class="list-group-item subjects-list-item">
-						<span class="select-dropdown"><label>Student Age:</label></span>
+					<li class="list-group-item subjects-list-item ">
+						<span class="select-dropdown"><label class="public">Student Age:</label></span>
 						<select multiple ng-model="job_.age" ng-change="save()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
 							<option value="">Choose an age group</option>
 						</select>
 					</li>
 
 					<!-- number of students -->
-					<li class="list-group-item">
-						<label>Number of students:</label>
+					<li class="list-group-item ">
+						<label class="public">Number of students:</label>
 						<input type="text" ng-model="job_.numStudents" ng-blur="save()">
 					</li>
 

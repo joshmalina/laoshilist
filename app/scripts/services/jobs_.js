@@ -12,12 +12,15 @@ angular.module('laoshiListApp')
     
     var ref = new Firebase (firebasePath + '/jobs');
 
+    ref = ref.orderByChild('status');
+
+
     var jobs = $firebaseArray.$extend({});
 
     return function(limitTo) {
 
       if(limitTo) {
-        return new jobs(ref.orderByChild('status').equalTo(jobStatus.indexOf(limitTo).toString()));
+        return new jobs(ref.equalTo(jobStatus.indexOf(limitTo).toString()));
       } else {
         return new jobs(ref);
       }

@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobsCtrl', ['jobs_', 'llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$firebaseArray', 'firebasePath', function (jobs_, llConstants, User_, currentAuth, fbMethods, $scope, $firebaseArray, firebasePath) {
+  .controller('JobsCtrl', ['jobs_', 'llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$location', function (jobs_, llConstants, User_, currentAuth, fbMethods, $scope, $location) {
 
     if(currentAuth) {
       var user = User_(currentAuth.uid);
@@ -23,6 +23,8 @@ angular.module('laoshiListApp')
       $scope.jobs = jobs_('Needs Teacher');
     }
 
+    // important since firebase indices don't seem to be able to be set in ascending order
+    $scope.groupBy = '-dateModified';
 
     // pass constants to filter
     $scope.statuses = llConstants.jobstatus();
@@ -35,6 +37,8 @@ angular.module('laoshiListApp')
   		$scope.jobs.$add({
           status:'needDetail', 
           dateModified: fbMethods.getTime()
+      }).then(function(ref) {
+        $location.path('/job-edit/' + ref.key());
       });
   	};
 

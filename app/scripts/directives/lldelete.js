@@ -31,7 +31,6 @@ angular.module('laoshiListApp')
 		    var modalInstance = $modal.open(modalObj);
 
 		    modalInstance.result.then(function (deletedItem) {
-		      console.log(deletedItem);
 		    });
 		  };
 

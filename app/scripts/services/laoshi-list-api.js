@@ -11,7 +11,8 @@
  .factory('laoshiListApi', ['Upload', '$http', '$q', 'User_', function (Upload, $http, $q, User_) {
 
   var basePathToAPI = 'http://localhost:3000/api/';
-  basePathToAPI = 'http://laoshilist-server-dev.elasticbeanstalk.com/api/';
+  //basePathToAPI = 'http://laoshilist-server-dev3.elasticbeanstalk.com/api/';
+  //basePathToAPI = 'http://188.166.248.93:3000/api/'
 
   var expectedCVfileTypes = ['application/x-iwork-pages-sffpages', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/msword', 'application/pdf', 'txt', 'text/rtf', 'text/plain'];
   var expectedCVsize = 1000000;

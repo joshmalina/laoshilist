@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "angular-elastic": "^2.3.5",
-    "angular-file-upload": "^1.6.4",
-    "spin.js": "^2.1.0"
+    "angular-file-upload": "*"
   },
   "repository": {},
   "devDependencies": {
@@ -38,8 +37,6 @@
     "karma-jasmine": "^0.3.5",
     "karma-phantomjs-launcher": "^0.1.4",
     "load-grunt-tasks": "^3.1.0",
-    "spin": "0.0.1",
-    "spin.js": "^2.1.0",
     "time-grunt": "^1.0.0"
   },
   "engines": {

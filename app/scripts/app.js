@@ -26,8 +26,8 @@
  .config(function ($routeProvider, $provide) {
   $routeProvider
     .when('/', {
-      templateUrl: 'views/main.html',
-      controller: 'MainCtrl',
+      templateUrl: 'views/jobs.html',
+      controller: 'JobsCtrl',
       resolve: {
         // controller will not be loaded until $waitForAuth resolves
         // Auth refers to our $firebaseAuth wrapper in the example above

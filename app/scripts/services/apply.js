@@ -110,6 +110,7 @@ angular.module('laoshiListApp')
 
                 // try to get a presigned url
                 laoshiListApi.uploadCoverLetter(note, user.$id, user.getFullestName(), job.title).then(
+                  
                   // if we got it
                   function(url) {
 

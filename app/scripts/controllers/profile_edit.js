@@ -8,11 +8,12 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('ProfileEditCtrl', ['currentAuth', 'User_', 'fbMethods', 'llConstants', '$firebaseArray', '$scope', '$location', '$routeParams', 'firebasePath', '$filter', 'laoshiListApi', function (currentAuth, User_, fbMethods, llConstants, $firebaseArray, $scope, $location, $routeParams, firebasePath, $filter, laoshiListApi) {
+ .controller('ProfileEditCtrl', ['$http', 'currentAuth', 'User_', 'fbMethods', 'llConstants', '$firebaseArray', '$scope', '$location', '$routeParams', 'firebasePath', '$filter', 'laoshiListApi', 'Upload', function ($http, currentAuth, User_, fbMethods, llConstants, $firebaseArray, $scope, $location, $routeParams, firebasePath, $filter, laoshiListApi, Upload) {
 
  	User_(currentAuth.uid).$loaded().then(function(usr) {
  		$scope.isAdmin = usr.isAdmin();
  		$scope.isAdmin || currentAuth.uid == $routeParams.username ? '' : $location.path('/jobs');
+ 		$scope.cvref = $scope.user.cv ? 'http://localhost:3000/api/resume?userid=' + $scope.user.$id + '&extension=' + $scope.user.cv : null;
  	})
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);
@@ -108,26 +109,64 @@
 
 	$scope.alerts = [];
 
-	$scope.upload = function (files) {
 
-        $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});        
 
-        laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
-            // store in firebase
-            $scope.user.cv = url;
-            $scope.user.$save();
+	// upload resume
+	$scope.uploadResume = function (files) {
 
-            // success
-            $scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+        // prevent preemptive notices -- since this function is triggered
+        // when the button is pressed -- it doesn't wait for a file
+        if(files.length < 1) {
+        	return;
+        }
 
-        }, function(error) {
-            // push an alert
-            $scope.alerts.push({type:'danger', msg: error});
-            //$scope.path_to_cv = null;
-        }, function(update) {
-            // push an update
-            $scope.alerts.push({type:'info', msg:update});
-        });
+        var url = 'http://localhost:3000/api/resume';       
+
+        var options = {
+        	url: url,
+            fields: {'userid': $scope.user.$id, 'filekind' : 'resume'},
+            file: files,
+            method: 'POST'
+        }
+
+        $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});
+
+
+        Upload.upload(options).success(function (data, status, headers, config) {
+        	console.log(data);
+        	// we need to update the ref here, preferable with the extension of the file uploaded
+        	$scope.user.cv = data;
+        	$scope.user.$save();
+
+        	url = url + '?userid=' + $scope.user.$id + '&extension=' + data;
+
+        	//
+        	$scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+
+
+
+        }).error(function (data, status, headers, config) {
+            console.log('error status: ' + status);
+            console.log(data);
+        })
+
+        
+        // laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {
+        //     // store in firebase
+        //     $scope.user.cv = url;
+        //     $scope.user.$save();
+
+        //     // success
+        //     $scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+
+        // }, function(error) {
+        //     // push an alert
+        //     $scope.alerts.push({type:'danger', msg: error});
+        //     //$scope.path_to_cv = null;
+        // }, function(update) {
+        //     // push an update
+        //     $scope.alerts.push({type:'info', msg:update});
+        // });
 
         
     };

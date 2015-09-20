@@ -15,14 +15,19 @@
   var User = $firebaseObject.$extend({
       applyTo: function(jobID, note) {
 
-        var note_ = note || true;
-
         var datum = {
           when: fbMethods.getTime(),
           note: note || null
         };
 
   			// add to a list of jobs that this teacher has applied to
+        // so: job1 { 
+        //  appliedTo: {
+        //    'some-job-id': {
+        //        when: "5 pm on saturday"
+        //}       note: "i would be a really good candidate!""
+        //}
+        //}
   			var jobsRef = ref.child(this.$id).child('appliedTo').child(jobID);
   			jobsRef.set(datum, function(error) {
           return error;
@@ -69,7 +74,7 @@
   });
 
   return function(userID) {
-    
+
       return new User(ref.child(userID));
     
   };

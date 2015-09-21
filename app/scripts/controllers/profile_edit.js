@@ -13,7 +13,7 @@
  	User_(currentAuth.uid).$loaded().then(function(usr) {
  		$scope.isAdmin = usr.isAdmin();
  		$scope.isAdmin || currentAuth.uid == $routeParams.username ? '' : $location.path('/jobs');
- 		$scope.cvref = $scope.user.cv ? 'http://localhost:3000/api/resume?userid=' + $scope.user.$id + '&extension=' + $scope.user.cv : null;
+ 		$scope.cvref = usr.getPathToCV();
  	})
 
  	var ref = new Firebase (firebasePath + '/users/' + $routeParams.username);

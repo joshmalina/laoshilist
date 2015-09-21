@@ -8,9 +8,10 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('laoshiListApi', ['Upload', '$http', '$q', 'User_', function (Upload, $http, $q, User_) {
+ .factory('laoshiListApi', ['Upload', '$http', '$q', 'User_', 'apiPath', function (Upload, $http, $q, User_, apiPath) {
 
-  var basePathToAPI = 'http://localhost:3000/api/';
+  //var basePathToAPI = 'http://localhost:3000/api/';
+  var basePathToAPI = apiPath;
   //basePathToAPI = 'http://laoshilist-server-dev3.elasticbeanstalk.com/api/';
   //basePathToAPI = 'http://188.166.248.93:3000/api/'
 
@@ -126,7 +127,11 @@
 
     var defer = $q.defer();
 
-    
+    var user = User_(userID);
+
+    user.$loaded().then(function(user) {
+
+    })
 
     // console.log(letter);
 

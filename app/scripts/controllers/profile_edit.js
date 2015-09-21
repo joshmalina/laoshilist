@@ -120,35 +120,47 @@
         	return;
         }
 
-        var url = 'http://localhost:3000/api/resume';       
-
-        var options = {
-        	url: url,
-            fields: {'userid': $scope.user.$id, 'filekind' : 'resume'},
-            file: files,
-            method: 'POST'
-        }
-
         $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});
 
 
-        Upload.upload(options).success(function (data, status, headers, config) {
-        	console.log(data);
-        	// we need to update the ref here, preferable with the extension of the file uploaded
-        	$scope.user.cv = data;
-        	$scope.user.$save();
-
-        	url = url + '?userid=' + $scope.user.$id + '&extension=' + data;
-
-        	//
+        laoshiListApi.uploadCV(files, $scope.user.$id).then(function(path_to_cv) {
+        	var url = path_to_cv;
         	$scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
-
-
-
-        }).error(function (data, status, headers, config) {
-            console.log('error status: ' + status);
-            console.log(data);
+        }, function(error) {
+        	$scope.alerts.push({type:'danger', msg: 'There has been a problem uploading your CV. Please try again later.'});
+        }, function(update) {
+        	//
         })
+
+        // var url = 'http://localhost:3000/api/resume';       
+
+        // var options = {
+        // 	url: url,
+        //     fields: {'userid': $scope.user.$id, 'filekind' : 'resume'},
+        //     file: files,
+        //     method: 'POST'
+        // }
+
+        // $scope.alerts.push({type:'info', msg:'Attempting to upload your CV'});
+
+
+        // Upload.upload(options).success(function (data, status, headers, config) {
+        // 	console.log(data);
+        // 	// we need to update the ref here, preferable with the extension of the file uploaded
+        // 	$scope.user.cv = data;
+        // 	$scope.user.$save();
+
+        // 	url = url + '?userid=' + $scope.user.$id + '&extension=' + data;
+
+        // 	//
+        // 	$scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + url + '">' + url + '</a>'});
+
+
+
+        // }).error(function (data, status, headers, config) {
+        //     console.log('error status: ' + status);
+        //     console.log(data);
+        // })
 
         
         // laoshiListApi.uploadCV(files, $scope.user.$id).then(function(url) {

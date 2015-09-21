@@ -8,7 +8,7 @@
  * Factory in the laoshiListApp.
  */
  angular.module('laoshiListApp')
- .factory('User_', ['$firebaseObject', 'firebasePath', 'Job_', '$q', 'fbMethods', function ($firebaseObject, firebasePath, Job_, $q, fbMethods) {
+ .factory('User_', ['$firebaseObject', 'firebasePath', 'Job_', '$q', 'fbMethods', 'apiPath', function ($firebaseObject, firebasePath, Job_, $q, fbMethods, apiPath) {
 
   var ref = new Firebase (firebasePath + '/users');  
 
@@ -63,6 +63,9 @@
       },
       getFullestName: function() {
         return this.lastName ? this.firstName + ' ' + this.lastName : this.firstName;        
+      },
+      getPathToCV: function() {
+        return apiPath + 'resume?userid=' + this.$id + '&extension=' + this.cv;
       },
       // bool indicates whether user has already applied to this job
       hasApplied: function(jobID) {

@@ -98,35 +98,44 @@
  		scope.doneApplied = 'Submit';
 
  		// uploads CVs for all users extant and otherwise
- 		scope.uploadCV= function(cv) {
+ 		scope.uploadCV = function(cv) {
+
+ 			if(cv.length < 1) {
+ 				return;
+ 			}
 
  			if(scope.alerts.length === 0) {
  				scope.alerts.push({type: 'info', msg: 'Attempting to upload your CV...'});
  			}
 
  			getUserId().then(function(userID) {
-
- 				laoshiListApi.uploadCV(cv, userID).then(
-
-	 				function(cvURL) {
+ 				laoshiListApi.uploadCV(cv, userID).then(function(cvURL) {
+ 					scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + cvURL + '">' + cvURL + '</a>'});
+				}, 
+ 				function(error) {
+ 					scope.alerts.push({type:'danger', msg: 'cv not uploaded'});
+ 				}	
+			)})
+		}
+		
 		 				
-		 				updateUserCV(userID, cvURL).then(function() {
-		 					scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + cvURL + '">' + cvURL + '</a>'});
-		 				}, function(error) {
-		 					scope.alerts.push({type:'danger', msg: 'link to cv not saved'});
-		 				});
+		//  				updateUserCV(userID, cvURL).then(function() {
+		//  					scope.alerts.push({type:'success', msg:'Your cv has been uploaded: <a target = "blank_" href="' + cvURL + '">' + cvURL + '</a>'});
+		//  				}, function(error) {
+		//  					scope.alerts.push({type:'danger', msg: 'link to cv not saved'});
+		//  				});
 
-	 				}, function(error) {
-	 					scope.alerts.push({type: 'danger', msg: error});
-	 				}
-				)
+	 // 				}, function(error) {
+	 // 					scope.alerts.push({type: 'danger', msg: error});
+	 // 				}
+		// 		)
 
 
- 			})
+ 	// 		})
 
 
  			
-		}
+		// }
 
  		// calls methods that log the applicant and email him/her
  		scope.apply = function() {

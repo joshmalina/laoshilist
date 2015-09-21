@@ -135,29 +135,75 @@
     return defer.promise;
   }
 
+  function updateExtensionOfCV(userID, extension) {
+
+    var user = User_(userID);
+    return user.$loaded().then(function(u) {
+      u.cv = extension;
+      u.$save();
+    });
+
+  }
+
+  // return the path to the uploaded file, or an error message
   function uploadCV(files, userID) {
 
     var defer = $q.defer();
 
-    if(filesMakeSense(files, expectedCVfileTypes, expectedCVsize)) {
+    var url = basePathToAPI + 'resume'
 
-      var file = files[0];
-
-      var path = getCVPath(file, userID);
-
-      getSignedURL(file, userID, path).then(function(url) {
-        defer.notify('crabsss');
-        defer.resolve(url);
-      }, function(error) {
-        defer.reject(error);
-      });
-    } else {
-      if(files.length > 0) {
-        defer.reject('Your file is either too large or not the right kind. CVs may be in the following forms: pdf, txt, rtf, pages, doc, docx');
-      }
+    var options = {
+      url: url,
+      fields: {'userid': userID, 'filekind' : 'resume'},
+      file: files,
+      method: 'POST'
     }
 
+    Upload.upload(options).success(function (data, status, headers, config) {
+
+      console.log(data);
+
+      var extension = data;
+      var path_to_cv = url + '?userid=' + userID + '&extension=' + extension;
+
+      updateExtensionOfCV(userID, extension);
+
+      defer.resolve(path_to_cv);     
+      
+
+    }).error(function (data, status, headers, config) {
+        console.log('error status: ' + status);
+        console.log(data);
+        var error = 'there has been an error';
+
+      defer.reject(error);
+    })
+
     return defer.promise;
+
+
+    // old way of doing things
+    // var defer = $q.defer();
+
+    // if(filesMakeSense(files, expectedCVfileTypes, expectedCVsize)) {
+
+    //   var file = files[0];
+
+    //   var path = getCVPath(file, userID);
+
+    //   getSignedURL(file, userID, path).then(function(url) {
+    //     defer.notify('crabsss');
+    //     defer.resolve(url);
+    //   }, function(error) {
+    //     defer.reject(error);
+    //   });
+    // } else {
+    //   if(files.length > 0) {
+    //     defer.reject('Your file is either too large or not the right kind. CVs may be in the following forms: pdf, txt, rtf, pages, doc, docx');
+    //   }
+    // }
+
+    // return defer.promise;
 
   }
 

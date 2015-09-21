@@ -106,25 +106,25 @@ angular.module('laoshiListApp')
             } else {
 
               // if cover letter present
-              if(note) {
+              // if(note) {
 
-                // try to get a presigned url
-                laoshiListApi.uploadCoverLetter(note, user.$id, user.getFullestName(), job.title).then(
+              //   // try to get a presigned url
+              //   laoshiListApi.uploadCoverLetter(note, user.$id, user.getFullestName(), job.title).then(
                   
-                  // if we got it
-                  function(url) {
+              //     // if we got it
+              //     function(url) {
 
-                    // save to db
-                    user.appliedTo[job.$id].note = url;
-                    user.$save();
+              //       // save to db
+              //       user.appliedTo[job.$id].note = url;
+              //       user.$save();
 
-                    // couldn't get url
-                }, function(error) {
+              //       // couldn't get url
+              //   }, function(error) {
 
-                    console.log(error);
-                    defer.reject('Cover letter upload failure');
-                })
-              } 
+              //       console.log(error);
+              //       defer.reject('Cover letter upload failure');
+              //   })
+              // } 
 
                 // let them know
                 defer.resolve('Application successfully submitted');

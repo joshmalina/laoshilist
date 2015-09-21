@@ -118,19 +118,25 @@
     return deffered.promise;
   }
 
+  /* older implementation had us storing a document in S3;
+   * now we're just going to throw the text blob into
+   * firebase
+   */
   function uploadCoverLetter(letter, userID, username, jobTitle) {
 
     var defer = $q.defer();
 
-    console.log(letter);
+    
 
-    var path = getCoverLetterPath(letter, userID, username, jobTitle);
+    // console.log(letter);
 
-    getSignedURL(letter, userID, path).then(function(url) {
-      defer.resolve(url);
-    }, function(error) {
-      defer.reject(error);
-    });
+    // var path = getCoverLetterPath(letter, userID, username, jobTitle);
+
+    // getSignedURL(letter, userID, path).then(function(url) {
+    //   defer.resolve(url);
+    // }, function(error) {
+    //   defer.reject(error);
+    // });
 
     return defer.promise;
   }

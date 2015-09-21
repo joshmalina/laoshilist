@@ -44,7 +44,7 @@
 					<span ng-if="user.cv">Update CV</span>
 					<span ng-if="!user.cv">Upload CV</span>
 				</span>
-				<a ng-show="user.cv.length > 0" ng-href="{{user.cv}}" target="blank_" class="btn btn-default llClear">Download CV</a>
+				<a ng-show="user.cv.length > 0" ng-href="{{user.getPathToCV()}}" target="blank_" class="btn btn-default llClear">Download CV</a>
 			</div>
 			<!-- <div class="button btn btn-default form-group" ngf-select ngf-change="upload($files)">
 				Upload New CV

@@ -17,7 +17,7 @@
 
         var datum = {
           when: fbMethods.getTime(),
-          note: note || null
+          note: note.text || null
         };
 
   			// add to a list of jobs that this teacher has applied to

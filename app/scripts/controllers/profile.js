@@ -36,6 +36,7 @@
           $scope.teachesStudies = 0 in Object.keys($scope.user.roles) ? 'Teaches' : 'Studies';
 
     }
+    $scope.cvref = user.getPathToCV();
     $scope.notes = $firebaseArray(ref.child('notes'));
   });
 

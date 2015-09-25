@@ -74,6 +74,9 @@
 			<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.roles">
 				<span class = "fields-name">Is a</span> <explode wrap="roles" obj="user.roles"></explode> 		
 			</div>
+			<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.loginEmail">
+				<span class="fields-name">Email </span><br> {{user.loginEmail}}	
+			</div>
 			<!-- INTERVIEW STATUS -->
 			<div class = "styled col-sm-12 col-md-12 col-xs-12 col-lg-12" ng-if="user.interviewed">
 				<span class = "fields-name">Has been </span>interviewed
@@ -144,7 +147,7 @@
 		
 		<!-- UPLOADED CV -->
 		<div class = "styled col-lg-12 col-md-12 col-xs-12 col-sm-12 col-lg-12" ng-if="user.cv">
-			<span class="fields-value"><a target="_blank" href="{{user.cv}}">Original Resume</a></span>
+			na <span class="fields-value"><a target="_blank" href="{{user_.getPathToCV()}}">Original Resume</a></span>
 		</div>
 		
 		<div class = "col-lg-7 col-sm-12 col-md-12 styled col-xs-12" ng-if="user.city">

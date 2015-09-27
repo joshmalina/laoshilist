@@ -144,7 +144,7 @@
 
  			if(scope.applicant.why) {
  				var coverLetter = {
- 					text: scope.applicant.why,
+ 					text: scope.applicant.why || '',
  					type: 'text/plain'
  				}
  			}

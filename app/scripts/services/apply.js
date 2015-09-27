@@ -84,7 +84,7 @@ angular.module('laoshiListApp')
         if(user && job) {
 
           // apply on the user side, return an error
-          var userError = user.applyTo(job.$id, note);        
+          var userError = user.applyTo(job.$id, note || null);        
 
           // if no user error
           if(!userError) {

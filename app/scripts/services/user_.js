@@ -15,9 +15,17 @@
   var User = $firebaseObject.$extend({
       applyTo: function(jobID, note) {
 
+        if(note) {
+          note = note.hasOwnProperty('text') ? note.text : null;
+        } else {
+          note = null;
+        }
+
+        
+
         var datum = {
           when: fbMethods.getTime(),
-          note: note.text || null
+          note: note
         };
 
   			// add to a list of jobs that this teacher has applied to

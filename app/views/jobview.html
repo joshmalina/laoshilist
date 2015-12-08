@@ -91,7 +91,7 @@
 						<td class="catName"><strong>Pay:</strong></td>
 						<td class="catValue">{{job.teacherPay}}</td>
 					</tr>
-					<tr ng-if="job.subjects">
+					<tr ng-if="job.subjects.length > 0">
 						<td class="catName"><strong>Subject:</strong></td>
 						<td class="catValue"><explode wrap="subjects" array="job.subjects"></td>
 					</tr>	
@@ -133,7 +133,7 @@
 	<div class = "related-jobs">
 		<h3>Other Jobs</h3>
 		<div class = "job_" ng-repeat="job_ in jobs | limitTo:4">	
-			<a ng-href="#/jobview/{{job_.$id}}">{{job_.title}}</a><br>
+			<a ng-href="#/jobview/{{job_._id}}">{{job_.title}}</a><br>
 			<small>{{job_.shortLocation}}<span ng-if="job_.city && job_.shortLocation">,</span>
 </small>
 			<small>{{cities[job_.city].en}}</small>

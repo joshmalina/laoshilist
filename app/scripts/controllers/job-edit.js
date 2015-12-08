@@ -8,7 +8,7 @@
  * Controller of the laoshiListApp
  */
 angular.module('laoshiListApp')
-  .controller('JobEditCtrl', ['$scope', 'Job_', '$routeParams', function ($scope, Job_, $routeParams) {
+  .controller('JobEditCtrl', ['$scope', '$routeParams', function ($scope, $routeParams) {
 
     $scope.job = {
     	$id: $routeParams.jobid

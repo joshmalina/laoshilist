@@ -10,28 +10,9 @@
 angular.module('laoshiListApp')
   .controller('JobsCtrl', ['jobs__', 'jobs_', 'llConstants', 'User_', 'currentAuth', 'fbMethods', '$scope', '$location', function (jobs__, jobs_, llConstants, User_, currentAuth, fbMethods, $scope, $location) {
 
-    if(currentAuth) {
-      var user = User_(currentAuth.uid);
-      user.$loaded().then(function() {        
-        $scope.isAdmin = user.isAdmin();
-        // only display jobs that need teachers to non-admins
-        $scope.jobs = user.isAdmin() ? jobs_() : jobs_('Needs Teacher');
-      });    
-    // if not logged in at all  
-    } else {
-      // definetly only show jobs that need teachers
-      $scope.jobs = jobs_('Needs Teacher');
-    }  
-
-    jobs__().then(function(jobs) {
-      console.log(jobs.data);
+    jobs__.getJobs().then(function(jobs) {
       $scope.jj = jobs.data;
-    })
-
-    
-
-
-   
+    });   
 
     // important since firebase indices don't seem to be able to be set in ascending order
     $scope.groupBy = '-dateModified';
@@ -42,14 +23,13 @@ angular.module('laoshiListApp')
     $scope.ages = llConstants.ages();
     $scope.cities = llConstants.cities();  
 
-    // add new job, set default status
-  	$scope.addJob = function() {
-  		$scope.jobs.$add({
-          status:'needDetail', 
-          dateModified: fbMethods.getTime()
+    $scope.addJob = function() {
+      jobs__.addJob({
+        status: 1,
+        dateModified: Date.now()
       }).then(function(ref) {
-        $location.path('/job-edit/' + ref.key());
-      });
-  	};
+        $location.path('/job-edit/' + ref.data)
+      })
+    }
 
   }]);

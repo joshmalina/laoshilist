@@ -8,28 +8,25 @@
  * Controller of the laoshiListApp
  */
  angular.module('laoshiListApp')
- .controller('JobviewCtrl', ['jobs_', 'llConstants', 'User_', 'Job_', 'currentAuth', '$routeParams', '$scope', 'firebasePath', '$firebaseArray', '$cookies', '$location', function (jobs_, llConstants, User_, Job_, currentAuth, $routeParams, $scope, firebasePath, $firebaseArray, $cookies, $location) {
+ .controller('JobviewCtrl', ['jobs__', 'llConstants', 'User_', 'Job_', 'currentAuth', '$routeParams', '$scope', 'firebasePath', '$firebaseArray', '$cookies', '$location', function (jobs__, llConstants, User_, Job_, currentAuth, $routeParams, $scope, firebasePath, $firebaseArray, $cookies, $location) {
     
     // set job
-    $scope.job = Job_($routeParams.jobid);
+    var jobq = Job_($routeParams.jobid);
+    jobq.then(function(job) {
+        if (job == null) $location.path('/jobs');
+        console.log(job.data[0]);
+        $scope.job = job.data[0];
+    });
 
-    // include the client's name -- if there is one
-    $scope.job.$loaded().then(function(job) {
-        if(job.clientID) {
-            var client = User_(job.clientID);
-            client.$loaded().then(function(client_) {
-                $scope.job.clientName = client_.getFullestName();
-            })
-        }
-    })
-
-    // if job does not exist, redirect
-    // better if displayed some error message
-    $scope.job.$loaded().then(function(ref) {
-        if(ref.$value === null) {
-            $location.path('/jobs');
-        }
-    });    
+    // // include the client's name -- if there is one
+    // $scope.job.then(function(job) {
+    //     if(job.clientID) {
+    //         var client = User_(job.clientID);
+    //         client.$loaded().then(function(client_) {
+    //             $scope.job.clientName = client_.getFullestName();
+    //         })
+    //     }
+    // })
 
     // if logged in
     if(currentAuth) {
@@ -73,26 +70,13 @@
     $scope.cities = llConstants.cities();
     $scope.ages = llConstants.ages();
     $scope.subjects = llConstants.subjects();
-    $scope.jobs = jobs_('Needs Teacher');
 
-    $scope.deleteCV = function () {        
+    var jobsq = jobs__.getJobs();
+    jobsq.then(function(jobs) {
+        $scope.jobs = jobs.data;
+    })
 
-        // remove file from s3
-        // how to identify it?
-        // laoshiListApi.deleteCV(user.cv).then(function(response) {
-            // remove reference from firebase
-            // $scope.job.cv = null;
-            // $scope.job.$save().then(function() {
-            //     $scope.alerts.push({type:'success', msg: 'Your cv was succesfully deleted'});
-            // })
-
-        //}, function(error) {
-        //     $scope.alerts.push({type:'danger', msg: 'Your cv could not be deleted at this time'});
-
-        // }, function(update) {
-        //     $scope.alerts.push({type: 'info', msg: 'Attempting to delete your cv'});
-        // })
-}
+ 
 
 
 

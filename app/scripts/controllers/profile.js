@@ -47,7 +47,6 @@
 
   $scope.user_.$loaded().then(function(u) {    
     $scope.user_.appliedTo_().then(function(jobs) {
-      console.log(jobs);
       $scope.appliedFor = jobs;
     })
   }); 

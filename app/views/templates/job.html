@@ -185,7 +185,7 @@
 					<li class="list-group-item subjects-list-item ">
 						<span class="select-dropdown">
 							<label class="public">Subjects:</label>
-							<span ng-repeat="(key,_) in job_.subjects track by key">
+							<span ng-repeat="(key,_) in job_.subjects[0] track by key">
 								{{subjects[key]}}{{$last ? '' : ', '}}
 							</span>
 						</span>
@@ -215,10 +215,11 @@
 
 					<!-- city -->
 					<li class="list-group-item subjects-list-item ">
-						<span class="select-dropdown"><label class="public">City:</label></span>
+						<span class="select-dropdown"><label class="public">City:</label>{{cities[job_.city].en}}</span>
 						<select ng-model="job_.city" ng-change="save()" ng-options="k as c.en for (k,c) in cities" class="reign-in form-control">
 							<option value="">Choose a city</option>
 						</select>
+
 					</li>
 					<!-- location -->
 					<li class="list-group-item ">
@@ -235,8 +236,8 @@
 
 					<!-- ages -->
 					<li class="list-group-item subjects-list-item ">
-						<span class="select-dropdown"><label class="public">Student Age:</label></span>
-						<select multiple ng-model="job_.age" ng-change="save()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
+						<span class="select-dropdown"><label class="public">Student Age:</label>{{ages[job_.age]}}</span>
+						<select multiple ng-model="job_.age" ng-change="saveSubjects()" ng-options="key as age for (key, age) in ages" class="reign-in form-control">
 							<option value="">Choose an age group</option>
 						</select>
 					</li>

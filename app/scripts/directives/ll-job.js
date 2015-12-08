@@ -7,17 +7,19 @@
  * # llJob
  */
  angular.module('laoshiListApp')
- .directive('llJob', ['llConstants', 'Job_', 'User_', 'users', 'Auth', 'user', '$location', 'fbMethods', 'firebasePath', function (llConstants, Job_, User_, users, Auth, user, $location, fbMethods, firebasePath) {
+ .directive('llJob', ['jobs__', 'llConstants', 'Job_', 'User_', 'users', 'Auth', 'user', 'cities', '$location', 'fbMethods', 'firebasePath', 'ages', function (jobs__, llConstants, Job_, User_, users, Auth, user, cities, $location, fbMethods, firebasePath, ages) {
 
    function link (scope) {
 
-    var authObj = Auth.$getAuth();
-
-  		// get our job object from firebase
-      var ref = new Firebase(firebasePath + '/jobs/' + scope.job.$id);
+    var authObj = Auth.$getAuth();  		
 
   		// make available to scope
-  		scope.job_ = Job_(scope.job.$id); 
+  		var job_ = Job_(scope.job._id);
+      job_.then(function(j) {
+        if (j == null) $location.path('/');
+        scope.job_ = j.data[0];
+        console.log(scope.job_);
+      }) 
 
       scope.teachers = users.getTeachers();
       scope.clients = users.getClients();
@@ -33,34 +35,29 @@
         });
         }
         
-      };
-
-      scope.job_.$loaded().then(function(o) {
-        scope.updateClient();
-        if(o.$value === null) {
-          $location.path('/');
-        }
-      });   
-
-      scope.notes = scope.job_.getNotes();   
-
-    
-      
-      // when anything about the job changes, including adding notes,
-      // the dateModified field gets updated
-      ref.on('child_changed', function() {
-        ref.child('dateModified').set(fbMethods.getTime());
-      })
+      };     
 
       scope.save = function() {
-        scope.job_.$save().catch(function(error) {
-         console.log('Couldn\'t update', error);
-       });
+        jobs__.updateJob(scope.job_).then(function(updated) {
+          console.log(scope.job_);
+          console.log('updated');
+        });       
       };
 
-      scope.saveSubjects = function(model) {
-        ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));
+      scope.saveSubjects = function(subjects) {
+        scope.job_.subjects = mapSubjects(subjects);
+        console.log(scope.job_);
+        scope.save();
+        //ref.child('subjects').set(fbMethods.takeArrayReturnFbObject(model));
       };
+
+      function mapSubjects(subjects) {
+        var ret = {};
+        for (var i = 0; i < subjects.length; i++) {
+          ret[subjects[i]] = true
+        }
+        return ret;
+      }
 
 
 

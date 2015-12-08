@@ -105,17 +105,6 @@
 	</div>
 
 
-
-	<div class = "job-results col-lg-8 col-xl-9 col-md-8 col-sm-9">
-		<div class = "resultsNum">Showing {{filteredJobs.length}} jobs</div>
-		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jobs | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch))">
-			<job-snapshot jobid="job.$id" admin="isAdmin"></job-snapshot>
-			<!--span ng-if="isAdmin">
-				<ll-delete item="job" collection="jobs"></ll-delete>
-			</span-->
-		</div>
-	</div>
-
 	<div class = "job-results col-lg-8 col-xl-9 col-md-8 col-sm-9">
 		<div class = "resultsNum">Showing {{jj.length}} jobs</div>
 		<div class="job-directive" ng-repeat="(key, job) in (filteredJobs = (jj | orderBy: groupBy | jobsFilter: filterText | filter: filterSearch))">

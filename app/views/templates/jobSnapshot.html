@@ -23,10 +23,11 @@
 <div class = "jobSnapshot">	
 
 	<h4>
-		<a ng-href="#/jobview/{{job.$id}}">{{job.title}}</a><small ng-if="admin && job.clientID" class="pull-right clientName">{{client.getFullestName()}}</small><br>	
+		<a ng-href="#/jobview/{{job._id}}">{{job.title}}</a><small ng-if="admin && job.clientID" class="pull-right clientName">{{client.getFullestName()}}</small><br>	
 	
 	
 	</h4>
+	<pre>{{job||json}}</pre>
 	<small class="citySub">
 		{{job.shortLocation}}
 		<i ng-if="job.city && job.shortLocation">-</i>

@@ -22,9 +22,9 @@
   }
 }
 
-"jshint_options":
-    {
-        "predef": {
-            "Firebase": false
-        }
-     }
+# "jshint_options":
+#    {
+#        "predef": {
+#            "Firebase": false
+#        }
+#     }
